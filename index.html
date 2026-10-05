@@ -12,7 +12,6 @@
     <style>
         * { box-sizing: border-box; transition: background 0.4s ease, color 0.4s ease; }
         
-        /* 4 Aesthetic UI Dynamic Themes */
         body.theme-skyblue {
             background: radial-gradient(circle at center, #0d1b2a 0%, #000814 100%);
             --accent: #00b0ff;
@@ -132,35 +131,18 @@
         }
         .btn:active { transform: scale(0.95); }
 
-        /* REAL HEART SHAPE SCANNER CONTAINER */
-        .heart-qr-wrapper {
-            position: relative;
-            width: 220px;
-            height: 200px;
-            margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(0 0 15px var(--accent));
-        }
-
-        .heart-qr-shape {
-            width: 195px;
-            height: 185px;
-            background: #ffffff;
-            clip-path: path("M 97.5,180 C 15,110 0,60 0,35 C 0,12 25,0 55,0 C 75,0 90,15 97.5,30 C 105,15 120,0 140,0 C 170,0 195,12 195,35 C 195,60 180,110 97.5,180 Z");
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            overflow: hidden;
-        }
-
+        /* Standard Sharp Square Scanner */
         #qrcode {
-            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            margin: 15px auto;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 12px;
+            width: fit-content;
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        /* Countdown */
         .timer-grid {
             display: flex;
             justify-content: center;
@@ -177,7 +159,6 @@
         .timer-box span { font-size: 1.3rem; font-weight: 700; color: #fff; display: block; }
         .timer-box small { font-size: 0.65rem; color: var(--text-glow); text-transform: uppercase; }
 
-        /* Polaroid Photo Slideshow */
         .photo-card {
             background: #ffffff;
             padding: 8px 8px 24px 8px;
@@ -206,7 +187,7 @@
             text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        /* Neon Blessing (Strictly No Emojis) */
+        /* Strictly No Emojis Neon Blessing */
         .blessing-neon {
             font-family: 'Dancing Script', cursive;
             font-size: 2.4rem;
@@ -279,13 +260,13 @@
 
         <div class="input-group">
             <label>Select Multiple Photos (Gallery se 1 ya zyada):</label>
-            <input type="file" id="in-photos" accept="image/*" multiple onchange="uploadPhotosCloud(this)">
+            <input type="file" id="in-photos" accept="image/*" multiple onchange="uploadPhotos(this)">
             <div id="photo-status" class="badge-status"></div>
         </div>
 
         <div class="input-group">
             <label>Select Custom Song / Audio (.mp3 from phone):</label>
-            <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudioCloud(this)">
+            <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudio(this)">
             <div id="audio-status" class="badge-status"></div>
         </div>
 
@@ -294,18 +275,11 @@
             <textarea id="in-wishes" rows="4"></textarea>
         </div>
 
-        <button class="btn" id="gen-btn" onclick="generateHeartQR()">Generate Heart Scanner 💖</button>
+        <button class="btn" id="gen-btn" onclick="buildDirectQR()">Generate QR Scanner 🚀</button>
 
         <div id="qr-result" style="display:none; margin-top: 15px;">
-            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this Heart Scanner on ANY phone:</p>
-            
-            <!-- Real Heart Shaped Scanner -->
-            <div class="heart-qr-wrapper">
-                <div class="heart-qr-shape">
-                    <div id="qrcode"></div>
-                </div>
-            </div>
-            
+            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this QR to open the card on ANY phone:</p>
+            <div id="qrcode"></div>
             <button class="btn" style="padding: 10px 24px; font-size: 0.9rem;" onclick="testCardRightNow()">Test Live Card 👁️</button>
         </div>
     </div>
@@ -333,7 +307,6 @@
     </div>
 
     <script>
-        // Floating Stars
         const bg = document.getElementById('bg-elements');
         const icons = ['✨', '⭐', '❄️', '💙', '💜'];
         for (let i = 0; i < 22; i++) {
@@ -349,7 +322,7 @@
 
         const audio = document.getElementById('bg-audio');
         let uploadedImages = [];
-        let uploadedAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
+        let customAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
         let cardPayload = null;
         let curIdx = 0;
 
@@ -357,8 +330,8 @@
             document.body.className = themeName;
         }
 
-        // Direct Cloud File Host Handler (Works across all devices)
-        async function uploadFile(file) {
+        // Direct Global Cloud Upload
+        async function sendFileToWeb(file) {
             const formData = new FormData();
             formData.append('file', file);
             try {
@@ -374,40 +347,40 @@
             return null;
         }
 
-        async function uploadPhotosCloud(input) {
+        async function uploadPhotos(input) {
             if (input.files && input.files.length > 0) {
                 const status = document.getElementById('photo-status');
                 const btn = document.getElementById('gen-btn');
-                status.innerText = `Syncing ${input.files.length} photo(s)... ⏳`;
+                status.innerText = `Connecting & uploading ${input.files.length} photo(s)... ⏳`;
                 btn.disabled = true;
 
                 uploadedImages = [];
                 for (let i = 0; i < input.files.length; i++) {
-                    const u = await uploadFile(input.files[i]);
+                    const u = await sendFileToWeb(input.files[i]);
                     if (u) uploadedImages.push(u);
                 }
 
                 if (uploadedImages.length === 0) {
                     uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
                 }
-                status.innerText = `✓ ${uploadedImages.length} photo(s) synced for scanner!`;
+                status.innerText = `✓ ${uploadedImages.length} photo(s) ready for any phone!`;
                 btn.disabled = false;
             }
         }
 
-        async function uploadAudioCloud(input) {
+        async function uploadAudio(input) {
             if (input.files && input.files[0]) {
                 const status = document.getElementById('audio-status');
                 const btn = document.getElementById('gen-btn');
-                status.innerText = "Syncing song... ⏳";
+                status.innerText = "Uploading song to web... ⏳";
                 btn.disabled = true;
 
-                const au = await uploadFile(input.files[0]);
+                const au = await sendFileToWeb(input.files[0]);
                 if (au) {
-                    uploadedAudioUrl = au;
+                    customAudioUrl = au;
                     status.innerText = "✓ Custom song ready!";
                 } else {
-                    status.innerText = "✓ Default celebration song set!";
+                    status.innerText = "✓ Default celebration song ready!";
                 }
                 btn.disabled = false;
             }
@@ -424,23 +397,23 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
 
-            // Scanner Link Reader (?data=...)
+            // Direct Data Loader on recipient scan (?card=...)
             const urlParams = new URLSearchParams(window.location.search);
-            const rawData = urlParams.get('data');
+            const rawCard = urlParams.get('card');
 
-            if (rawData) {
+            if (rawCard) {
                 try {
-                    cardPayload = JSON.parse(decodeURIComponent(escape(atob(rawData))));
+                    cardPayload = JSON.parse(decodeURIComponent(escape(atob(rawCard))));
                     document.getElementById('creator-view').style.display = 'none';
                     document.getElementById('entry-modal').style.display = 'flex';
                     if (cardPayload.theme) document.body.className = cardPayload.theme;
                 } catch(e) {
-                    console.log("Normal view");
+                    console.log("Card parse error");
                 }
             }
         };
 
-        function generateHeartQR() {
+        function buildDirectQR() {
             const name = document.getElementById('in-name').value.trim() || "Special Friend";
             const date = document.getElementById('in-date').value || "";
             const theme = document.getElementById('in-theme').value;
@@ -454,26 +427,27 @@
                 n: name,
                 d: date,
                 p: uploadedImages,
-                a: uploadedAudioUrl,
+                a: customAudioUrl,
                 w: rawWishes,
                 theme: theme
             };
 
-            // Lightweight base64 query param (Clean & Direct)
-            const cleanHash = btoa(unescape(encodeURIComponent(JSON.stringify(cardPayload))));
-            const targetUrl = window.location.origin + window.location.pathname + '?data=' + cleanHash;
+            // Encode payload directly into query string for universal accessibility
+            const safePayload = btoa(unescape(encodeURIComponent(JSON.stringify(cardPayload))));
+            const fullTargetUrl = window.location.origin + window.location.pathname + '?card=' + safePayload;
 
+            // Generate Standard Square QR (High Readability)
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById('qrcode'), {
-                text: targetUrl,
-                width: 150,
-                height: 150,
+                text: fullTargetUrl,
+                width: 175,
+                height: 175,
                 colorDark: "#000814",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
+                correctLevel: QRCode.CorrectLevel.L
             });
 
-            window.testCardUrl = targetUrl;
+            window.testCardUrl = fullTargetUrl;
             document.getElementById('qr-result').style.display = "block";
         }
 
@@ -492,7 +466,6 @@
             if (cardPayload.theme) document.body.className = cardPayload.theme;
             document.getElementById('out-name').innerText = "Happy Birthday, " + cardPayload.n + "! 🎂";
             
-            // Set Custom Song
             if (cardPayload.a) {
                 audio.src = cardPayload.a;
             }
