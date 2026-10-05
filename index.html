@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Magic ✨</title>
+    <title>Happy Birthday Priyanshu & Priyal ✨</title>
     
+    <!-- Fonts & Confetti -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-        * { box-sizing: border-box; transition: background 0.4s ease, color 0.4s ease; }
+        * { box-sizing: border-box; transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
         
+        /* 6 Rich Dynamic Aesthetic Themes */
         body.theme-skyblue {
             background: radial-gradient(circle at center, #0d1b2a 0%, #000814 100%);
             --accent: #00b0ff;
@@ -36,6 +37,18 @@
             --accent-glow: rgba(0, 245, 212, 0.45);
             --text-glow: #70e000;
         }
+        body.theme-gold {
+            background: radial-gradient(circle at center, #2b1f00 0%, #120c00 100%);
+            --accent: #ffd166;
+            --accent-glow: rgba(255, 209, 102, 0.45);
+            --text-glow: #ffe494;
+        }
+        body.theme-cyber {
+            background: radial-gradient(circle at center, #1b003a 0%, #050014 100%);
+            --accent: #7209b7;
+            --accent-glow: rgba(114, 9, 183, 0.45);
+            --text-glow: #4cc9f0;
+        }
 
         body {
             margin: 0;
@@ -49,6 +62,7 @@
             overflow-x: hidden;
         }
 
+        /* Floating Stars */
         .bg-elements {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -67,6 +81,29 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
+        /* UI Theme Selector Ribbon */
+        .theme-selector {
+            position: fixed;
+            top: 15px;
+            display: flex;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--accent);
+            z-index: 99;
+            backdrop-filter: blur(10px);
+        }
+        .theme-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: 0.2s transform;
+        }
+        .theme-dot:active { transform: scale(1.25); }
+
         .box {
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(18px);
@@ -80,111 +117,58 @@
             border: 1px solid rgba(255, 255, 255, 0.16);
             position: relative;
             z-index: 10;
+            margin-top: 35px;
         }
 
-        h1, h2 {
+        h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--text-glow);
-            margin-top: 0;
-            text-shadow: 0 0 12px var(--accent);
+            margin: 5px 0 15px 0;
+            font-size: 2.3rem;
+            text-shadow: 0 0 15px var(--accent);
         }
-
-        .input-group { text-align: left; margin-bottom: 12px; }
-        .input-group label { font-size: 0.82rem; color: var(--text-glow); display: block; margin-bottom: 5px; font-weight: 600; }
-        input, textarea, select {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid var(--accent);
-            background: rgba(0, 0, 0, 0.55);
-            color: #fff;
-            outline: none;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        input[type="file"] {
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            border: 1px dashed var(--accent);
-        }
-
-        .badge-status {
-            font-size: 0.82rem;
-            color: #76ff03;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent), #014f86);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--accent-glow);
-            margin-top: 12px;
-            transition: 0.3s;
-        }
-        .btn:active { transform: scale(0.95); }
-
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            margin: 15px auto;
-            padding: 15px;
-            background: #ffffff;
-            border-radius: 14px;
-            width: fit-content;
-            box-shadow: 0 0 25px var(--accent-glow);
-        }
-
-        .timer-grid {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 15px 0;
-        }
-        .timer-box {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 8px 6px;
-            min-width: 58px;
-        }
-        .timer-box span { font-size: 1.3rem; font-weight: 700; color: #fff; display: block; }
-        .timer-box small { font-size: 0.65rem; color: var(--text-glow); text-transform: uppercase; }
 
         .photo-card {
             background: #ffffff;
             padding: 8px 8px 24px 8px;
-            border-radius: 10px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
             margin: 15px auto;
-            max-width: 240px;
+            max-width: 250px;
             transform: rotate(-2deg);
         }
         .photo-card img {
             width: 100%;
-            height: 220px;
+            height: 230px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
             display: block;
             transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
         .cursive-text {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.7rem;
-            min-height: 85px;
+            font-size: 1.75rem;
+            min-height: 90px;
             line-height: 1.35;
             color: #ffffff;
-            margin: 15px 0;
+            margin: 18px 0;
             text-shadow: 0 0 10px var(--accent-glow);
         }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent), #014f86);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: 0.3s;
+        }
+        .btn:active { transform: scale(0.95); }
 
         /* Strictly No Emojis Neon Blessing */
         .blessing-neon {
@@ -205,6 +189,7 @@
             50% { transform: translateY(-12px); }
         }
 
+        /* Sound Enable Entry Gate */
         #entry-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -221,94 +206,54 @@
 </head>
 <body class="theme-skyblue">
 
+    <!-- Theme Switcher Dots on Top -->
+    <div class="theme-selector">
+        <div class="theme-dot" style="background:#00b0ff;" onclick="setTheme('theme-skyblue')" title="Sky Blue"></div>
+        <div class="theme-dot" style="background:#b5179e;" onclick="setTheme('theme-purple')" title="Midnight Purple"></div>
+        <div class="theme-dot" style="background:#ff4d6d;" onclick="setTheme('theme-rose')" title="Sunset Rose"></div>
+        <div class="theme-dot" style="background:#00f5d4;" onclick="setTheme('theme-emerald')" title="Mint Emerald"></div>
+        <div class="theme-dot" style="background:#ffd166;" onclick="setTheme('theme-gold')" title="Royal Gold"></div>
+        <div class="theme-dot" style="background:#7209b7;" onclick="setTheme('theme-cyber')" title="Cyber Night"></div>
+    </div>
+
     <div class="bg-elements" id="bg-elements"></div>
 
+    <!-- Soft Romantic Background Music -->
     <audio id="bg-audio" loop preload="auto">
-        <source id="audio-source" src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="entry-modal" style="display: none;">
-        <h1 style="font-size: 2.7rem; margin-bottom: 10px;">Surprise Waiting For You ✨</h1>
-        <p style="color: var(--text-glow); font-size: 1rem; margin-bottom: 25px;">Turn on volume for background music 🎶</p>
-        <button class="btn" style="font-size: 1.2rem; padding: 14px 40px;" onclick="unlockAndPlay()">Open Surprise 🎁</button>
+    <!-- Tap to Open Gate -->
+    <div id="entry-modal">
+        <h1 style="font-size: 2.8rem; margin-bottom: 8px;">Surprise for Priyanshu & Priyal ✨</h1>
+        <p style="color: var(--text-glow); font-size: 1rem; margin-bottom: 25px;">Turn on volume for the romantic melody 🎶</p>
+        <button class="btn" style="font-size: 1.2rem; padding: 14px 42px;" onclick="unlockSurprise()">Open Surprise 🎁</button>
     </div>
 
-    <!-- 1. CREATOR PANEL -->
-    <div id="creator-view" class="box">
-        <h2>Wish System Creator ✨</h2>
-        
-        <div class="input-group">
-            <label>Recipient Name:</label>
-            <input type="text" id="in-name" placeholder="Friend ka naam">
-        </div>
+    <!-- The Birthday Card View -->
+    <div class="box" id="card-box" style="display: none;">
+        <h1>Happy Birthday! 🎂</h1>
+        <p style="font-size: 0.95rem; color: var(--text-glow); margin-top: -10px; font-weight:600;">Priyanshu & Priyal ✨</p>
 
-        <div class="input-group">
-            <label>Theme Style (Interface Look):</label>
-            <select id="in-theme" onchange="previewTheme(this.value)">
-                <option value="theme-skyblue">1. Sky-Blue Frost (Girlish & Cool)</option>
-                <option value="theme-purple">2. Midnight Violet (Royal & Dreamy)</option>
-                <option value="theme-rose">3. Sunset Rose (Fairy & Warm)</option>
-                <option value="theme-emerald">4. Mint Emerald (Cyber Glow)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Birthday Date (Countdown):</label>
-            <input type="date" id="in-date">
-        </div>
-
-        <div class="input-group">
-            <label>Select Multiple Photos (Gallery se 1 ya zyada):</label>
-            <input type="file" id="in-photos" accept="image/*" multiple onchange="uploadPhotos(this)">
-            <div id="photo-status" class="badge-status"></div>
-        </div>
-
-        <div class="input-group">
-            <label>Select Custom Song (.mp3 from phone):</label>
-            <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudio(this)">
-            <div id="audio-status" class="badge-status"></div>
-        </div>
-
-        <div class="input-group">
-            <label>English Wishes (Ek line me ek wish):</label>
-            <textarea id="in-wishes" rows="4"></textarea>
-        </div>
-
-        <button class="btn" id="gen-btn" onclick="saveDirectAndMakeQR()">Generate QR Scanner 🚀</button>
-
-        <div id="qr-result" style="display:none; margin-top: 15px;">
-            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this QR on ANY phone:</p>
-            <div id="qrcode"></div>
-            <button class="btn" style="padding: 10px 24px; font-size: 0.9rem;" onclick="testCardRightNow()">Test Live Card 👁️</button>
-        </div>
-    </div>
-
-    <!-- 2. RECIPIENT SURPRISE VIEW -->
-    <div id="card-view" class="box" style="display: none;">
-        <h1 id="out-name">Happy Birthday! 🎂</h1>
-
-        <div id="countdown" class="timer-grid">
-            <div class="timer-box"><span id="days">00</span><small>Days</small></div>
-            <div class="timer-box"><span id="hours">00</span><small>Hours</small></div>
-            <div class="timer-box"><span id="minutes">00</span><small>Mins</small></div>
-            <div class="timer-box"><span id="seconds">00</span><small>Secs</small></div>
-        </div>
-
+        <!-- Polaroid Photo -->
         <div class="photo-card">
-            <img id="out-photo" src="" alt="Birthday Special">
+            <!-- Directly linked to the ImgBB uploaded image -->
+            <img id="out-photo" src="https://i.ibb.co/PzrLbCRg/photo.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600'" alt="Priyanshu & Priyal">
         </div>
 
-        <div id="wish-display" class="cursive-text">A special surprise waiting for you...</div>
+        <div id="wish-display" class="cursive-text">A timeless melody of love, laughter, and beautiful memories...</div>
         
+        <!-- Strictly No Emojis Neon Blessing -->
         <div id="blessing-box" class="blessing-neon">Mahadev Bless You</div>
 
-        <button id="action-btn" class="btn" onclick="stepWish()">Next Surprise ✨</button>
+        <button id="action-btn" class="btn" onclick="nextSurprise()">Next Surprise ✨</button>
     </div>
 
     <script>
+        // Floating Stars & Hearts
         const bg = document.getElementById('bg-elements');
-        const icons = ['✨', '⭐', '❄️', '💙', '💜'];
-        for (let i = 0; i < 22; i++) {
+        const icons = ['✨', '⭐', '❄️', '💙', '💜', '🌸'];
+        for (let i = 0; i < 24; i++) {
             let el = document.createElement('div');
             el.className = 'element';
             el.innerText = icons[Math.floor(Math.random() * icons.length)];
@@ -320,206 +265,34 @@
         }
 
         const audio = document.getElementById('bg-audio');
-        let uploadedImages = [];
-        let customAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
-        let cardPayload = null;
         let curIdx = 0;
 
-        // KVdb Public Key-Value Storage (Direct CORS Allowed & Free)
-        const KV_BUCKET = "kvdb.io/MNhD9P2z8eQjT1w5R7s3kL";
+        // Custom Curated Romantic English Wishes for Priyanshu & Priyal
+        const wishes = [
+            "May your bond continue to bloom with unconditional love, warmth, and quiet moments of magic. ✨",
+            "Wishing Priyanshu & Priyal a lifetime of shared dreams, laughter that never fades, and endless adventures together. 🌟",
+            "May today mark the beginning of a chapter filled with peace, boundless joy, and gentle grace. 🥂",
+            "Two souls woven with love, shining brighter than the stars in the night sky. Happy Birthday! 🎈"
+        ];
 
-        function previewTheme(themeName) {
+        function setTheme(themeName) {
             document.body.className = themeName;
         }
 
-        async function sendFileToWeb(file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            try {
-                const res = await fetch('https://tmpfiles.org/api/v1/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const d = await res.json();
-                if (d && d.data && d.data.url) {
-                    return d.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                }
-            } catch(e) {}
-            return null;
-        }
-
-        async function uploadPhotos(input) {
-            if (input.files && input.files.length > 0) {
-                const status = document.getElementById('photo-status');
-                const btn = document.getElementById('gen-btn');
-                status.innerText = `Connecting & uploading ${input.files.length} photo(s)... ⏳`;
-                btn.disabled = true;
-
-                uploadedImages = [];
-                for (let i = 0; i < input.files.length; i++) {
-                    const u = await sendFileToWeb(input.files[i]);
-                    if (u) uploadedImages.push(u);
-                }
-
-                if (uploadedImages.length === 0) {
-                    uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
-                }
-                status.innerText = `✓ ${uploadedImages.length} photo(s) ready!`;
-                btn.disabled = false;
-            }
-        }
-
-        async function uploadAudio(input) {
-            if (input.files && input.files[0]) {
-                const status = document.getElementById('audio-status');
-                const btn = document.getElementById('gen-btn');
-                status.innerText = "Uploading song to web... ⏳";
-                btn.disabled = true;
-
-                const au = await sendFileToWeb(input.files[0]);
-                if (au) {
-                    customAudioUrl = au;
-                    status.innerText = "✓ Custom song ready!";
-                } else {
-                    status.innerText = "✓ Default celebration song ready!";
-                }
-                btn.disabled = false;
-            }
-        }
-
-        window.onload = async function() {
-            document.getElementById('in-wishes').value = 
-                "Wishing you a day filled with happiness and a year filled with joy! ✨\n" +
-                "May your life be as bright and beautiful as the sky today. 🌟\n" +
-                "Wishing you a sky full of stars and a life full of dreams. 🥂\n" +
-                "Keep shining and spreading your light wherever you go. 🎈";
-
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
-
-            // Scan Detect
-            const urlParams = new URLSearchParams(window.location.search);
-            const cardId = urlParams.get('id');
-
-            if (cardId) {
-                document.getElementById('creator-view').style.display = 'none';
-                document.getElementById('entry-modal').style.display = 'flex';
-
-                try {
-                    const res = await fetch(`https://${KV_BUCKET}/${cardId}`);
-                    cardPayload = await res.json();
-                    if (cardPayload && cardPayload.theme) {
-                        document.body.className = cardPayload.theme;
-                    }
-                } catch(e) {
-                    console.log("Fetch error, checking fallback");
-                }
-            }
-        };
-
-        async function saveDirectAndMakeQR() {
-            const name = document.getElementById('in-name').value.trim() || "Special Friend";
-            const date = document.getElementById('in-date').value || "";
-            const theme = document.getElementById('in-theme').value;
-            const rawWishes = document.getElementById('in-wishes').value.split('\n').filter(w => w.trim() !== "");
-
-            if (uploadedImages.length === 0) {
-                uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
-            }
-
-            cardPayload = {
-                n: name,
-                d: date,
-                p: uploadedImages,
-                a: customAudioUrl,
-                w: rawWishes,
-                theme: theme
-            };
-
-            const btn = document.getElementById('gen-btn');
-            btn.innerText = "Syncing & Generating... ⏳";
-            btn.disabled = true;
-
-            const shortId = "bd_" + Math.random().toString(36).substring(2, 8);
-
-            try {
-                await fetch(`https://${KV_BUCKET}/${shortId}`, {
-                    method: 'POST',
-                    body: JSON.stringify(cardPayload)
-                });
-            } catch(e) {
-                console.log(e);
-            }
-
-            btn.innerText = "Generate QR Scanner 🚀";
-            btn.disabled = false;
-
-            const targetUrl = window.location.origin + window.location.pathname + '?id=' + shortId;
-
-            document.getElementById('qrcode').innerHTML = "";
-            new QRCode(document.getElementById('qrcode'), {
-                text: targetUrl,
-                width: 175,
-                height: 175,
-                colorDark: "#000814",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
-            });
-
-            window.testCardUrl = targetUrl;
-            document.getElementById('qr-result').style.display = "block";
-        }
-
-        function testCardRightNow() {
-            if (window.testCardUrl) {
-                window.location.href = window.testCardUrl;
-            }
-        }
-
-        function unlockAndPlay() {
-            document.getElementById('entry-modal').style.display = "none";
-            document.getElementById('card-view').style.display = "block";
-
-            if (!cardPayload) return;
-
-            if (cardPayload.theme) document.body.className = cardPayload.theme;
-            document.getElementById('out-name').innerText = "Happy Birthday, " + cardPayload.n + "! 🎂";
-            
-            if (cardPayload.a) {
-                audio.src = cardPayload.a;
-            }
+        function unlockSurprise() {
+            document.getElementById('entry-modal').style.display = 'none';
+            document.getElementById('card-box').style.display = 'block';
             audio.play().catch(e => console.log(e));
 
-            const photoEl = document.getElementById('out-photo');
-            photoEl.src = (cardPayload.p && cardPayload.p.length > 0) ? cardPayload.p[0] : "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600";
-
-            initCountdown(cardPayload.d);
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#00b0ff', '#ffffff', '#ffd166', '#ff4d6d']
+            });
         }
 
-        function initCountdown(dateStr) {
-            if (!dateStr) {
-                document.getElementById('countdown').style.display = "none";
-                return;
-            }
-            const targetTime = new Date(dateStr + "T00:00:00").getTime();
-
-            function update() {
-                const diff = targetTime - new Date().getTime();
-                if (diff <= 0) {
-                    document.getElementById('countdown').innerHTML = "<h3 style='color:var(--text-glow);margin:5px;'>It's Celebration Day! 🥳</h3>";
-                    return;
-                }
-                document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                document.getElementById('hours').innerText = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-                document.getElementById('minutes').innerText = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
-                document.getElementById('seconds').innerText = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-            }
-            update();
-            setInterval(update, 1000);
-        }
-
-        function stepWish() {
+        function nextSurprise() {
             confetti({
                 particleCount: 85,
                 spread: 65,
@@ -530,29 +303,17 @@
             const textEl = document.getElementById('wish-display');
             const btn = document.getElementById('action-btn');
             const blessing = document.getElementById('blessing-box');
-            const photoEl = document.getElementById('out-photo');
 
-            if (curIdx < cardPayload.w.length) {
-                textEl.innerText = cardPayload.w[curIdx];
+            if (curIdx < wishes.length) {
+                textEl.innerText = wishes[curIdx];
                 btn.innerText = "Next Surprise ✨";
-
-                if (cardPayload.p && cardPayload.p.length > 0) {
-                    const nextPhotoIdx = (curIdx + 1) % cardPayload.p.length;
-                    photoEl.style.opacity = 0;
-                    photoEl.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        photoEl.src = cardPayload.p[nextPhotoIdx];
-                        photoEl.style.opacity = 1;
-                        photoEl.style.transform = 'scale(1)';
-                    }, 200);
-                }
-
                 curIdx++;
             } else {
                 textEl.style.display = "none";
                 btn.style.display = "none";
                 blessing.style.display = "block";
 
+                // Grand Final Confetti Blast
                 var duration = 4 * 1000;
                 var end = Date.now() + duration;
                 (function frame() {
