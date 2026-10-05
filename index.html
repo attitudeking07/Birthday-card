@@ -108,11 +108,11 @@
             display: flex;
             justify-content: center;
             margin: 15px auto;
-            padding: 12px;
+            padding: 14px;
             background: #fff;
             border-radius: 16px;
             width: fit-content;
-            box-shadow: 0 0 20px rgba(0, 183, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 183, 255, 0.5);
         }
 
         .timer-grid {
@@ -199,14 +199,13 @@
         <source id="audio-source" src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Tap to Open Overlay for Sound Auto-Play -->
     <div id="entry-modal" style="display: none;">
         <h1 style="font-size: 2.6rem; margin-bottom: 10px;">Surprise Waiting For You ✨</h1>
         <p style="color: #81d4fa; font-size: 1rem; margin-bottom: 25px;">Turn on volume for background music 🎶</p>
         <button class="btn" style="font-size: 1.2rem; padding: 14px 40px;" onclick="unlockAndPlay()">Open Surprise 🎁</button>
     </div>
 
-    <!-- 1. CREATOR VIEW -->
+    <!-- 1. CREATOR PANEL -->
     <div id="creator-view" class="box">
         <h2>Wish System Creator ✨</h2>
         
@@ -221,14 +220,14 @@
         </div>
 
         <div class="input-group">
-            <label>Select Multiple Photos (Choose all at once):</label>
-            <input type="file" id="in-photos" accept="image/*" multiple onchange="uploadMultipleImages(this)">
+            <label>Select Multiple Photos (Gallery):</label>
+            <input type="file" id="in-photos" accept="image/*" multiple onchange="preparePhotos(this)">
             <div id="photo-status" class="badge-status"></div>
         </div>
 
         <div class="input-group">
             <label>Select Custom Audio / Song (.mp3):</label>
-            <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudio(this)">
+            <input type="file" id="in-audio" accept="audio/*" onchange="prepareAudio(this)">
             <div id="audio-status" class="badge-status"></div>
         </div>
 
@@ -237,16 +236,16 @@
             <textarea id="in-wishes" rows="4"></textarea>
         </div>
 
-        <button class="btn" id="gen-btn" onclick="makeUniversalQR()">Generate QR Scanner 🚀</button>
+        <button class="btn" id="gen-btn" onclick="generateCleanQR()">Generate QR Scanner 🚀</button>
 
         <div id="qr-result" style="display:none; margin-top: 18px;">
             <p style="color:#81d4fa; font-size:0.85rem; margin-bottom: 5px;">Scan this QR to open the card on ANY phone:</p>
             <div id="qrcode"></div>
-            <button class="btn" style="background:#0288d1; margin-top: 8px;" onclick="testCardLocally()">Test Card Right Now 👁️</button>
+            <p id="qr-link-text" style="font-size: 0.75rem; color: #80d8ff; word-break: break-all; margin-top: 8px;"></p>
         </div>
     </div>
 
-    <!-- 2. RECIPIENT CARD VIEW -->
+    <!-- 2. RECIPIENT SURPRISE VIEW -->
     <div id="card-view" class="box" style="display: none;">
         <h1 id="out-name">Happy Birthday! 🎂</h1>
 
@@ -269,7 +268,7 @@
     </div>
 
     <script>
-        // Floating Stars
+        // Background Stars
         const bg = document.getElementById('bg-elements');
         const icons = ['✨', '⭐', '❄️', '💙'];
         for (let i = 0; i < 22; i++) {
@@ -284,67 +283,41 @@
         }
 
         const audio = document.getElementById('bg-audio');
-        let uploadedPhotoUrls = [];
-        let finalAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
+        let selectedPhotos = [];
+        let selectedAudio = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
         let cardData = null;
         let curIdx = 0;
 
-        // Auto Upload to free direct web host
-        async function uploadToCloud(file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            try {
-                const res = await fetch('https://tmpfiles.org/api/v1/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await res.json();
-                if (data && data.data && data.data.url) {
-                    return data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
-                }
-            } catch(e) {}
-            return null;
-        }
-
-        async function uploadMultipleImages(input) {
+        function preparePhotos(input) {
             if (input.files && input.files.length > 0) {
+                selectedPhotos = [];
+                const files = Array.from(input.files);
                 const status = document.getElementById('photo-status');
-                const btn = document.getElementById('gen-btn');
-                status.innerText = `Uploading ${input.files.length} photo(s)... ⏳`;
-                btn.disabled = true;
+                status.innerText = "Processing photos... ⏳";
 
-                uploadedPhotoUrls = [];
-                for (let i = 0; i < input.files.length; i++) {
-                    const url = await uploadToCloud(input.files[i]);
-                    if (url) uploadedPhotoUrls.push(url);
-                }
-
-                if (uploadedPhotoUrls.length > 0) {
-                    status.innerText = `✓ ${uploadedPhotoUrls.length} photo(s) uploaded successfully!`;
-                } else {
-                    // Fallback to placeholder if offline
-                    uploadedPhotoUrls = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
-                    status.innerText = `✓ Photos ready!`;
-                }
-                btn.disabled = false;
+                let done = 0;
+                files.forEach(f => {
+                    const r = new FileReader();
+                    r.onload = function(e) {
+                        selectedPhotos.push(e.target.result);
+                        done++;
+                        if (done === files.length) {
+                            status.innerText = `✓ ${selectedPhotos.length} photo(s) ready!`;
+                        }
+                    };
+                    r.readAsDataURL(f);
+                });
             }
         }
 
-        async function uploadAudio(input) {
+        function prepareAudio(input) {
             if (input.files && input.files[0]) {
-                const status = document.getElementById('audio-status');
-                const btn = document.getElementById('gen-btn');
-                status.innerText = "Uploading audio... ⏳";
-                btn.disabled = true;
-
-                const url = await uploadToCloud(input.files[0]);
-                if (url) {
-                    finalAudioUrl = url;
-                    status.innerText = "✓ Custom song ready!";
-                } else {
-                    status.innerText = "✓ Default celebration song ready!";
-                }
-                btn.disabled = false;
+                const r = new FileReader();
+                r.onload = function(e) {
+                    selectedAudio = e.target.result;
+                    document.getElementById('audio-status').innerText = `✓ Song loaded: ${input.files[0].name.substring(0, 16)}...`;
+                };
+                r.readAsDataURL(input.files[0]);
             }
         }
 
@@ -359,55 +332,61 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
 
-            // If scanned via QR Code (URL Query String)
-            const urlParams = new URLSearchParams(window.location.search);
-            const encoded = urlParams.get('wish');
-            if (encoded) {
+            // Scanner detect
+            const hash = window.location.hash.substring(1);
+            if (hash.startsWith('card_')) {
+                const stored = localStorage.getItem(hash);
+                if (stored) {
+                    cardData = JSON.parse(stored);
+                    document.getElementById('creator-view').style.display = "none";
+                    document.getElementById('entry-modal').style.display = "flex";
+                }
+            } else if (window.location.search.includes('wish=')) {
                 try {
-                    cardData = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+                    const param = new URLSearchParams(window.location.search).get('wish');
+                    cardData = JSON.parse(decodeURIComponent(escape(atob(param))));
                     document.getElementById('creator-view').style.display = "none";
                     document.getElementById('entry-modal').style.display = "flex";
                 } catch(e) {}
             }
         };
 
-        function makeUniversalQR() {
+        function generateCleanQR() {
             const name = document.getElementById('in-name').value.trim() || "Special Friend";
             const date = document.getElementById('in-date').value || "";
             const rawWishes = document.getElementById('in-wishes').value.split('\n').filter(w => w.trim() !== "");
 
-            if (uploadedPhotoUrls.length === 0) {
-                uploadedPhotoUrls = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
+            if (selectedPhotos.length === 0) {
+                selectedPhotos = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
             }
 
             cardData = {
                 n: name,
                 d: date,
-                p: uploadedPhotoUrls,
-                a: finalAudioUrl,
+                p: selectedPhotos,
+                a: selectedAudio,
                 w: rawWishes
             };
 
-            const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cardData))));
-            
-            // Clean absolute link with query param (?wish=...)
-            const targetUrl = window.location.origin + window.location.pathname + "?wish=" + encoded;
+            // Lightweight unique key
+            const cardId = 'card_' + Date.now();
+            localStorage.setItem(cardId, JSON.stringify(cardData));
+
+            // Clean, ultra-short link so QR is easily readable
+            const cleanUrl = window.location.origin + window.location.pathname + '#' + cardId;
 
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById('qrcode'), {
-                text: targetUrl,
-                width: 175,
-                height: 175,
+                text: cleanUrl,
+                width: 200,
+                height: 200,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.L
+                correctLevel: QRCode.CorrectLevel.M
             });
-            document.getElementById('qr-result').style.display = "block";
-        }
 
-        function testCardLocally() {
-            document.getElementById('creator-view').style.display = "none";
-            document.getElementById('entry-modal').style.display = "flex";
+            document.getElementById('qr-link-text').innerText = cleanUrl;
+            document.getElementById('qr-result').style.display = "block";
         }
 
         function unlockAndPlay() {
@@ -416,11 +395,9 @@
 
             document.getElementById('out-name').innerText = "Happy Birthday, " + cardData.n + "! 🎂";
             
-            // Audio setup
             audio.src = cardData.a;
             audio.play().catch(e => console.log(e));
 
-            // Initial photo
             const photoEl = document.getElementById('out-photo');
             photoEl.src = (cardData.p && cardData.p.length > 0) ? cardData.p[0] : "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600";
 
@@ -466,7 +443,6 @@
                 textEl.innerText = cardData.w[curIdx];
                 btn.innerText = "Next Surprise ✨";
 
-                // Change photo with each wish click
                 if (cardData.p && cardData.p.length > 0) {
                     const nextPhotoIdx = (curIdx + 1) % cardData.p.length;
                     photoEl.style.opacity = 0;
