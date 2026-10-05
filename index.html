@@ -274,7 +274,7 @@
             <textarea id="in-wishes" rows="4"></textarea>
         </div>
 
-        <button class="btn" id="gen-btn" onclick="saveToCloudAndGenerateCleanQR()">Generate QR Scanner 🚀</button>
+        <button class="btn" id="gen-btn" onclick="saveDirectAndMakeQR()">Generate QR Scanner 🚀</button>
 
         <div id="qr-result" style="display:none; margin-top: 15px;">
             <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this QR on ANY phone:</p>
@@ -325,8 +325,8 @@
         let cardPayload = null;
         let curIdx = 0;
 
-        // Permanent Free Cloud Storage (Firebase Realtime DB)
-        const FIREBASE_DB = "https://birthday-magic-surprise-default-rtdb.firebaseio.com/cards";
+        // KVdb Public Key-Value Storage (Direct CORS Allowed & Free)
+        const KV_BUCKET = "kvdb.io/MNhD9P2z8eQjT1w5R7s3kL";
 
         function previewTheme(themeName) {
             document.body.className = themeName;
@@ -398,7 +398,7 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
 
-            // Scanner Detect: Fetch Short ID from Cloud
+            // Scan Detect
             const urlParams = new URLSearchParams(window.location.search);
             const cardId = urlParams.get('id');
 
@@ -407,18 +407,18 @@
                 document.getElementById('entry-modal').style.display = 'flex';
 
                 try {
-                    const res = await fetch(`${FIREBASE_DB}/${cardId}.json`);
+                    const res = await fetch(`https://${KV_BUCKET}/${cardId}`);
                     cardPayload = await res.json();
                     if (cardPayload && cardPayload.theme) {
                         document.body.className = cardPayload.theme;
                     }
                 } catch(e) {
-                    console.log("Fetch error");
+                    console.log("Fetch error, checking fallback");
                 }
             }
         };
 
-        async function saveToCloudAndGenerateCleanQR() {
+        async function saveDirectAndMakeQR() {
             const name = document.getElementById('in-name').value.trim() || "Special Friend";
             const date = document.getElementById('in-date').value || "";
             const theme = document.getElementById('in-theme').value;
@@ -441,28 +441,25 @@
             btn.innerText = "Syncing & Generating... ⏳";
             btn.disabled = true;
 
-            // Generate tiny 6-digit random ID
-            const shortId = Math.random().toString(36).substring(2, 8);
+            const shortId = "bd_" + Math.random().toString(36).substring(2, 8);
 
             try {
-                // Save to cloud in 0.5s
-                await fetch(`${FIREBASE_DB}/${shortId}.json`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                await fetch(`https://${KV_BUCKET}/${shortId}`, {
+                    method: 'POST',
                     body: JSON.stringify(cardPayload)
                 });
-            } catch(e) {}
+            } catch(e) {
+                console.log(e);
+            }
 
             btn.innerText = "Generate QR Scanner 🚀";
             btn.disabled = false;
 
-            // Ultra short link (Under 60 chars) - 100% instant camera detection!
-            const shortTargetUrl = window.location.origin + window.location.pathname + '?id=' + shortId;
+            const targetUrl = window.location.origin + window.location.pathname + '?id=' + shortId;
 
-            // Render Crisp QR Code
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById('qrcode'), {
-                text: shortTargetUrl,
+                text: targetUrl,
                 width: 175,
                 height: 175,
                 colorDark: "#000814",
@@ -470,7 +467,7 @@
                 correctLevel: QRCode.CorrectLevel.M
             });
 
-            window.testCardUrl = shortTargetUrl;
+            window.testCardUrl = targetUrl;
             document.getElementById('qr-result').style.display = "block";
         }
 
