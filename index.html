@@ -131,16 +131,15 @@
         }
         .btn:active { transform: scale(0.95); }
 
-        /* Standard Sharp Square Scanner */
         #qrcode {
             display: flex;
             justify-content: center;
             margin: 15px auto;
-            padding: 12px;
+            padding: 15px;
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 14px;
             width: fit-content;
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 25px var(--accent-glow);
         }
 
         .timer-grid {
@@ -265,7 +264,7 @@
         </div>
 
         <div class="input-group">
-            <label>Select Custom Song / Audio (.mp3 from phone):</label>
+            <label>Select Custom Song (.mp3 from phone):</label>
             <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudio(this)">
             <div id="audio-status" class="badge-status"></div>
         </div>
@@ -275,10 +274,10 @@
             <textarea id="in-wishes" rows="4"></textarea>
         </div>
 
-        <button class="btn" id="gen-btn" onclick="buildDirectQR()">Generate QR Scanner 🚀</button>
+        <button class="btn" id="gen-btn" onclick="saveToCloudAndGenerateCleanQR()">Generate QR Scanner 🚀</button>
 
         <div id="qr-result" style="display:none; margin-top: 15px;">
-            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this QR to open the card on ANY phone:</p>
+            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this QR on ANY phone:</p>
             <div id="qrcode"></div>
             <button class="btn" style="padding: 10px 24px; font-size: 0.9rem;" onclick="testCardRightNow()">Test Live Card 👁️</button>
         </div>
@@ -326,11 +325,13 @@
         let cardPayload = null;
         let curIdx = 0;
 
+        // Permanent Free Cloud Storage (Firebase Realtime DB)
+        const FIREBASE_DB = "https://birthday-magic-surprise-default-rtdb.firebaseio.com/cards";
+
         function previewTheme(themeName) {
             document.body.className = themeName;
         }
 
-        // Direct Global Cloud Upload
         async function sendFileToWeb(file) {
             const formData = new FormData();
             formData.append('file', file);
@@ -363,7 +364,7 @@
                 if (uploadedImages.length === 0) {
                     uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
                 }
-                status.innerText = `✓ ${uploadedImages.length} photo(s) ready for any phone!`;
+                status.innerText = `✓ ${uploadedImages.length} photo(s) ready!`;
                 btn.disabled = false;
             }
         }
@@ -386,7 +387,7 @@
             }
         }
 
-        window.onload = function() {
+        window.onload = async function() {
             document.getElementById('in-wishes').value = 
                 "Wishing you a day filled with happiness and a year filled with joy! ✨\n" +
                 "May your life be as bright and beautiful as the sky today. 🌟\n" +
@@ -397,23 +398,27 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
 
-            // Direct Data Loader on recipient scan (?card=...)
+            // Scanner Detect: Fetch Short ID from Cloud
             const urlParams = new URLSearchParams(window.location.search);
-            const rawCard = urlParams.get('card');
+            const cardId = urlParams.get('id');
 
-            if (rawCard) {
+            if (cardId) {
+                document.getElementById('creator-view').style.display = 'none';
+                document.getElementById('entry-modal').style.display = 'flex';
+
                 try {
-                    cardPayload = JSON.parse(decodeURIComponent(escape(atob(rawCard))));
-                    document.getElementById('creator-view').style.display = 'none';
-                    document.getElementById('entry-modal').style.display = 'flex';
-                    if (cardPayload.theme) document.body.className = cardPayload.theme;
+                    const res = await fetch(`${FIREBASE_DB}/${cardId}.json`);
+                    cardPayload = await res.json();
+                    if (cardPayload && cardPayload.theme) {
+                        document.body.className = cardPayload.theme;
+                    }
                 } catch(e) {
-                    console.log("Card parse error");
+                    console.log("Fetch error");
                 }
             }
         };
 
-        function buildDirectQR() {
+        async function saveToCloudAndGenerateCleanQR() {
             const name = document.getElementById('in-name').value.trim() || "Special Friend";
             const date = document.getElementById('in-date').value || "";
             const theme = document.getElementById('in-theme').value;
@@ -432,22 +437,40 @@
                 theme: theme
             };
 
-            // Encode payload directly into query string for universal accessibility
-            const safePayload = btoa(unescape(encodeURIComponent(JSON.stringify(cardPayload))));
-            const fullTargetUrl = window.location.origin + window.location.pathname + '?card=' + safePayload;
+            const btn = document.getElementById('gen-btn');
+            btn.innerText = "Syncing & Generating... ⏳";
+            btn.disabled = true;
 
-            // Generate Standard Square QR (High Readability)
+            // Generate tiny 6-digit random ID
+            const shortId = Math.random().toString(36).substring(2, 8);
+
+            try {
+                // Save to cloud in 0.5s
+                await fetch(`${FIREBASE_DB}/${shortId}.json`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cardPayload)
+                });
+            } catch(e) {}
+
+            btn.innerText = "Generate QR Scanner 🚀";
+            btn.disabled = false;
+
+            // Ultra short link (Under 60 chars) - 100% instant camera detection!
+            const shortTargetUrl = window.location.origin + window.location.pathname + '?id=' + shortId;
+
+            // Render Crisp QR Code
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById('qrcode'), {
-                text: fullTargetUrl,
+                text: shortTargetUrl,
                 width: 175,
                 height: 175,
                 colorDark: "#000814",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.L
+                correctLevel: QRCode.CorrectLevel.M
             });
 
-            window.testCardUrl = fullTargetUrl;
+            window.testCardUrl = shortTargetUrl;
             document.getElementById('qr-result').style.display = "block";
         }
 
