@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Magic ✨</title>
     
-    <!-- Fonts, Confetti, QR Engine & LZ-String Compressor -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
 
     <style>
         * { box-sizing: border-box; transition: background 0.4s ease, color 0.4s ease; }
         
-        /* 4 Aesthetic Dynamic Themes */
+        /* 4 Aesthetic UI Dynamic Themes */
         body.theme-skyblue {
             background: radial-gradient(circle at center, #0d1b2a 0%, #000814 100%);
             --accent: #00b0ff;
@@ -134,44 +132,32 @@
         }
         .btn:active { transform: scale(0.95); }
 
-        /* Unique Stylized QR Frame with Heart Motif */
-        .qr-frame-wrapper {
+        /* REAL HEART SHAPE SCANNER CONTAINER */
+        .heart-qr-wrapper {
             position: relative;
-            margin: 20px auto;
             width: 220px;
-            height: 220px;
+            height: 200px;
+            margin: 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
+            filter: drop-shadow(0 0 15px var(--accent));
         }
-        .qr-heart-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            filter: drop-shadow(0 0 12px var(--accent));
-        }
-        #qrcode {
-            position: relative;
-            z-index: 2;
-            padding: 10px;
+
+        .heart-qr-shape {
+            width: 195px;
+            height: 185px;
             background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 0 18px rgba(0,0,0,0.4);
+            clip-path: path("M 97.5,180 C 15,110 0,60 0,35 C 0,12 25,0 55,0 C 75,0 90,15 97.5,30 C 105,15 120,0 140,0 C 170,0 195,12 195,35 C 195,60 180,110 97.5,180 Z");
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            overflow: hidden;
         }
-        .qr-badge-icon {
-            position: absolute;
-            z-index: 3;
-            top: -12px;
-            right: -10px;
-            font-size: 1.8rem;
-            animation: pulseIcon 1.5s infinite alternate;
-        }
-        @keyframes pulseIcon {
-            0% { transform: scale(0.9); }
-            100% { transform: scale(1.15) rotate(8deg); }
+
+        #qrcode {
+            margin-top: 12px;
         }
 
         /* Countdown */
@@ -263,7 +249,7 @@
 
     <div id="entry-modal" style="display: none;">
         <h1 style="font-size: 2.7rem; margin-bottom: 10px;">Surprise Waiting For You ✨</h1>
-        <p style="color: var(--text-glow); font-size: 1rem; margin-bottom: 25px;">Turn on volume for music 🎶</p>
+        <p style="color: var(--text-glow); font-size: 1rem; margin-bottom: 25px;">Turn on volume for background music 🎶</p>
         <button class="btn" style="font-size: 1.2rem; padding: 14px 40px;" onclick="unlockAndPlay()">Open Surprise 🎁</button>
     </div>
 
@@ -293,8 +279,14 @@
 
         <div class="input-group">
             <label>Select Multiple Photos (Gallery se 1 ya zyada):</label>
-            <input type="file" id="in-photos" accept="image/*" multiple onchange="processMultipleImages(this)">
+            <input type="file" id="in-photos" accept="image/*" multiple onchange="uploadPhotosCloud(this)">
             <div id="photo-status" class="badge-status"></div>
+        </div>
+
+        <div class="input-group">
+            <label>Select Custom Song / Audio (.mp3 from phone):</label>
+            <input type="file" id="in-audio" accept="audio/*" onchange="uploadAudioCloud(this)">
+            <div id="audio-status" class="badge-status"></div>
         </div>
 
         <div class="input-group">
@@ -302,17 +294,16 @@
             <textarea id="in-wishes" rows="4"></textarea>
         </div>
 
-        <button class="btn" id="gen-btn" onclick="generateUniversalDirectQR()">Generate Heart Scanner 💖</button>
+        <button class="btn" id="gen-btn" onclick="generateHeartQR()">Generate Heart Scanner 💖</button>
 
         <div id="qr-result" style="display:none; margin-top: 15px;">
-            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this unique QR on ANY phone:</p>
+            <p style="color: var(--text-glow); font-size:0.85rem; margin-bottom: 5px;">Scan this Heart Scanner on ANY phone:</p>
             
-            <div class="qr-frame-wrapper">
-                <svg class="qr-heart-bg" viewBox="0 0 100 100">
-                    <path d="M50 88 S15 65 15 38 A20 20 0 0 1 50 25 A20 20 0 0 1 85 38 C85 65 50 88 50 88 Z" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="6,3"/>
-                </svg>
-                <span class="qr-badge-icon">💖</span>
-                <div id="qrcode"></div>
+            <!-- Real Heart Shaped Scanner -->
+            <div class="heart-qr-wrapper">
+                <div class="heart-qr-shape">
+                    <div id="qrcode"></div>
+                </div>
             </div>
             
             <button class="btn" style="padding: 10px 24px; font-size: 0.9rem;" onclick="testCardRightNow()">Test Live Card 👁️</button>
@@ -342,7 +333,7 @@
     </div>
 
     <script>
-        // Floating Background Stars
+        // Floating Stars
         const bg = document.getElementById('bg-elements');
         const icons = ['✨', '⭐', '❄️', '💙', '💜'];
         for (let i = 0; i < 22; i++) {
@@ -357,7 +348,8 @@
         }
 
         const audio = document.getElementById('bg-audio');
-        let processedImages = [];
+        let uploadedImages = [];
+        let uploadedAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
         let cardPayload = null;
         let curIdx = 0;
 
@@ -365,48 +357,58 @@
             document.body.className = themeName;
         }
 
-        // Auto compress canvas to tiny micro-thumbnails so QR stays scan-friendly
-        function compressImage(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.createElement('canvas');
-                        const maxDim = 180; // Ultra compact for QR data integrity
-                        let w = img.width, h = img.height;
-                        if (w > h) {
-                            if (w > maxDim) { h *= maxDim / w; w = maxDim; }
-                        } else {
-                            if (h > maxDim) { w *= maxDim / h; h = maxDim; }
-                        }
-                        canvas.width = w;
-                        canvas.height = h;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, w, h);
-                        resolve(canvas.toDataURL('image/jpeg', 0.45));
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+        // Direct Cloud File Host Handler (Works across all devices)
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const res = await fetch('https://tmpfiles.org/api/v1/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const d = await res.json();
+                if (d && d.data && d.data.url) {
+                    return d.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+                }
+            } catch(e) {}
+            return null;
         }
 
-        async function processMultipleImages(input) {
+        async function uploadPhotosCloud(input) {
             if (input.files && input.files.length > 0) {
                 const status = document.getElementById('photo-status');
                 const btn = document.getElementById('gen-btn');
-                status.innerText = `Compressing ${input.files.length} photo(s)... ⏳`;
+                status.innerText = `Syncing ${input.files.length} photo(s)... ⏳`;
                 btn.disabled = true;
 
-                processedImages = [];
-                const files = Array.from(input.files).slice(0, 4); // Max 4 photos to keep QR crystal clear
-                for (let f of files) {
-                    const comp = await compressImage(f);
-                    processedImages.push(comp);
+                uploadedImages = [];
+                for (let i = 0; i < input.files.length; i++) {
+                    const u = await uploadFile(input.files[i]);
+                    if (u) uploadedImages.push(u);
                 }
 
-                status.innerText = `✓ ${processedImages.length} photo(s) packed into scanner!`;
+                if (uploadedImages.length === 0) {
+                    uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
+                }
+                status.innerText = `✓ ${uploadedImages.length} photo(s) synced for scanner!`;
+                btn.disabled = false;
+            }
+        }
+
+        async function uploadAudioCloud(input) {
+            if (input.files && input.files[0]) {
+                const status = document.getElementById('audio-status');
+                const btn = document.getElementById('gen-btn');
+                status.innerText = "Syncing song... ⏳";
+                btn.disabled = true;
+
+                const au = await uploadFile(input.files[0]);
+                if (au) {
+                    uploadedAudioUrl = au;
+                    status.innerText = "✓ Custom song ready!";
+                } else {
+                    status.innerText = "✓ Default celebration song set!";
+                }
                 btn.disabled = false;
             }
         }
@@ -422,69 +424,62 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
 
-            // Direct unpack from URL hash (No database needed!)
-            const hash = window.location.hash.substring(1);
-            if (hash && hash.startsWith('wish=')) {
+            // Scanner Link Reader (?data=...)
+            const urlParams = new URLSearchParams(window.location.search);
+            const rawData = urlParams.get('data');
+
+            if (rawData) {
                 try {
-                    const rawCompressed = hash.replace('wish=', '');
-                    const decompressed = LZString.decompressFromEncodedURIComponent(rawCompressed);
-                    if (decompressed) {
-                        cardPayload = JSON.parse(decompressed);
-                        document.getElementById('creator-view').style.display = 'none';
-                        document.getElementById('entry-modal').style.display = 'flex';
-                        if (cardPayload.theme) document.body.className = cardPayload.theme;
-                    }
+                    cardPayload = JSON.parse(decodeURIComponent(escape(atob(rawData))));
+                    document.getElementById('creator-view').style.display = 'none';
+                    document.getElementById('entry-modal').style.display = 'flex';
+                    if (cardPayload.theme) document.body.className = cardPayload.theme;
                 } catch(e) {
-                    console.log("Decompress error", e);
+                    console.log("Normal view");
                 }
             }
         };
 
-        // Generates 100% self-contained QR Code without any cloud dependency
-        function generateUniversalDirectQR() {
+        function generateHeartQR() {
             const name = document.getElementById('in-name').value.trim() || "Special Friend";
             const date = document.getElementById('in-date').value || "";
             const theme = document.getElementById('in-theme').value;
             const rawWishes = document.getElementById('in-wishes').value.split('\n').filter(w => w.trim() !== "");
 
-            if (processedImages.length === 0) {
-                processedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
+            if (uploadedImages.length === 0) {
+                uploadedImages = ["https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600"];
             }
 
             cardPayload = {
                 n: name,
                 d: date,
-                p: processedImages,
+                p: uploadedImages,
+                a: uploadedAudioUrl,
                 w: rawWishes,
                 theme: theme
             };
 
-            // Ultra compress entire JSON object into URI string
-            const jsonString = JSON.stringify(cardPayload);
-            const compressed = LZString.compressToEncodedURIComponent(jsonString);
+            // Lightweight base64 query param (Clean & Direct)
+            const cleanHash = btoa(unescape(encodeURIComponent(JSON.stringify(cardPayload))));
+            const targetUrl = window.location.origin + window.location.pathname + '?data=' + cleanHash;
 
-            // Clean link carrying all data directly in the hash
-            const finalUrl = window.location.origin + window.location.pathname + '#wish=' + compressed;
-
-            // Render Heart QR
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById('qrcode'), {
-                text: finalUrl,
-                width: 160,
-                height: 160,
+                text: targetUrl,
+                width: 150,
+                height: 150,
                 colorDark: "#000814",
                 colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.L // Low error correction = biggest data capacity
+                correctLevel: QRCode.CorrectLevel.M
             });
 
-            window.testCardUrl = finalUrl;
+            window.testCardUrl = targetUrl;
             document.getElementById('qr-result').style.display = "block";
         }
 
         function testCardRightNow() {
             if (window.testCardUrl) {
                 window.location.href = window.testCardUrl;
-                window.location.reload();
             }
         }
 
@@ -497,6 +492,10 @@
             if (cardPayload.theme) document.body.className = cardPayload.theme;
             document.getElementById('out-name').innerText = "Happy Birthday, " + cardPayload.n + "! 🎂";
             
+            // Set Custom Song
+            if (cardPayload.a) {
+                audio.src = cardPayload.a;
+            }
             audio.play().catch(e => console.log(e));
 
             const photoEl = document.getElementById('out-photo');
