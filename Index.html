@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #0d1b2a 0%, #000814 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-elements {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .element {
+            position: absolute;
+            color: rgba(0, 191, 255, 0.35);
+            animation: floatBG 8s infinite ease-in-out;
+        }
+        @keyframes floatBG {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 25px 20px;
+            border-radius: 28px;
+            box-shadow: 0 0 35px rgba(0, 183, 255, 0.25);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #80d8ff;
+            margin-top: 0;
+            text-shadow: 0 0 12px rgba(128, 216, 255, 0.7);
+        }
+
+        .input-group { text-align: left; margin-bottom: 12px; }
+        .input-group label { font-size: 0.82rem; color: #81d4fa; display: block; margin-bottom: 5px; font-weight: 600; }
+        input, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #00b0ff;
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            outline: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        input[type="file"] {
+            padding: 8px;
+            background: rgba(0, 176, 255, 0.12);
+            cursor: pointer;
+            border: 1px dashed #00b0ff;
+        }
+
+        .badge-status {
+            font-size: 0.82rem;
+            color: #76ff03;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00b0ff, #0081cb);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 176, 255, 0.4);
+            margin-top: 12px;
+            transition: 0.3s;
+        }
+        .btn:active { transform: scale(0.95); }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 15px auto;
+            padding: 12px;
+            background: #fff;
+            border-radius: 16px;
+            width: fit-content;
+            box-shadow: 0 0 20px rgba(0, 183, 255, 0.4);
+        }
+
+        /* Countdown */
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .timer-box {
+            background: rgba(0, 176, 255, 0.18);
+            border: 1px solid #00b0ff;
+            border-radius: 12px;
+            padding: 8px 6px;
+            min-width: 58px;
+        }
+        .timer-box span { font-size: 1.3rem; font-weight: 700; color: #fff; display: block; }
+        .timer-box small { font-size: 0.65rem; color: #81d4fa; text-transform: uppercase; }
+
+        /* Polaroid Photo Frame */
+        .photo-card {
+            background: #ffffff;
+            padding: 8px 8px 24px 8px;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            margin: 15px auto;
+            max-width: 240px;
+            transform: rotate(-2deg);
+        }
+        .photo-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        .cursive-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.7rem;
+            min-height: 85px;
+            line-height: 1.35;
+            color: #e0f7fa;
+            margin: 15px 0;
+        }
+
+        /* Floating Neon Blessing (Strictly No Emojis) */
+        .blessing-neon {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.3rem;
+            color: #ffffff;
+            display: none;
+            text-shadow: 
+                0 0 7px #fff, 
+                0 0 15px #00b0ff, 
+                0 0 35px #00b0ff, 
+                0 0 70px #00b0ff,
+                0 0 90px #0081cb;
+            animation: floatBlessing 2.5s infinite ease-in-out;
+            margin: 25px 0 15px 0;
+        }
+        @keyframes floatBlessing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Entry Screen */
+        #entry-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 8, 20, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-elements" id="bg-elements"></div>
+
+    <!-- Audio Player -->
+    <audio id="bg-audio" loop preload="auto">
+        <source id="audio-source" src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Tap To Open & Play Music Barrier -->
+    <div id="entry-modal" style="display: none;">
+        <h1 style="font-size: 2.6rem; margin-bottom: 10px;">Surprise Waiting For You ✨</h1>
+        <p style="color: #81d4fa; font-size: 1rem; margin-bottom: 25px;">Turn on volume for background music 🎶</p>
+        <button class="btn" style="font-size: 1.2rem; padding: 14px 40px;" onclick="unlockAndPlay()">Open Surprise 🎁</button>
+    </div>
+
+    <!-- 1. CREATOR PANEL -->
+    <div id="creator-view" class="box">
+        <h2>Wish System Creator ✨</h2>
+        
+        <div class="input-group">
+            <label>Recipient Name:</label>
+            <input type="text" id="in-name" placeholder="Friend ka naam">
+        </div>
+
+        <div class="input-group">
+            <label>Birthday Date (Countdown ke liye):</label>
+            <input type="date" id="in-date">
+        </div>
+
+        <div class="input-group">
+            <label>Select Photos (Gallery se 1 ya multiple photos choose karo):</label>
+            <input type="file" id="in-photos" accept="image/*" multiple onchange="loadPhotos(this)">
+            <div id="photo-status" class="badge-status"></div>
+        </div>
+
+        <div class="input-group">
+            <label>Select Custom Audio / Song (.mp3 from phone):</label>
+            <input type="file" id="in-audio" accept="audio/*" onchange="loadAudio(this)">
+            <div id="audio-status" class="badge-status"></div>
+        </div>
+
+        <div class="input-group">
+            <label>English Wishes (Ek line me ek wish):</label>
+            <textarea id="in-wishes" rows="4"></textarea>
+        </div>
+
+        <button class="btn" onclick="startPreviewDirectly()">Test Preview Now 👁️</button>
+        <button class="btn" style="background: linear-gradient(135deg, #0288d1, #01579b);" onclick="makeQR()">Generate QR Scanner 🚀</button>
+
+        <div id="qr-result" style="display:none; margin-top: 18px;">
+            <p style="color:#81d4fa; font-size:0.85rem; margin-bottom: 5px;">Scan this QR to open the card:</p>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <!-- 2. RECIPIENT SURPRISE VIEW -->
+    <div id="card-view" class="box" style="display: none;">
+        <h1 id="out-name">Happy Birthday! 🎂</h1>
+
+        <!-- Countdown Timer -->
+        <div id="countdown" class="timer-grid">
+            <div class="timer-box"><span id="days">00</span><small>Days</small></div>
+            <div class="timer-box"><span id="hours">00</span><small>Hours</small></div>
+            <div class="timer-box"><span id="minutes">00</span><small>Mins</small></div>
+            <div class="timer-box"><span id="seconds">00</span><small>Secs</small></div>
+        </div>
+
+        <!-- Photo Frame (Changes on Click) -->
+        <div class="photo-card">
+            <img id="out-photo" src="" alt="Birthday Special">
+        </div>
+
+        <div id="wish-display" class="cursive-text">A special surprise waiting for you...</div>
+        
+        <!-- Strictly No Emojis Neon Blessing -->
+        <div id="blessing-box" class="blessing-neon">Mahadev Bless You</div>
+
+        <button id="action-btn" class="btn" onclick="stepWish()">Next Surprise ✨</button>
+    </div>
+
+    <script>
+        // Floating Stars
+        const bg = document.getElementById('bg-elements');
+        const icons = ['✨', '⭐', '❄️', '💙'];
+        for (let i = 0; i < 22; i++) {
+            let el = document.createElement('div');
+            el.className = 'element';
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.top = Math.random() * 100 + 'vh';
+            el.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            el.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            bg.appendChild(el);
+        }
+
+        const audio = document.getElementById('bg-audio');
+        let selectedPhotos = [];
+        let defaultPhoto = "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600";
+        let selectedAudioUrl = "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3?filename=happy-birthday-to-you-piano-124037.mp3";
+        let wishesData = [];
+        let curIdx = 0;
+
+        // Rock Solid Photo Loader with FileReader (Works on all Android WebViews)
+        function loadPhotos(input) {
+            if (input.files && input.files.length > 0) {
+                selectedPhotos = [];
+                const files = Array.from(input.files);
+                const status = document.getElementById('photo-status');
+                status.innerText = "Loading photos... ⏳";
+
+                let loadedCount = 0;
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        selectedPhotos.push(e.target.result);
+                        loadedCount++;
+                        if (loadedCount === files.length) {
+                            status.innerText = `✓ ${selectedPhotos.length} photo(s) selected successfully!`;
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        // Audio Loader
+        function loadAudio(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedAudioUrl = e.target.result;
+                    document.getElementById('audio-status').innerText = `✓ Song ready: ${input.files[0].name.substring(0, 18)}...`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById('in-wishes').value = 
+                "Wishing you a day filled with happiness and a year filled with joy! ✨\n" +
+                "May your life be as bright and beautiful as the sky today. 🌟\n" +
+                "Wishing you a sky full of stars and a life full of dreams. 🥂\n" +
+                "Keep shining and spreading your light wherever you go. 🎈";
+
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('in-date').value = tomorrow.toISOString().split('T')[0];
+        };
+
+        function startPreviewDirectly() {
+            const name = document.getElementById('in-name').value.trim() || "Special Friend";
+            const date = document.getElementById('in-date').value;
+            const rawWishes = document.getElementById('in-wishes').value.split('\n').filter(w => w.trim() !== "");
+
+            document.getElementById('creator-view').style.display = "none";
+            document.getElementById('entry-modal').style.display = "flex";
+
+            window.activeCardData = {
+                name: name,
+                date: date,
+                wishes: rawWishes
+            };
+        }
+
+        function unlockAndPlay() {
+            document.getElementById('entry-modal').style.display = "none";
+            document.getElementById('card-view').style.display = "block";
+
+            const data = window.activeCardData;
+            document.getElementById('out-name').innerText = "Happy Birthday, " + data.name + "! 🎂";
+            wishesData = data.wishes;
+
+            // Play Music
+            audio.src = selectedAudioUrl;
+            audio.play().catch(e => console.log(e));
+
+            // Set Initial Photo
+            const photoEl = document.getElementById('out-photo');
+            photoEl.src = selectedPhotos.length > 0 ? selectedPhotos[0] : defaultPhoto;
+
+            initCountdown(data.date);
+        }
+
+        function initCountdown(dateStr) {
+            if (!dateStr) {
+                document.getElementById('countdown').style.display = "none";
+                return;
+            }
+            
+            const targetTime = new Date(dateStr + "T00:00:00").getTime();
+
+            function update() {
+                const now = new Date().getTime();
+                const diff = targetTime - now;
+
+                if (diff <= 0) {
+                    document.getElementById('countdown').innerHTML = "<h3 style='color:#80d8ff;margin:5px;'>It's Celebration Day! 🥳</h3>";
+                    return;
+                }
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(d).padStart(2, '0');
+                document.getElementById('hours').innerText = String(h).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        function makeQR() {
+            const name = document.getElementById('in-name').value.trim() || "Special Friend";
+            const date = document.getElementById('in-date').value || "";
+            const rawWishes = document.getElementById('in-wishes').value.split('\n').filter(w => w.trim() !== "");
+
+            const payload = { n: name, d: date, w: rawWishes };
+            const hashStr = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+            const fullLink = window.location.href.split('#')[0] + "#" + hashStr;
+
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById('qrcode'), {
+                text: fullLink,
+                width: 175,
+                height: 175,
+                colorDark: "#000000",
+                colorLight: "#ffffff"
+            });
+            document.getElementById('qr-result').style.display = "block";
+        }
+
+        // Next Surprise: Updates Wish + Changes Photo + Blasts Confetti
+        function stepWish() {
+            confetti({
+                particleCount: 85,
+                spread: 65,
+                origin: { y: 0.65 },
+                colors: ['#00b0ff', '#ffffff', '#ffd700', '#81d4fa']
+            });
+
+            const textEl = document.getElementById('wish-display');
+            const btn = document.getElementById('action-btn');
+            const blessing = document.getElementById('blessing-box');
+            const photoEl = document.getElementById('out-photo');
+
+            if (curIdx < wishesData.length) {
+                // Change Text
+                textEl.innerText = wishesData[curIdx];
+                btn.innerText = "Next Surprise ✨";
+
+                // Change Photo on Next Click smoothly
+                if (selectedPhotos.length > 0) {
+                    const nextPhotoIdx = (curIdx + 1) % selectedPhotos.length;
+                    photoEl.style.opacity = 0;
+                    photoEl.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        photoEl.src = selectedPhotos[nextPhotoIdx];
+                        photoEl.style.opacity = 1;
+                        photoEl.style.transform = 'scale(1)';
+                    }, 200);
+                }
+
+                curIdx++;
+            } else {
+                textEl.style.display = "none";
+                btn.style.display = "none";
+                blessing.style.display = "block";
+
+                // Final celebration blast
+                var duration = 4 * 1000;
+                var end = Date.now() + duration;
+                (function frame() {
+                    confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#00b0ff', '#ffffff'] });
+                    confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#00b0ff', '#ffd700'] });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
+            }
+        }
+    </script>
+</body>
+              </html>
+              
