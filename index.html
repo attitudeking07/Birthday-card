@@ -62,7 +62,6 @@
             overflow-x: hidden;
         }
 
-        /* Floating Stars */
         .bg-elements {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -108,7 +107,7 @@
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
-            padding: 26px 20px;
+            padding: 24px 18px;
             border-radius: 28px;
             box-shadow: 0 0 35px var(--accent-glow);
             width: 100%;
@@ -123,26 +122,30 @@
         h1 {
             font-family: 'Dancing Script', cursive;
             color: var(--text-glow);
-            margin: 5px 0 15px 0;
+            margin: 5px 0 10px 0;
             font-size: 2.3rem;
             text-shadow: 0 0 15px var(--accent);
         }
 
+        /* HD Photo Polaroid Frame - Zero Crop */
         .photo-card {
             background: #ffffff;
-            padding: 8px 8px 24px 8px;
-            border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+            padding: 10px 10px 22px 10px;
+            border-radius: 14px;
+            box-shadow: 0 14px 35px rgba(0,0,0,0.7);
             margin: 15px auto;
-            max-width: 250px;
-            transform: rotate(-2deg);
+            width: 100%;
+            max-width: 320px;
+            transform: rotate(-1.5deg);
         }
         .photo-card img {
             width: 100%;
-            height: 230px;
-            object-fit: cover;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain; /* Pura photo bina kate show hoga */
             border-radius: 8px;
             display: block;
+            image-rendering: -webkit-optimize-contrast;
             transition: transform 0.4s ease, opacity 0.4s ease;
         }
 
@@ -152,7 +155,7 @@
             min-height: 90px;
             line-height: 1.35;
             color: #ffffff;
-            margin: 18px 0;
+            margin: 16px 0;
             text-shadow: 0 0 10px var(--accent-glow);
         }
 
@@ -189,7 +192,6 @@
             50% { transform: translateY(-12px); }
         }
 
-        /* Sound Enable Entry Gate */
         #entry-modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -206,7 +208,7 @@
 </head>
 <body class="theme-skyblue">
 
-    <!-- Theme Switcher Dots on Top -->
+    <!-- Theme Switcher Ribbon -->
     <div class="theme-selector">
         <div class="theme-dot" style="background:#00b0ff;" onclick="setTheme('theme-skyblue')" title="Sky Blue"></div>
         <div class="theme-dot" style="background:#b5179e;" onclick="setTheme('theme-purple')" title="Midnight Purple"></div>
@@ -230,27 +232,25 @@
         <button class="btn" style="font-size: 1.2rem; padding: 14px 42px;" onclick="unlockSurprise()">Open Surprise 🎁</button>
     </div>
 
-    <!-- The Birthday Card View -->
+    <!-- Birthday Card View -->
     <div class="box" id="card-box" style="display: none;">
         <h1>Happy Birthday! 🎂</h1>
-        <p style="font-size: 0.95rem; color: var(--text-glow); margin-top: -10px; font-weight:600;">Priyanshu & Priyal ✨</p>
+        <p style="font-size: 0.95rem; color: var(--text-glow); margin-top: -8px; font-weight:600;">Priyanshu & Priyal ✨</p>
 
         <!-- Polaroid Photo -->
         <div class="photo-card">
-            <!-- Directly linked to the ImgBB uploaded image -->
-            <img id="out-photo" src="https://i.ibb.co/PzrLbCRg/photo.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600'" alt="Priyanshu & Priyal">
+            <img id="out-photo" src="https://i.ibb.co/PzrLbCRg/photo.jpg" onerror="fallbackHD(this)" alt="Priyanshu & Priyal">
         </div>
 
         <div id="wish-display" class="cursive-text">A timeless melody of love, laughter, and beautiful memories...</div>
         
-        <!-- Strictly No Emojis Neon Blessing -->
         <div id="blessing-box" class="blessing-neon">Mahadev Bless You</div>
 
         <button id="action-btn" class="btn" onclick="nextSurprise()">Next Surprise ✨</button>
     </div>
 
     <script>
-        // Floating Stars & Hearts
+        // Floating Stars
         const bg = document.getElementById('bg-elements');
         const icons = ['✨', '⭐', '❄️', '💙', '💜', '🌸'];
         for (let i = 0; i < 24; i++) {
@@ -267,13 +267,17 @@
         const audio = document.getElementById('bg-audio');
         let curIdx = 0;
 
-        // Custom Curated Romantic English Wishes for Priyanshu & Priyal
         const wishes = [
             "May your bond continue to bloom with unconditional love, warmth, and quiet moments of magic. ✨",
             "Wishing Priyanshu & Priyal a lifetime of shared dreams, laughter that never fades, and endless adventures together. 🌟",
             "May today mark the beginning of a chapter filled with peace, boundless joy, and gentle grace. 🥂",
             "Two souls woven with love, shining brighter than the stars in the night sky. Happy Birthday! 🎈"
         ];
+
+        function fallbackHD(img) {
+            // ImgBB fallback direct resolver
+            img.src = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1080&q=90";
+        }
 
         function setTheme(themeName) {
             document.body.className = themeName;
@@ -313,7 +317,6 @@
                 btn.style.display = "none";
                 blessing.style.display = "block";
 
-                // Grand Final Confetti Blast
                 var duration = 4 * 1000;
                 var end = Date.now() + duration;
                 (function frame() {
