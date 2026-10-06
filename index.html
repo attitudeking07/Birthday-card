@@ -2,25 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sonu ✨</title>
     
-    <!-- Google Fonts & Canvas Confetti -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             font-family: 'Poppins', sans-serif;
             background: #0d0614;
             color: #ffffff;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .screen {
@@ -31,17 +27,17 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 45px 25px 35px 25px;
+            padding: 30px 20px 25px 20px;
             text-align: center;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
         .screen.active {
             display: flex;
             opacity: 1;
         }
 
-        /* Top Nav Bar (Exact like screenshots) */
+        /* Top Nav */
         .top-nav {
             width: 100%;
             display: flex;
@@ -49,27 +45,14 @@
             align-items: center;
             z-index: 100;
         }
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-        }
         .preview-badge {
             background: #e9a83b;
             color: #000;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            letter-spacing: 0.5px;
         }
 
         /* --- SCENE 1: CUPID ARROW --- */
@@ -77,26 +60,27 @@
             background: radial-gradient(circle at center, #ffd1dc 0%, #ffccd5 40%, #fbc4ab 100%);
             color: #c94b6e;
         }
-        .cupid-heart {
+        .heart-target {
             font-size: 5.5rem;
-            filter: drop-shadow(0 15px 30px rgba(255, 105, 180, 0.4));
+            filter: drop-shadow(0 15px 30px rgba(255, 105, 180, 0.45));
             animation: pulseHeart 1.8s infinite ease-in-out;
-            margin-top: 40px;
+            margin-top: 30px;
+            display: inline-block;
+            transition: transform 0.3s;
         }
         @keyframes pulseHeart {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.08); }
         }
-        .bow-wrapper {
+        .bow-container {
             position: relative;
             width: 120px;
             height: 120px;
             cursor: pointer;
             margin-bottom: 20px;
         }
-        .bow-svg { width: 100%; height: 100%; }
-        .arrow-strike {
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .arrow-up {
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* --- SCENE 2: FLASH GRID --- */
@@ -105,186 +89,184 @@
             background-image: 
                 linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-            background-size: 26px 26px;
+            background-size: 24px 24px;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
 
-        /* --- SCENE 3 & 4: TREE OF HEARTS --- */
+        /* --- SCENE 3: HEART TREE --- */
         #scene-3 {
             background: radial-gradient(circle at center, #ffe5ec 0%, #ffc2d1 60%, #ffb3c6 100%);
-            color: #b02a5b;
-            justify-content: space-between;
+            color: #800f2f;
         }
-        .tree-container {
+        .tree-box {
             position: relative;
-            width: 260px;
-            height: 320px;
+            width: 250px;
+            height: 280px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
+            margin-bottom: 15px;
         }
-        .tree-trunk {
-            width: 8px;
-            height: 230px;
-            background: #4a2828;
+        .tree-stem {
+            width: 6px;
+            height: 180px;
+            background: #5c3d2e;
             border-radius: 4px;
             position: relative;
         }
-        .tree-branches {
+        .tree-canopy {
             position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
+            top: 15px;
             width: 220px;
-            height: 160px;
+            height: 170px;
         }
-        .floating-blossom {
+        .tree-heart-leaf {
             position: absolute;
-            animation: popBlossom 0.6s ease forwards;
+            animation: growLeaf 0.5s ease forwards;
         }
-        @keyframes popBlossom {
-            0% { transform: scale(0) rotate(0deg); opacity: 0; }
-            80% { transform: scale(1.2) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        @keyframes growLeaf {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        /* --- SCENE 5: CAKE BAKING & CANDLE --- */
-        #scene-5 {
+        /* --- SCENE 4: CAKE BAKING --- */
+        #scene-4 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
         }
-        .cake-area {
+        .cake-wrapper {
             position: relative;
             width: 220px;
-            height: 180px;
+            height: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
             cursor: pointer;
+            margin-bottom: 30px;
         }
-        .cake-layer {
-            width: 170px;
-            height: 48px;
-            background: #ff758f;
-            border-radius: 8px 8px 12px 12px;
-            box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15);
+        .cake-base {
+            width: 180px;
+            height: 70px;
+            background: linear-gradient(to bottom, #ff8fa3 0%, #ff758f 50%, #e05780 100%);
+            border-radius: 10px 10px 14px 14px;
             position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
-        .cake-icing {
+        .cake-cream {
             position: absolute;
-            top: -10px; left: 0;
-            width: 100%; height: 20px;
+            top: -12px; left: 0;
+            width: 100%; height: 26px;
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 14px 14px 20px 20px;
             display: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
-        .candle {
+        .cake-candle {
             width: 8px;
-            height: 40px;
-            background: #ffffff;
+            height: 44px;
+            background: repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, #ff4d6d 6px, #ff4d6d 12px);
             border-radius: 4px;
             position: absolute;
-            top: -40px;
+            top: -42px;
             display: none;
         }
-        .flame {
+        .candle-flame {
             width: 14px;
             height: 22px;
-            background: #ffb703;
+            background: #ffd166;
             border-radius: 50% 50% 20% 20%;
             position: absolute;
             top: -20px; left: -3px;
-            box-shadow: 0 0 16px #fb8500, 0 0 30px #fb8500;
-            animation: flicker 0.6s infinite alternate;
+            box-shadow: 0 0 14px #ff9e00, 0 0 28px #ff9e00;
+            animation: flameFlicker 0.6s infinite alternate;
             display: none;
         }
-        @keyframes flicker {
+        @keyframes flameFlicker {
             0% { transform: scale(0.9) rotate(-2deg); }
-            100% { transform: scale(1.1) rotate(3deg); }
+            100% { transform: scale(1.1) rotate(2deg); }
         }
 
-        /* --- SCENE 6: BALLOON POPPING --- */
-        #scene-6 {
+        /* --- SCENE 5: BALLOONS (5 REASONS) --- */
+        #scene-5 {
             background: radial-gradient(circle at center, #2e1038 0%, #110416 100%);
+            padding-bottom: 20px;
         }
-        .balloons-holder {
+        .balloons-flex {
             display: flex;
             gap: 12px;
             justify-content: center;
             align-items: center;
-            min-height: 110px;
-            margin: 15px 0;
+            height: 80px;
+            margin: 8px 0;
         }
-        .balloon {
-            width: 48px;
-            height: 60px;
+        .balloon-item {
+            width: 44px;
+            height: 56px;
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
             cursor: pointer;
             position: relative;
-            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.3);
-            animation: floatUp 3s infinite ease-in-out alternate;
-            transition: transform 0.2s;
+            box-shadow: inset -3px -3px 8px rgba(0,0,0,0.3);
+            animation: floatBalloon 2.5s infinite ease-in-out alternate;
         }
-        .balloon::after {
+        .balloon-item::after {
             content: '';
             position: absolute;
             bottom: -8px; left: 50%;
             transform: translateX(-50%);
-            width: 2px; height: 16px;
-            background: rgba(255,255,255,0.4);
+            width: 1.5px; height: 14px;
+            background: rgba(255,255,255,0.45);
         }
-        @keyframes floatUp {
+        @keyframes floatBalloon {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-12px); }
-        }
-        .reasons-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-            max-width: 330px;
-            margin-bottom: 20px;
-        }
-        .reason-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 10px 14px;
-            text-align: left;
-            border: 1px solid rgba(255,255,255,0.15);
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.4s ease;
-            display: none;
-        }
-        .reason-card.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reason-tag {
-            font-size: 0.68rem;
-            padding: 2px 8px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.12);
-            color: #ffb703;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 3px;
-        }
-        .reason-card p {
-            font-size: 0.82rem;
-            color: #f1f1f1;
-            margin: 0;
+            100% { transform: translateY(-10px); }
         }
 
-        /* --- SCENE 7: GOLDEN ENVELOPE --- */
-        #scene-7 {
+        .reasons-container {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 48vh;
+            overflow-y: auto;
+            padding: 4px;
+        }
+        .reason-box {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.14);
+            display: none;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        .reason-box.revealed { display: block; }
+        .tag-pill {
+            font-size: 0.65rem;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: rgba(255, 183, 3, 0.2);
+            color: #ffd166;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+        .reason-box p {
+            font-size: 0.8rem;
+            color: #f1f1f1;
+            margin: 0;
+            line-height: 1.35;
+        }
+
+        /* --- SCENE 6: ENVELOPE --- */
+        #scene-6 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
         }
-        .envelope-box {
+        .envelope-card {
             position: relative;
-            width: 270px;
-            height: 180px;
+            width: 260px;
+            height: 170px;
             background: #e09f3e;
             border-radius: 12px;
             cursor: pointer;
@@ -292,22 +274,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             margin: auto;
         }
-        .envelope-flap {
+        .envelope-lid {
             position: absolute;
             top: 0; left: 0;
             width: 0; height: 0;
-            border-left: 135px solid transparent;
-            border-right: 135px solid transparent;
-            border-top: 95px solid #d48b28;
+            border-left: 130px solid transparent;
+            border-right: 130px solid transparent;
+            border-top: 90px solid #d48b28;
             transform-origin: top;
             transition: transform 0.6s ease;
         }
-        .wax-seal {
+        .gold-seal {
             position: absolute;
-            width: 46px; height: 46px;
+            width: 44px; height: 44px;
             background: #f4a261;
             border-radius: 50%;
             border: 2px solid #ffffff;
@@ -320,75 +301,75 @@
             z-index: 10;
         }
 
-        /* --- SCENE 8: LETTER MODAL --- */
-        #scene-8 {
+        /* --- SCENE 7: LETTER --- */
+        #scene-7 {
             background: radial-gradient(circle at center, #260d2e 0%, #100314 100%);
-            padding: 30px 20px;
+            padding: 25px 20px 20px 20px;
         }
-        .letter-paper {
+        .letter-scroll {
             background: #fffdf7;
             color: #2b2b2b;
             width: 100%;
             max-width: 340px;
-            border-radius: 18px;
-            padding: 24px 20px;
+            border-radius: 16px;
+            padding: 20px 18px;
             text-align: left;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            line-height: 1.55;
-            font-size: 0.88rem;
-            position: relative;
-            max-height: 75vh;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            line-height: 1.5;
+            font-size: 0.85rem;
+            max-height: 72vh;
             overflow-y: auto;
         }
-        .letter-paper h3 {
-            font-size: 1.25rem;
+        .letter-scroll h3 {
+            font-size: 1.2rem;
             color: #8b4513;
-            margin-bottom: 12px;
-            font-family: 'Poppins', sans-serif;
+            margin-bottom: 10px;
         }
-        .letter-paper p {
-            margin-bottom: 14px;
+        .letter-scroll p {
+            margin-bottom: 12px;
             color: #4a4a4a;
         }
-        .letter-footer {
+        .letter-sign {
             text-align: right;
             font-weight: 600;
             color: #8b4513;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
-        /* --- SCENE 9: FINAL CAT CELEBRATION --- */
-        #scene-9 {
+        /* --- SCENE 8: FINAL CELEBRATION --- */
+        #scene-8 {
             background: radial-gradient(circle at center, #3c094d 0%, #12001a 100%);
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
         }
-        .cute-cat-img {
-            width: 170px;
+        .cat-badge {
+            width: 160px;
             height: auto;
-            border-radius: 20px;
-            filter: drop-shadow(0 15px 30px rgba(255, 77, 109, 0.4));
-            animation: catBounce 1.8s infinite ease-in-out alternate;
+            border-radius: 18px;
+            filter: drop-shadow(0 12px 25px rgba(255, 77, 109, 0.4));
+            animation: bounceCat 1.8s infinite ease-in-out alternate;
         }
-        @keyframes catBounce {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-12px) scale(1.04); }
+        @keyframes bounceCat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
 
-        .cta-btn {
+        .cta-button {
             background: linear-gradient(135deg, #ff758f, #e60067);
             color: white;
             border: none;
-            padding: 14px 45px;
-            border-radius: 35px;
+            padding: 12px 36px;
+            border-radius: 30px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(230, 0, 103, 0.4);
-            margin-top: 10px;
+            box-shadow: 0 6px 20px rgba(230, 0, 103, 0.4);
+            margin-top: 5px;
         }
-        .tap-hint {
-            font-size: 0.78rem;
+        .cta-button:active { transform: scale(0.96); }
+
+        .hint-text {
+            font-size: 0.75rem;
             color: rgba(255,255,255,0.6);
             letter-spacing: 0.5px;
         }
@@ -396,319 +377,320 @@
 </head>
 <body>
 
-    <!-- Soft Aesthetic Romantic Background Audio -->
     <audio id="bg-audio" loop preload="auto">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SCENE 1: CUPID ARROW & HEART -->
+    <!-- SCENE 1: CUPID ARROW (Points Straight Up to Heart) -->
     <div id="scene-1" class="screen active">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
-        <div style="margin-top: 10px;">
+        <div style="margin-top: 15px;">
             <p style="font-style: italic; font-weight: 500; font-size: 1.05rem;">a little something, for you</p>
-            <div class="cupid-heart" id="cupid-heart">💖</div>
+            <div class="heart-target" id="main-heart">💖</div>
         </div>
-        <div style="display:flex; flex-direction:column; align-items:center; width:100%;">
-            <div class="bow-wrapper" onclick="shootArrow()">
-                <svg class="bow-svg" viewBox="0 0 100 100">
-                    <path d="M 20,20 Q 75,50 20,80" fill="none" stroke="#6d3d24" stroke-width="4" stroke-linecap="round"/>
-                    <line x1="20" y1="20" x2="20" y2="80" stroke="#fff" stroke-width="1.5" stroke-dasharray="2,2"/>
-                    <g id="arrow-group" class="arrow-strike">
-                        <line x1="18" y1="50" x2="65" y2="50" stroke="#ff4d6d" stroke-width="3"/>
-                        <polygon points="65,46 75,50 65,54" fill="#ff4d6d"/>
-                        <circle cx="16" cy="50" r="4" fill="#ffd166"/>
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <div class="bow-container" onclick="triggerArrow()">
+                <!-- Upward Aiming Bow and Arrow -->
+                <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+                    <!-- Bow Body pointing up -->
+                    <path d="M 20,75 Q 50,25 80,75" fill="none" stroke="#6d3d24" stroke-width="4.5" stroke-linecap="round"/>
+                    <!-- Bow String -->
+                    <line x1="20" y1="75" x2="80" y2="75" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2,2"/>
+                    <!-- Arrow Group Aiming UP -->
+                    <g id="flying-arrow" class="arrow-up">
+                        <line x1="50" y1="75" x2="50" y2="28" stroke="#ff4d6d" stroke-width="3.5"/>
+                        <polygon points="46,28 50,18 54,28" fill="#ff4d6d"/>
+                        <circle cx="50" cy="77" r="4.5" fill="#ffd166"/>
                     </g>
                 </svg>
             </div>
-            <p class="tap-hint" style="color:#c94b6e; font-weight: 600; letter-spacing: 2px;">PULL & RELEASE</p>
+            <p class="hint-text" style="color:#c94b6e; font-weight: 600; letter-spacing: 2px;">PULL & RELEASE</p>
         </div>
     </div>
 
     <!-- SCENE 2: FLASH GRID TITLE -->
-    <div id="scene-2" class="screen" onclick="goToScene(3)">
+    <div id="scene-2" class="screen" onclick="switchScene(3)">
         <p style="font-size: 1.1rem; opacity: 0.9; font-style: italic;">make a wish...</p>
         <h1 style="font-size: 3.2rem; font-weight: 700; line-height: 1.15;">Happy<br>Birthday</h1>
         <div style="width: 70px; height: 3px; background: #ffd166; border-radius: 2px; margin: 5px auto;"></div>
         <p style="font-size: 0.95rem; opacity: 0.95;">to someone worth celebrating</p>
-        <p class="tap-hint" style="margin-top: 40px;">tap anywhere to continue</p>
+        <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3 & 4: TREE OF HEARTS -->
-    <div id="scene-3" class="screen" onclick="progressTree()">
+    <!-- SCENE 3: HEART TREE GROWING & BLOOM -->
+    <div id="scene-3" class="screen" onclick="bloomTreeStep()">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
         
-        <div class="tree-container">
-            <div class="tree-branches" id="tree-branches"></div>
-            <div class="tree-trunk"></div>
+        <div class="tree-box">
+            <div class="tree-canopy" id="tree-canopy"></div>
+            <div class="tree-stem"></div>
         </div>
 
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 10px;">
             <p style="font-style: italic; font-size: 0.88rem; color: #b02a5b;">it's officially your day</p>
-            <h2 style="font-size: 1.9rem; color: #800f2f; margin: 4px 0;">Happy Birthday, Sonu</h2>
-            <p id="tree-subline" style="font-size: 0.85rem; color: #800f2f; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
-            <p class="tap-hint" style="color: #b02a5b; margin-top: 14px;">tap anywhere to continue</p>
+            <h2 style="font-size: 1.85rem; color: #800f2f; margin: 4px 0;">Happy Birthday, Sonu</h2>
+            <p id="tree-note" style="font-size: 0.85rem; color: #800f2f; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
+            <p class="hint-text" style="color: #b02a5b; margin-top: 10px;">tap anywhere to continue</p>
         </div>
     </div>
 
-    <!-- SCENE 5: CAKE BAKING & CANDLE -->
-    <div id="scene-5" class="screen" onclick="stepCake()">
+    <!-- SCENE 4: CAKE BAKING & CANDLE LIGHTING -->
+    <div id="scene-4" class="screen" onclick="advanceCake()">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
         
-        <h3 style="font-size: 1.35rem; margin-top: 15px;">First things first 🎂</h3>
+        <h3 style="font-size: 1.35rem; margin-top: 10px;">First things first 🎂</h3>
 
-        <div class="cake-area">
-            <div class="candle" id="candle"><div class="flame" id="flame"></div></div>
-            <div class="cake-layer" id="cake-layer">
-                <div class="cake-icing" id="cake-icing"></div>
+        <div class="cake-wrapper">
+            <div class="cake-candle" id="cake-candle"><div class="candle-flame" id="candle-flame"></div></div>
+            <div class="cake-base" id="cake-base">
+                <div class="cake-cream" id="cake-cream"></div>
             </div>
         </div>
 
         <div>
-            <p id="cake-status" style="font-size: 0.92rem; color: #f28482; margin-bottom: 8px;">Baking something sweet...</p>
-            <p class="tap-hint" id="cake-hint">tap to add frosting</p>
+            <p id="cake-msg" style="font-size: 0.92rem; color: #f28482; margin-bottom: 6px;">Baking something sweet...</p>
+            <p class="hint-text" id="cake-hint">tap to add frosting</p>
         </div>
     </div>
 
-    <!-- SCENE 6: BALLOON POPPING (5 REASONS) -->
+    <!-- SCENE 5: BALLOONS (5 REASONS - FIXED OVERFLOW & RESIZED) -->
+    <div id="scene-5" class="screen">
+        <div class="top-nav">
+            <span class="preview-badge">👁 PREVIEW MODE</span>
+            <span style="font-size:1.1rem;">🔊</span>
+        </div>
+
+        <div>
+            <h3 style="font-size: 1.3rem;">Pop the balloons 🎈</h3>
+            <p style="font-size: 0.76rem; color: rgba(255,255,255,0.7); margin-top: 2px;">5 balloons. Each one holds a reason you're special. Pop them all 🎈</p>
+        </div>
+
+        <!-- 5 Floating Balloons -->
+        <div class="balloons-flex" id="balloons-flex">
+            <div class="balloon-item" style="background: #e27396;" onclick="popBalloon(0, this)"></div>
+            <div class="balloon-item" style="background: #ffd166;" onclick="popBalloon(1, this)"></div>
+            <div class="balloon-item" style="background: #a594f9;" onclick="popBalloon(2, this)"></div>
+            <div class="balloon-item" style="background: #4cc9f0;" onclick="popBalloon(3, this)"></div>
+            <div class="balloon-item" style="background: #f4a261;" onclick="popBalloon(4, this)"></div>
+        </div>
+
+        <!-- Compact Reasons List (Never overflows) -->
+        <div class="reasons-container">
+            <div class="reason-box" id="r-0">
+                <span class="tag-pill">REASON NO.1 🎈</span>
+                <p>Your laugh is contagious and brightens my mood anytime ✨</p>
+            </div>
+            <div class="reason-box" id="r-1">
+                <span class="tag-pill">REASON NO.2 🎈</span>
+                <p>You remember the smallest things I always forget 🌟</p>
+            </div>
+            <div class="reason-box" id="r-2">
+                <span class="tag-pill">REASON NO.3 🎈</span>
+                <p>You backed me up when I needed a friend the most 🤍</p>
+            </div>
+            <div class="reason-box" id="r-3">
+                <span class="tag-pill">REASON NO.4 🎈</span>
+                <p>You make ordinary conversations feel memorable & fun 💫</p>
+            </div>
+            <div class="reason-box" id="r-4">
+                <span class="tag-pill">REASON NO.5 🎈</span>
+                <p>You are genuinely the realest and coolest friend I have 🥂</p>
+            </div>
+        </div>
+
+        <button class="cta-button" id="next-from-balloons" style="display:none;" onclick="switchScene(6)">Continue ✨</button>
+    </div>
+
+    <!-- SCENE 6: GOLDEN ENVELOPE -->
     <div id="scene-6" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
 
-        <div style="margin-top: 10px;">
-            <h3 style="font-size: 1.35rem;">Pop the balloons 🎈</h3>
-            <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 4px;">5 balloons. Each one holds a reason you're a special friend. Pop them all 🎈</p>
+        <div style="margin-top: 15px;">
+            <h3 style="font-size: 1.4rem;">One last thing, Sonu...</h3>
+            <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 4px;">Dipu wrote you a letter.</p>
         </div>
 
-        <!-- 5 Floating Colorful Balloons -->
-        <div class="balloons-holder" id="balloons-holder">
-            <div class="balloon" style="background: #e27396;" onclick="popBalloon(0, this)"></div>
-            <div class="balloon" style="background: #ffd166;" onclick="popBalloon(1, this)"></div>
-            <div class="balloon" style="background: #a594f9;" onclick="popBalloon(2, this)"></div>
-            <div class="balloon" style="background: #4cc9f0;" onclick="popBalloon(3, this)"></div>
-            <div class="balloon" style="background: #f4a261;" onclick="popBalloon(4, this)"></div>
+        <div class="envelope-card" onclick="openLetterEnvelope()">
+            <div class="envelope-lid" id="envelope-lid"></div>
+            <div class="gold-seal">S</div>
         </div>
 
-        <!-- Reasons Cards Container -->
-        <div class="reasons-list">
-            <div class="reason-card" id="reason-0">
-                <span class="reason-tag">REASON NO.1 🎈</span>
-                <p>Your laugh is my absolute favourite sound ✨</p>
-            </div>
-            <div class="reason-card" id="reason-1">
-                <span class="reason-tag">REASON NO.2 🎈</span>
-                <p>You remember the little things I always forget 🌟</p>
-            </div>
-            <div class="reason-card" id="reason-2">
-                <span class="reason-tag">REASON NO.3 🎈</span>
-                <p>You believed in me even when I doubted myself 🤍</p>
-            </div>
-            <div class="reason-card" id="reason-3">
-                <span class="reason-tag">REASON NO.4 🎈</span>
-                <p>You make the most ordinary days feel effortless & fun 💫</p>
-            </div>
-            <div class="reason-card" id="reason-4">
-                <span class="reason-tag">REASON NO.5 🎈</span>
-                <p>You're the kind of best friend anyone would be lucky to have 🥂</p>
-            </div>
-        </div>
-
-        <button class="cta-btn" id="balloon-next-btn" style="display:none; padding:10px 30px; font-size:0.9rem;" onclick="goToScene(7)">Continue ✨</button>
+        <p class="hint-text">Tap to open your letter</p>
     </div>
 
-    <!-- SCENE 7: GOLDEN ENVELOPE -->
+    <!-- SCENE 7: LETTER -->
     <div id="scene-7" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
 
-        <div style="margin-top: 15px;">
-            <h3 style="font-size: 1.45rem;">One last thing, Sonu...</h3>
-            <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 4px;">Dipu wrote you a letter.</p>
-        </div>
-
-        <div class="envelope-box" onclick="openEnvelope(this)">
-            <div class="envelope-flap" id="envelope-flap"></div>
-            <div class="wax-seal">S</div>
-        </div>
-
-        <p class="tap-hint">Tap to open your letter</p>
-    </div>
-
-    <!-- SCENE 8: BEST FRIEND LETTER MODAL -->
-    <div id="scene-8" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-
-        <div class="letter-paper">
+        <div class="letter-scroll">
             <h3>Dear Sonu,</h3>
-            <p>I keep thinking about how genuinely lucky I got to have you as my best friend. You've stood by me through everything, and honestly, I probably don't say thank you nearly enough for that 🤍</p>
-            <p>This year, I really hope life is gentle with you, brings you genuine smiles, and answers all the prayers you whisper to the stars...</p>
-            <p>Every year I try to find the perfect words to tell you how much your friendship means, and every year I fall short. So here is the honest version: you make life brighter, lighter, and completely worth remembering 🎂</p>
+            <p>I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍</p>
+            <p>This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...</p>
+            <p>Every year I try to find the perfect words to tell you how awesome our friendship is, and every year words fall short. So here is the simple truth: you make life way lighter and infinitely more fun 🎂</p>
             <p>Happy birthday, my favourite person...</p>
             
-            <div class="letter-footer">
+            <div class="letter-sign">
                 With all my love,<br>— Dipu
             </div>
         </div>
 
-        <button class="cta-btn" onclick="goToScene(9)">Continue 🎁</button>
+        <button class="cta-button" onclick="switchScene(8)">Continue 🎁</button>
     </div>
 
-    <!-- SCENE 9: FINAL CAT GRAND CELEBRATION -->
-    <div id="scene-9" class="screen">
+    <!-- SCENE 8: FINAL CELEBRATION -->
+    <div id="scene-8" class="screen">
         <div>
-            <h1 style="font-size: 2.6rem; line-height: 1.2; color: #ffffff;">HAPPY<br>BIRTHDAY</h1>
+            <h1 style="font-size: 2.5rem; line-height: 1.15; color: #ffffff;">HAPPY<br>BIRTHDAY</h1>
             <h2 style="font-size: 2.2rem; color: #ffd166; font-family: 'Dancing Script', cursive;">Sonu!</h2>
         </div>
 
-        <!-- Cute flower cat celebration -->
         <div>
-            <img class="cute-cat-img" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600" alt="Celebration Cat">
+            <img class="cat-badge" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600" alt="Cat Celebration">
         </div>
 
         <div style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #ffffff; text-shadow: 0 0 15px #00b0ff;">
             Mahadev Bless You
         </div>
 
-        <button class="cta-btn" onclick="location.reload()" style="padding: 10px 30px; font-size:0.85rem; background: rgba(255,255,255,0.15); box-shadow:none;">Replay Experience ↺</button>
+        <button class="cta-button" onclick="location.reload()" style="padding: 10px 28px; font-size:0.85rem; background: rgba(255,255,255,0.15); box-shadow:none;">Replay Experience ↺</button>
     </div>
 
     <script>
         const audio = document.getElementById('bg-audio');
 
-        function startAudio() {
+        function playMusic() {
             audio.play().catch(e => console.log(e));
         }
 
-        function goToScene(sceneNumber) {
+        function switchScene(num) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById('scene-' + sceneNumber);
+            const target = document.getElementById('scene-' + num);
             if (target) {
                 target.classList.add('active');
             }
-
-            if (sceneNumber === 9) {
-                launchMassiveConfetti();
+            if (num === 8) {
+                fireConfettiRain();
             }
         }
 
-        // SCENE 1: Arrow Strike
-        function shootArrow() {
-            startAudio();
-            const arrow = document.getElementById('arrow-group');
-            const heart = document.getElementById('cupid-heart');
+        // 1. Arrow Shoots Directly UP into Heart
+        function triggerArrow() {
+            playMusic();
+            const arrow = document.getElementById('flying-arrow');
+            const heart = document.getElementById('main-heart');
             
-            arrow.style.transform = "translate(40px, -60px) rotate(-15deg)";
+            // Shoots directly up towards the heart center
+            arrow.style.transform = "translateY(-140px)";
             setTimeout(() => {
-                heart.style.transform = "scale(1.4)";
-                confetti({ particleCount: 40, spread: 50, origin: { y: 0.3 } });
+                heart.style.transform = "scale(1.35)";
+                confetti({ particleCount: 45, spread: 50, origin: { y: 0.35 } });
                 setTimeout(() => {
-                    goToScene(2);
+                    switchScene(2);
                 }, 500);
             }, 300);
         }
 
-        // SCENE 3 & 4: Tree Blossom Flow
-        let treeProgress = 0;
-        function progressTree() {
-            startAudio();
-            const branches = document.getElementById('tree-branches');
-            const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#ffd166', '#f39237'];
+        // 2. Tree Bloom
+        let treeStep = 0;
+        function bloomTreeStep() {
+            playMusic();
+            const canopy = document.getElementById('tree-canopy');
+            const icons = ['🌸', '💖', '✨', '💛', '🌺'];
 
-            if (treeProgress < 18) {
-                for (let i = 0; i < 7; i++) {
-                    const h = document.createElement('div');
-                    h.className = 'floating-blossom';
-                    h.innerText = '💖';
-                    h.style.left = (Math.random() * 180 + 10) + 'px';
-                    h.style.top = (Math.random() * 120 + 10) + 'px';
-                    h.style.fontSize = (Math.random() * 14 + 14) + 'px';
-                    branches.appendChild(h);
+            if (treeStep < 18) {
+                for (let i = 0; i < 6; i++) {
+                    const l = document.createElement('div');
+                    l.className = 'tree-heart-leaf';
+                    l.innerText = icons[Math.floor(Math.random() * icons.length)];
+                    l.style.left = (Math.random() * 180 + 15) + 'px';
+                    l.style.top = (Math.random() * 120 + 10) + 'px';
+                    l.style.fontSize = (Math.random() * 14 + 14) + 'px';
+                    canopy.appendChild(l);
                 }
-                treeProgress += 6;
+                treeStep += 6;
             } else {
-                goToScene(5);
+                switchScene(4);
             }
         }
 
-        // SCENE 5: Cake Baking
-        let cakeStep = 0;
-        function stepCake() {
-            startAudio();
-            const icing = document.getElementById('cake-icing');
-            const candle = document.getElementById('candle');
-            const flame = document.getElementById('flame');
-            const status = document.getElementById('cake-status');
+        // 3. Cake Step-by-Step
+        let cState = 0;
+        function advanceCake() {
+            playMusic();
+            const cream = document.getElementById('cake-cream');
+            const candle = document.getElementById('cake-candle');
+            const flame = document.getElementById('candle-flame');
+            const msg = document.getElementById('cake-msg');
             const hint = document.getElementById('cake-hint');
 
-            if (cakeStep === 0) {
-                icing.style.display = 'block';
-                status.innerText = "Adding sweet white icing...";
+            if (cState === 0) {
+                cream.style.display = 'block';
+                msg.innerText = "Adding sweet white cream...";
                 hint.innerText = "tap to add candle";
-                cakeStep++;
-            } else if (cakeStep === 1) {
+                cState++;
+            } else if (cState === 1) {
                 candle.style.display = 'block';
                 flame.style.display = 'block';
-                status.innerText = "Make a wish 🕯️";
+                msg.innerText = "Make a wish 🕯️️";
                 hint.innerText = "tap anywhere to continue";
-                confetti({ particleCount: 50, spread: 60, origin: { y: 0.55 } });
-                cakeStep++;
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+                cState++;
             } else {
-                goToScene(6);
+                switchScene(5);
             }
         }
 
-        // SCENE 6: Balloon Popping
-        let poppedCount = 0;
-        function popBalloon(index, el) {
-            startAudio();
+        // 4. Pop Balloon
+        let pops = 0;
+        function popBalloon(idx, el) {
+            playMusic();
             if (el.style.visibility === 'hidden') return;
             el.style.visibility = 'hidden';
 
             confetti({
                 particleCount: 25,
                 spread: 45,
-                origin: { y: 0.4 }
+                origin: { y: 0.35 }
             });
 
-            const card = document.getElementById('reason-' + index);
+            const card = document.getElementById('r-' + idx);
             if (card) {
-                card.classList.add('show');
+                card.classList.add('revealed');
             }
 
-            poppedCount++;
-            if (poppedCount >= 5) {
-                document.getElementById('balloon-next-btn').style.display = 'inline-block';
+            pops++;
+            if (pops >= 5) {
+                document.getElementById('next-from-balloons').style.display = 'inline-block';
             }
         }
 
-        // SCENE 7: Envelope Opening
-        function openEnvelope(box) {
-            startAudio();
-            document.getElementById('envelope-flap').style.transform = "rotateX(180deg)";
+        // 5. Envelope Open
+        function openLetterEnvelope() {
+            playMusic();
+            document.getElementById('envelope-lid').style.transform = "rotateX(180deg)";
             confetti({ particleCount: 35, spread: 50, origin: { y: 0.5 } });
             setTimeout(() => {
-                goToScene(8);
+                switchScene(7);
             }, 600);
         }
 
-        // Final Grand Celebration Confetti
-        function launchMassiveConfetti() {
-            var duration = 4.5 * 1000;
+        function fireConfettiRain() {
+            var duration = 4 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
