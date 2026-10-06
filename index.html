@@ -425,7 +425,6 @@
                     </g>
                 </svg>
             </div>
-            <!-- Accurate instruction -->
             <p class="hint-text" style="color:#c94b6e; font-weight: 600; letter-spacing: 2px;">TAP TO SHOOT</p>
         </div>
     </div>
@@ -589,7 +588,7 @@
         <p class="hint-text">Tap to open your letter</p>
     </div>
 
-    <!-- SCENE 7: LETTER (REAL TIME TYPEWRITER WRITE ANIMATION) -->
+    <!-- SCENE 7: LETTER (OPTION 2 UPDATED) -->
     <div id="scene-7" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
@@ -820,11 +819,11 @@
             }, 600);
         }
 
-        // 6. Typewriter Effect for Letter (5-8 Seconds Smooth Typing)
+        // 6. Typewriter Effect for Letter (With Selected Option 2)
         const fullLetterParagraphs = [
             "I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍\n\n",
             "This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...\n\n",
-            "Every year I try to find the perfect words to tell you how awesome our friendship is, and every year words fall short. So here is the simple truth: you make life way lighter and infinitely more fun 🎂\n\n",
+            "I was trying to find the perfect way to write this, but honestly, no big speech is needed. The simple truth is: having you in my life makes every ordinary day feel ten times brighter 🎂\n\n",
             "Happy birthday, my favourite person..."
         ];
 
@@ -841,7 +840,6 @@
             continueBtn.style.pointerEvents = "none";
             cursor.style.display = "inline-block";
 
-            // Break into words for smooth, natural human typing flow
             const allWords = fullLetterParagraphs.join('').split(' ');
             let wIdx = 0;
 
@@ -850,7 +848,6 @@
                     container.innerText += (wIdx === 0 ? '' : ' ') + allWords[wIdx];
                     wIdx++;
                     scrollBox.scrollTop = scrollBox.scrollHeight;
-                    // ~70ms per word = takes ~6-7 seconds total
                     setTimeout(typeNextWord, 68);
                 } else {
                     cursor.style.display = "none";
