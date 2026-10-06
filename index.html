@@ -148,7 +148,6 @@
             height: 100%;
         }
 
-        /* Cake Build Animation States */
         #cake-base-plate {
             transform-origin: bottom center;
             transition: all 0.6s ease;
@@ -295,7 +294,7 @@
             z-index: 10;
         }
 
-        /* --- SCENE 7: LETTER --- */
+        /* --- SCENE 7: LETTER (TYPEWRITER MODE) --- */
         #scene-7 {
             background: radial-gradient(circle at center, #260d2e 0%, #100314 100%);
             padding: 25px 20px 20px 20px;
@@ -313,24 +312,43 @@
             font-size: 0.85rem;
             max-height: 72vh;
             overflow-y: auto;
+            position: relative;
         }
         .letter-scroll h3 {
             font-size: 1.2rem;
             color: #8b4513;
             margin-bottom: 10px;
         }
-        .letter-scroll p {
-            margin-bottom: 12px;
+        .typewriter-body {
             color: #4a4a4a;
+            white-space: pre-line;
+            min-height: 180px;
+            font-size: 0.85rem;
+            line-height: 1.55;
+        }
+        .cursor-blink {
+            display: inline-block;
+            width: 2px;
+            height: 14px;
+            background: #e60067;
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
         .letter-sign {
             text-align: right;
             font-weight: 600;
             color: #8b4513;
             margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
         }
 
-        /* --- SCENE 8: FINAL CELEBRATION (CUTE DISNEY PRINCESS AVATAR) --- */
+        /* --- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS) --- */
         #scene-8 {
             background: radial-gradient(circle at center, #3c094d 0%, #12001a 100%);
             justify-content: center;
@@ -385,7 +403,7 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SCENE 1: CUPID ARROW (Upward Aim) -->
+    <!-- SCENE 1: CUPID ARROW (TAP TO SHOOT) -->
     <div id="scene-1" class="screen active">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
@@ -407,7 +425,8 @@
                     </g>
                 </svg>
             </div>
-            <p class="hint-text" style="color:#c94b6e; font-weight: 600; letter-spacing: 2px;">PULL & RELEASE</p>
+            <!-- Accurate instruction -->
+            <p class="hint-text" style="color:#c94b6e; font-weight: 600; letter-spacing: 2px;">TAP TO SHOOT</p>
         </div>
     </div>
 
@@ -459,34 +478,26 @@
         
         <h3 style="font-size: 1.35rem; margin-top: 5px;">First things first 🎂</h3>
 
-        <!-- Realistic Illustrated SVG Cake with Attached Candle -->
         <div class="cake-svg-container">
             <svg class="cake-svg-el" viewBox="0 0 200 200">
-                <!-- Plate Base -->
                 <ellipse id="cake-base-plate" cx="100" cy="180" rx="85" ry="14" fill="#e0e1dd" stroke="#778da9" stroke-width="2"/>
                 <ellipse cx="100" cy="178" rx="75" ry="10" fill="#f8f9fa"/>
 
-                <!-- Bottom Pink Sponge Tier -->
                 <g id="cake-bottom-tier">
                     <path d="M 30,130 L 30,165 C 30,180 170,180 170,165 L 170,130 Z" fill="#ff758f"/>
-                    <!-- Strawberry Layer Strips -->
                     <path d="M 30,145 C 50,158 150,158 170,145 L 170,152 C 150,165 50,165 30,152 Z" fill="#e63946" opacity="0.6"/>
                     <ellipse cx="100" cy="130" rx="70" ry="16" fill="#ff8fa3"/>
                 </g>
 
-                <!-- Drips & Vanilla Cream Top -->
                 <g id="cake-icing-layer">
                     <path d="M 30,130 C 40,142 50,134 60,145 C 70,132 85,147 95,133 C 110,148 125,134 135,146 C 145,133 155,143 170,130 C 170,118 30,118 30,130 Z" fill="#ffffff" filter="drop-shadow(0 3px 2px rgba(0,0,0,0.1))"/>
-                    <!-- Decorative Berries -->
                     <circle cx="50" cy="126" r="4" fill="#e63946"/>
                     <circle cx="80" cy="122" r="4" fill="#e63946"/>
                     <circle cx="120" cy="122" r="4" fill="#e63946"/>
                     <circle cx="150" cy="126" r="4" fill="#e63946"/>
                 </g>
 
-                <!-- Candle Assembly: DIRECTLY INSERTED INTO CAKE TOP -->
                 <g id="candle-assembly" onclick="blowCandle()">
-                    <!-- Candle Body firmly anchored in cake (Y: 75 to 125) -->
                     <rect x="96" y="75" width="8" height="50" rx="4" fill="url(#candlePattern)" stroke="#ffccd5" stroke-width="0.5"/>
                     <defs>
                         <linearGradient id="candlePattern" x1="0" y1="0" x2="1" y2="1">
@@ -495,9 +506,7 @@
                             <stop offset="100%" stop-color="#ffffff"/>
                         </linearGradient>
                     </defs>
-                    <!-- Candle Wick -->
                     <line x1="100" y1="75" x2="100" y2="67" stroke="#4a4e69" stroke-width="2"/>
-                    <!-- Glowing Realistic Flame -->
                     <g id="candle-flame-path">
                         <ellipse cx="100" cy="55" rx="14" ry="18" fill="rgba(255, 183, 3, 0.25)"/>
                         <path d="M 100,42 C 94,52 95,64 100,66 C 105,64 106,52 100,42 Z" fill="#ffb703"/>
@@ -580,59 +589,49 @@
         <p class="hint-text">Tap to open your letter</p>
     </div>
 
-    <!-- SCENE 7: LETTER -->
+    <!-- SCENE 7: LETTER (REAL TIME TYPEWRITER WRITE ANIMATION) -->
     <div id="scene-7" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
 
-        <div class="letter-scroll">
+        <div class="letter-scroll" id="letter-scroll-box">
             <h3>Dear Sonu,</h3>
-            <p>I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍</p>
-            <p>This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...</p>
-            <p>Every year I try to find the perfect words to tell you how awesome our friendship is, and every year words fall short. So here is the simple truth: you make life way lighter and infinitely more fun 🎂</p>
-            <p>Happy birthday, my favourite person...</p>
-            
-            <div class="letter-sign">
+            <div class="typewriter-body">
+                <span id="typed-content"></span><span class="cursor-blink" id="type-cursor"></span>
+            </div>
+            <div class="letter-sign" id="letter-signature">
                 With all my love,<br>— Dipu
             </div>
         </div>
 
-        <button class="cta-button" onclick="switchScene(8)">Continue 🎁</button>
+        <button class="cta-button" id="letter-continue-btn" style="opacity:0; pointer-events:none; transition:opacity 0.6s ease;" onclick="switchScene(8)">Continue 🎁</button>
     </div>
 
-    <!-- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS CHIBI AVATAR) -->
+    <!-- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS) -->
     <div id="scene-8" class="screen">
         <div>
             <h1 style="font-size: 2.5rem; line-height: 1.15; color: #ffffff;">HAPPY<br>BIRTHDAY</h1>
             <h2 style="font-size: 2.2rem; color: #ffd166; font-family: 'Dancing Script', cursive;">Sonu!</h2>
         </div>
 
-        <!-- Glowing Cute Disney Princess Tiara Doll Frame -->
         <div class="princess-frame">
             <svg class="princess-vector" viewBox="0 0 100 100">
-                <!-- Hair Glow / Back Hair -->
                 <path d="M 25,50 C 20,80 35,95 50,95 C 65,95 80,80 75,50 Z" fill="#f4a261"/>
-                <!-- Cute Face -->
                 <ellipse cx="50" cy="52" rx="22" ry="20" fill="#ffe5d9"/>
-                <!-- Big Sparkly Eyes -->
                 <ellipse cx="42" cy="52" rx="4" ry="5.5" fill="#264653"/>
                 <circle cx="43.5" cy="50.5" r="1.5" fill="#ffffff"/>
                 <ellipse cx="58" cy="52" rx="4" ry="5.5" fill="#264653"/>
                 <circle cx="59.5" cy="50.5" r="1.5" fill="#ffffff"/>
-                <!-- Cute Blush & Smile -->
                 <circle cx="37" cy="57" r="3" fill="#ffb4a2" opacity="0.6"/>
                 <circle cx="63" cy="57" r="3" fill="#ffb4a2" opacity="0.6"/>
                 <path d="M 48,58 Q 50,61 52,58" fill="none" stroke="#e76f51" stroke-width="1.2" stroke-linecap="round"/>
-                <!-- Front Bangs Hair -->
                 <path d="M 28,45 C 35,32 65,32 72,45 C 65,40 58,45 50,42 C 42,45 35,40 28,45 Z" fill="#e76f51"/>
-                <!-- Sparkling Golden Disney Tiara / Crown -->
                 <path d="M 38,34 L 43,26 L 50,30 L 57,26 L 62,34 Z" fill="#ffd166" stroke="#e9c46a" stroke-width="0.8"/>
                 <circle cx="50" cy="24" r="2" fill="#ff4d6d"/>
                 <circle cx="43" cy="23" r="1.5" fill="#4cc9f0"/>
                 <circle cx="57" cy="23" r="1.5" fill="#4cc9f0"/>
-                <!-- Princess Dress Top -->
                 <path d="M 38,72 Q 50,80 62,72 L 68,95 Q 50,98 32,95 Z" fill="#ff8fa3"/>
                 <path d="M 44,72 Q 50,78 56,72" fill="none" stroke="#fff" stroke-width="1.5"/>
             </svg>
@@ -663,6 +662,8 @@
                 startTreeAutoGrow();
             } else if (num === 4) {
                 startCakeAutoBaking();
+            } else if (num === 7) {
+                startTypewriterLetter();
             } else if (num === 8) {
                 fireConfettiRain();
             }
@@ -731,7 +732,6 @@
             const narrative = document.getElementById('cake-narrative');
             const instruction = document.getElementById('cake-instruction');
 
-            // Reset
             bottomTier.style.opacity = '0';
             bottomTier.style.transform = 'translateY(40px)';
             icing.style.opacity = '0';
@@ -743,23 +743,20 @@
             narrative.innerText = "Baking something sweet...";
             instruction.innerText = "baking in progress...";
 
-            // Step 1: Cake Tier rises onto plate (0.4s)
             setTimeout(() => {
                 bottomTier.style.opacity = '1';
                 bottomTier.style.transform = 'translateY(0)';
             }, 400);
 
-            // Step 2: Strawberry glaze icing drips down (1.2s)
             setTimeout(() => {
                 icing.style.opacity = '1';
                 icing.style.transform = 'scaleY(1)';
                 narrative.innerText = "Adding sweet berry icing...";
             }, 1200);
 
-            // Step 3: Candle inserts firmly into cake and lights up (2.0s)
             setTimeout(() => {
                 candle.style.opacity = '1';
-                candle.style.transform = 'translateY(0)'; // Settles directly in the top of the cake
+                candle.style.transform = 'translateY(0)';
                 setTimeout(() => {
                     flame.style.opacity = '1';
                     narrative.innerText = "Make a wish 🕯️";
@@ -821,6 +818,51 @@
             setTimeout(() => {
                 switchScene(7);
             }, 600);
+        }
+
+        // 6. Typewriter Effect for Letter (5-8 Seconds Smooth Typing)
+        const fullLetterParagraphs = [
+            "I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍\n\n",
+            "This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...\n\n",
+            "Every year I try to find the perfect words to tell you how awesome our friendship is, and every year words fall short. So here is the simple truth: you make life way lighter and infinitely more fun 🎂\n\n",
+            "Happy birthday, my favourite person..."
+        ];
+
+        function startTypewriterLetter() {
+            const container = document.getElementById('typed-content');
+            const signature = document.getElementById('letter-signature');
+            const continueBtn = document.getElementById('letter-continue-btn');
+            const scrollBox = document.getElementById('letter-scroll-box');
+            const cursor = document.getElementById('type-cursor');
+
+            container.innerText = "";
+            signature.style.opacity = "0";
+            continueBtn.style.opacity = "0";
+            continueBtn.style.pointerEvents = "none";
+            cursor.style.display = "inline-block";
+
+            // Break into words for smooth, natural human typing flow
+            const allWords = fullLetterParagraphs.join('').split(' ');
+            let wIdx = 0;
+
+            function typeNextWord() {
+                if (wIdx < allWords.length) {
+                    container.innerText += (wIdx === 0 ? '' : ' ') + allWords[wIdx];
+                    wIdx++;
+                    scrollBox.scrollTop = scrollBox.scrollHeight;
+                    // ~70ms per word = takes ~6-7 seconds total
+                    setTimeout(typeNextWord, 68);
+                } else {
+                    cursor.style.display = "none";
+                    signature.style.opacity = "1";
+                    setTimeout(() => {
+                        continueBtn.style.opacity = "1";
+                        continueBtn.style.pointerEvents = "auto";
+                    }, 400);
+                }
+            }
+
+            setTimeout(typeNextWord, 300);
         }
 
         function fireConfettiRain() {
