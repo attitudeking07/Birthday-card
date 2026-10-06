@@ -94,93 +94,106 @@
             gap: 15px;
         }
 
-        /* --- SCENE 3: HEART TREE --- */
+        /* --- SCENE 3: REAL AUTO-BLOOMING HEART TREE --- */
         #scene-3 {
             background: radial-gradient(circle at center, #ffe5ec 0%, #ffc2d1 60%, #ffb3c6 100%);
             color: #800f2f;
         }
-        .tree-box {
+        .tree-stage {
             position: relative;
-            width: 250px;
-            height: 280px;
+            width: 280px;
+            height: 310px;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            margin-bottom: 15px;
+            align-items: center;
         }
-        .tree-stem {
-            width: 6px;
-            height: 180px;
-            background: #5c3d2e;
-            border-radius: 4px;
-            position: relative;
+        .tree-svg {
+            width: 100%;
+            height: 100%;
         }
-        .tree-canopy {
+        .trunk-path {
+            stroke: #4a2828;
+            stroke-width: 4;
+            fill: none;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            transition: stroke-dashoffset 1.8s ease-in-out;
+        }
+        .heart-leaf {
+            transform: scale(0);
+            transform-origin: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .sunray-bg {
             position: absolute;
-            top: 15px;
-            width: 220px;
-            height: 170px;
-        }
-        .tree-heart-leaf {
-            position: absolute;
-            animation: growLeaf 0.5s ease forwards;
-        }
-        @keyframes growLeaf {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
         }
 
-        /* --- SCENE 4: CAKE BAKING --- */
+        /* --- SCENE 4: REAL CAKE BAKING & CANDLE --- */
         #scene-4 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
         }
-        .cake-wrapper {
+        .cake-platform {
             position: relative;
-            width: 220px;
-            height: 200px;
+            width: 240px;
+            height: 210px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            cursor: pointer;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-        .cake-base {
+        .cake-tier {
             width: 180px;
-            height: 70px;
+            height: 65px;
             background: linear-gradient(to bottom, #ff8fa3 0%, #ff758f 50%, #e05780 100%);
             border-radius: 10px 10px 14px 14px;
             position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+            transform: translateY(60px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .cake-cream {
+        .cake-icing-layer {
             position: absolute;
             top: -12px; left: 0;
             width: 100%; height: 26px;
             background: #ffffff;
             border-radius: 14px 14px 20px 20px;
-            display: none;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: all 0.6s ease;
         }
-        .cake-candle {
-            width: 8px;
+        .candle-pillar {
+            width: 9px;
             height: 44px;
             background: repeating-linear-gradient(45deg, #ffffff, #ffffff 6px, #ff4d6d 6px, #ff4d6d 12px);
             border-radius: 4px;
             position: absolute;
             top: -42px;
-            display: none;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.6s ease;
+            cursor: pointer;
         }
-        .candle-flame {
+        .candle-flame-glow {
             width: 14px;
             height: 22px;
             background: #ffd166;
             border-radius: 50% 50% 20% 20%;
             position: absolute;
-            top: -20px; left: -3px;
-            box-shadow: 0 0 14px #ff9e00, 0 0 28px #ff9e00;
+            top: -20px; left: -2.5px;
+            box-shadow: 0 0 14px #ff9e00, 0 0 30px #ff9e00;
             animation: flameFlicker 0.6s infinite alternate;
-            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         @keyframes flameFlicker {
             0% { transform: scale(0.9) rotate(-2deg); }
@@ -336,22 +349,22 @@
             margin-top: 10px;
         }
 
-        /* --- SCENE 8: FINAL CELEBRATION --- */
+        /* --- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS DOLL) --- */
         #scene-8 {
             background: radial-gradient(circle at center, #3c094d 0%, #12001a 100%);
             justify-content: center;
-            gap: 20px;
+            gap: 18px;
         }
-        .cat-badge {
-            width: 160px;
+        .princess-avatar {
+            width: 175px;
             height: auto;
-            border-radius: 18px;
-            filter: drop-shadow(0 12px 25px rgba(255, 77, 109, 0.4));
-            animation: bounceCat 1.8s infinite ease-in-out alternate;
+            border-radius: 24px;
+            filter: drop-shadow(0 15px 30px rgba(255, 117, 143, 0.5));
+            animation: dollFloat 2.2s infinite ease-in-out alternate;
         }
-        @keyframes bounceCat {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
+        @keyframes dollFloat {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.03); }
         }
 
         .cta-button {
@@ -381,7 +394,7 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SCENE 1: CUPID ARROW (Points Straight Up to Heart) -->
+    <!-- SCENE 1: CUPID ARROW (Upward Aim) -->
     <div id="scene-1" class="screen active">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
@@ -393,13 +406,9 @@
         </div>
         <div style="display:flex; flex-direction:column; align-items:center;">
             <div class="bow-container" onclick="triggerArrow()">
-                <!-- Upward Aiming Bow and Arrow -->
                 <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
-                    <!-- Bow Body pointing up -->
                     <path d="M 20,75 Q 50,25 80,75" fill="none" stroke="#6d3d24" stroke-width="4.5" stroke-linecap="round"/>
-                    <!-- Bow String -->
                     <line x1="20" y1="75" x2="80" y2="75" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2,2"/>
-                    <!-- Arrow Group Aiming UP -->
                     <g id="flying-arrow" class="arrow-up">
                         <line x1="50" y1="75" x2="50" y2="28" stroke="#ff4d6d" stroke-width="3.5"/>
                         <polygon points="46,28 50,18 54,28" fill="#ff4d6d"/>
@@ -420,28 +429,42 @@
         <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3: HEART TREE GROWING & BLOOM -->
-    <div id="scene-3" class="screen" onclick="bloomTreeStep()">
+    <!-- SCENE 3: REAL AUTO-BLOOMING HEART TREE -->
+    <div id="scene-3" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
         </div>
         
-        <div class="tree-box">
-            <div class="tree-canopy" id="tree-canopy"></div>
-            <div class="tree-stem"></div>
+        <div class="tree-stage">
+            <div class="sunray-bg" id="sunray-bg"></div>
+            <!-- Beautiful Tree with Heart-Shaped Canopy Structure -->
+            <svg class="tree-svg" viewBox="0 0 200 240">
+                <!-- Trunk & Branches growing up into a heart -->
+                <path id="tree-path" class="trunk-path" d="M 100,230 L 100,120 M 100,140 Q 60,110 50,60 M 100,140 Q 140,110 150,60 M 100,110 Q 70,80 85,35 M 100,110 Q 130,80 115,35"/>
+                
+                <!-- Heart leaves forming a complete heart tree crown -->
+                <g id="hearts-canopy">
+                    <path class="heart-leaf" d="M100,45 C90,25 65,30 65,50 C65,70 100,90 100,90 C100,90 135,70 135,50 C135,30 110,25 100,45 Z" fill="#ff758f"/>
+                    <path class="heart-leaf" d="M70,75 C60,55 35,60 35,80 C35,100 70,120 70,120 C70,120 105,100 105,80 C105,60 80,55 70,75 Z" fill="#ff4d6d"/>
+                    <path class="heart-leaf" d="M130,75 C120,55 95,60 95,80 C95,100 130,120 130,120 C130,120 165,100 165,80 C165,60 140,55 130,75 Z" fill="#ff8fa3"/>
+                    <path class="heart-leaf" d="M50,110 C42,95 20,100 20,115 C20,130 50,145 50,145 C50,145 80,130 80,115 C80,100 58,95 50,110 Z" fill="#ffd166"/>
+                    <path class="heart-leaf" d="M150,110 C142,95 120,100 120,115 C120,130 150,145 150,145 C150,145 180,130 180,115 C180,100 158,95 150,110 Z" fill="#f4a261"/>
+                    <path class="heart-leaf" d="M100,105 C92,90 75,95 75,108 C75,120 100,135 100,135 C100,135 125,120 125,108 C125,95 108,90 100,105 Z" fill="#ffb703"/>
+                </g>
+            </svg>
         </div>
 
         <div style="margin-bottom: 10px;">
             <p style="font-style: italic; font-size: 0.88rem; color: #b02a5b;">it's officially your day</p>
             <h2 style="font-size: 1.85rem; color: #800f2f; margin: 4px 0;">Happy Birthday, Sonu</h2>
-            <p id="tree-note" style="font-size: 0.85rem; color: #800f2f; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
-            <p class="hint-text" style="color: #b02a5b; margin-top: 10px;">tap anywhere to continue</p>
+            <p style="font-size: 0.85rem; color: #800f2f; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
+            <button class="cta-button" id="tree-continue-btn" style="opacity:0; pointer-events:none; transition:opacity 0.5s ease; margin-top:10px;" onclick="switchScene(4)">Continue ✨</button>
         </div>
     </div>
 
-    <!-- SCENE 4: CAKE BAKING & CANDLE LIGHTING -->
-    <div id="scene-4" class="screen" onclick="advanceCake()">
+    <!-- SCENE 4: AUTO-BAKING CAKE + INTERACTIVE CANDLE -->
+    <div id="scene-4" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
             <span style="font-size:1.1rem;">🔊</span>
@@ -449,20 +472,23 @@
         
         <h3 style="font-size: 1.35rem; margin-top: 10px;">First things first 🎂</h3>
 
-        <div class="cake-wrapper">
-            <div class="cake-candle" id="cake-candle"><div class="candle-flame" id="candle-flame"></div></div>
-            <div class="cake-base" id="cake-base">
-                <div class="cake-cream" id="cake-cream"></div>
+        <div class="cake-platform">
+            <div class="candle-pillar" id="cake-candle" onclick="blowCandle()">
+                <div class="candle-flame-glow" id="candle-flame"></div>
+            </div>
+            <div class="cake-tier" id="cake-tier">
+                <div class="cake-icing-layer" id="cake-icing"></div>
             </div>
         </div>
 
         <div>
-            <p id="cake-msg" style="font-size: 0.92rem; color: #f28482; margin-bottom: 6px;">Baking something sweet...</p>
-            <p class="hint-text" id="cake-hint">tap to add frosting</p>
+            <p id="cake-narrative" style="font-size: 0.92rem; color: #f28482; margin-bottom: 8px;">Baking something sweet...</p>
+            <p class="hint-text" id="cake-instruction">baking in progress...</p>
+            <button class="cta-button" id="cake-continue-btn" style="display:none; margin-top:8px;" onclick="switchScene(5)">Continue ✨</button>
         </div>
     </div>
 
-    <!-- SCENE 5: BALLOONS (5 REASONS - FIXED OVERFLOW & RESIZED) -->
+    <!-- SCENE 5: BALLOONS (5 REASONS) -->
     <div id="scene-5" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
@@ -474,7 +500,6 @@
             <p style="font-size: 0.76rem; color: rgba(255,255,255,0.7); margin-top: 2px;">5 balloons. Each one holds a reason you're special. Pop them all 🎈</p>
         </div>
 
-        <!-- 5 Floating Balloons -->
         <div class="balloons-flex" id="balloons-flex">
             <div class="balloon-item" style="background: #e27396;" onclick="popBalloon(0, this)"></div>
             <div class="balloon-item" style="background: #ffd166;" onclick="popBalloon(1, this)"></div>
@@ -483,7 +508,6 @@
             <div class="balloon-item" style="background: #f4a261;" onclick="popBalloon(4, this)"></div>
         </div>
 
-        <!-- Compact Reasons List (Never overflows) -->
         <div class="reasons-container">
             <div class="reason-box" id="r-0">
                 <span class="tag-pill">REASON NO.1 🎈</span>
@@ -552,18 +576,19 @@
         <button class="cta-button" onclick="switchScene(8)">Continue 🎁</button>
     </div>
 
-    <!-- SCENE 8: FINAL CELEBRATION -->
+    <!-- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS DOLL) -->
     <div id="scene-8" class="screen">
         <div>
             <h1 style="font-size: 2.5rem; line-height: 1.15; color: #ffffff;">HAPPY<br>BIRTHDAY</h1>
             <h2 style="font-size: 2.2rem; color: #ffd166; font-family: 'Dancing Script', cursive;">Sonu!</h2>
         </div>
 
+        <!-- Cute Fairy Tale Princess Doll -->
         <div>
-            <img class="cat-badge" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600" alt="Cat Celebration">
+            <img class="princess-avatar" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600" alt="Cute Princess Doll">
         </div>
 
-        <div style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #ffffff; text-shadow: 0 0 15px #00b0ff;">
+        <div style="font-family: 'Dancing Script', cursive; font-size: 2.1rem; color: #ffffff; text-shadow: 0 0 15px #00b0ff;">
             Mahadev Bless You
         </div>
 
@@ -583,18 +608,23 @@
             if (target) {
                 target.classList.add('active');
             }
-            if (num === 8) {
+
+            // AUTO-TRIGGERS FOR REAL ANIMATIONS
+            if (num === 3) {
+                startTreeAutoGrow();
+            } else if (num === 4) {
+                startCakeAutoBaking();
+            } else if (num === 8) {
                 fireConfettiRain();
             }
         }
 
-        // 1. Arrow Shoots Directly UP into Heart
+        // 1. Arrow Trigger
         function triggerArrow() {
             playMusic();
             const arrow = document.getElementById('flying-arrow');
             const heart = document.getElementById('main-heart');
             
-            // Shoots directly up towards the heart center
             arrow.style.transform = "translateY(-140px)";
             setTimeout(() => {
                 heart.style.transform = "scale(1.35)";
@@ -605,54 +635,113 @@
             }, 300);
         }
 
-        // 2. Tree Bloom
-        let treeStep = 0;
-        function bloomTreeStep() {
-            playMusic();
-            const canopy = document.getElementById('tree-canopy');
-            const icons = ['🌸', '💖', '✨', '💛', '🌺'];
+        // 2. Real Automatic Tree Grow & Bloom
+        function startTreeAutoGrow() {
+            const trunk = document.getElementById('tree-path');
+            const leaves = document.querySelectorAll('.heart-leaf');
+            const sunray = document.getElementById('sunray-bg');
+            const btn = document.getElementById('tree-continue-btn');
 
-            if (treeStep < 18) {
-                for (let i = 0; i < 6; i++) {
-                    const l = document.createElement('div');
-                    l.className = 'tree-heart-leaf';
-                    l.innerText = icons[Math.floor(Math.random() * icons.length)];
-                    l.style.left = (Math.random() * 180 + 15) + 'px';
-                    l.style.top = (Math.random() * 120 + 10) + 'px';
-                    l.style.fontSize = (Math.random() * 14 + 14) + 'px';
-                    canopy.appendChild(l);
-                }
-                treeStep += 6;
-            } else {
-                switchScene(4);
-            }
+            // Reset
+            trunk.style.strokeDashoffset = '400';
+            leaves.forEach(l => l.style.transform = 'scale(0)');
+            sunray.style.opacity = '0';
+            btn.style.opacity = '0';
+            btn.style.pointerEvents = 'none';
+
+            // Step A: Trunk Grows smoothly
+            setTimeout(() => {
+                trunk.style.strokeDashoffset = '0';
+            }, 200);
+
+            // Step B: Heart leaves pop out in sequence forming a heart crown
+            setTimeout(() => {
+                leaves.forEach((leaf, idx) => {
+                    setTimeout(() => {
+                        leaf.style.transform = 'scale(1)';
+                    }, idx * 160);
+                });
+            }, 1200);
+
+            // Step C: Sunray burst & Confetti celebration
+            setTimeout(() => {
+                sunray.style.opacity = '1';
+                confetti({
+                    particleCount: 50,
+                    spread: 70,
+                    origin: { y: 0.4 },
+                    colors: ['#ff758f', '#ffd166', '#ff4d6d', '#ffffff']
+                });
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }, 2400);
         }
 
-        // 3. Cake Step-by-Step
-        let cState = 0;
-        function advanceCake() {
-            playMusic();
-            const cream = document.getElementById('cake-cream');
+        // 3. Real Automatic Cake Baking + Candle Tap
+        function startCakeAutoBaking() {
+            const tier = document.getElementById('cake-tier');
+            const icing = document.getElementById('cake-icing');
             const candle = document.getElementById('cake-candle');
             const flame = document.getElementById('candle-flame');
-            const msg = document.getElementById('cake-msg');
-            const hint = document.getElementById('cake-hint');
+            const narrative = document.getElementById('cake-narrative');
+            const instruction = document.getElementById('cake-instruction');
 
-            if (cState === 0) {
-                cream.style.display = 'block';
-                msg.innerText = "Adding sweet white cream...";
-                hint.innerText = "tap to add candle";
-                cState++;
-            } else if (cState === 1) {
-                candle.style.display = 'block';
-                flame.style.display = 'block';
-                msg.innerText = "Make a wish 🕯️️";
-                hint.innerText = "tap anywhere to continue";
-                confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
-                cState++;
-            } else {
-                switchScene(5);
-            }
+            // Reset
+            tier.style.opacity = '0';
+            tier.style.transform = 'translateY(60px)';
+            icing.style.opacity = '0';
+            icing.style.transform = 'scaleY(0)';
+            candle.style.opacity = '0';
+            candle.style.transform = 'translateY(-20px)';
+            flame.style.opacity = '0';
+
+            narrative.innerText = "Baking something sweet...";
+            instruction.innerText = "baking in progress...";
+
+            // Step 1: Cake Base slides up (0.5s)
+            setTimeout(() => {
+                tier.style.opacity = '1';
+                tier.style.transform = 'translateY(0)';
+            }, 400);
+
+            // Step 2: Frosting drips down (1.3s)
+            setTimeout(() => {
+                icing.style.opacity = '1';
+                icing.style.transform = 'scaleY(1)';
+                narrative.innerText = "Adding creamy vanilla icing...";
+            }, 1300);
+
+            // Step 3: Candle drops and lights up (2.2s)
+            setTimeout(() => {
+                candle.style.opacity = '1';
+                candle.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    flame.style.opacity = '1';
+                    narrative.innerText = "Make a wish 🕯️";
+                    instruction.innerText = "👉 Tap the candle to blow it out!";
+                    instruction.style.color = "#ffd166";
+                    instruction.style.fontWeight = "600";
+                }, 400);
+            }, 2100);
+        }
+
+        // Candle Blow Interaction
+        function blowCandle() {
+            const flame = document.getElementById('candle-flame');
+            if (flame.style.opacity === '0') return;
+
+            flame.style.opacity = '0'; // Blow out
+
+            confetti({
+                particleCount: 65,
+                spread: 75,
+                origin: { y: 0.55 },
+                colors: ['#ff758f', '#ffd166', '#4cc9f0', '#ffffff']
+            });
+
+            document.getElementById('cake-narrative').innerText = "Wish made! Happy Birthday, Sonu! 🎂";
+            document.getElementById('cake-instruction').innerText = "Everything is baked with love ✨";
+            document.getElementById('cake-continue-btn').style.display = 'inline-block';
         }
 
         // 4. Pop Balloon
@@ -690,7 +779,7 @@
         }
 
         function fireConfettiRain() {
-            var duration = 4 * 1000;
+            var duration = 4.5 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
