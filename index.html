@@ -27,7 +27,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 20px 25px 20px;
+            padding: 35px 20px 25px 20px;
             text-align: center;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -35,24 +35,6 @@
         .screen.active {
             display: flex;
             opacity: 1;
-        }
-
-        /* Top Nav */
-        .top-nav {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-        .preview-badge {
-            background: #e9a83b;
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
         }
 
         /* --- SCENE 1: CUPID ARROW --- */
@@ -64,7 +46,7 @@
             font-size: 5.5rem;
             filter: drop-shadow(0 15px 30px rgba(255, 105, 180, 0.45));
             animation: pulseHeart 1.8s infinite ease-in-out;
-            margin-top: 30px;
+            margin-top: 40px;
             display: inline-block;
             transition: transform 0.3s;
         }
@@ -309,12 +291,11 @@
         .panda-card:nth-child(even) { transform: rotate(1.5deg); }
         .panda-card:hover { transform: scale(1.03) rotate(0deg); }
         
-        /* Pastel Sky-Blue Background Inside Frame */
         .panda-svg-frame {
             width: 100%;
             height: 180px;
             border-radius: 8px;
-            background: #e0f2fe; /* Clean Soft Sky-Blue */
+            background: #e0f2fe;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -384,7 +365,7 @@
         /* --- SCENE 7: LETTER (TYPEWRITER MODE) --- */
         #scene-7 {
             background: radial-gradient(circle at center, #260d2e 0%, #100314 100%);
-            padding: 25px 20px 20px 20px;
+            padding: 30px 20px 20px 20px;
         }
         .letter-scroll {
             background: #fffdf7;
@@ -492,11 +473,7 @@
 
     <!-- SCENE 1: CUPID ARROW (TAP TO SHOOT) -->
     <div id="scene-1" class="screen active">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-        <div style="margin-top: 15px;">
+        <div style="margin-top: 25px;">
             <p style="font-style: italic; font-weight: 500; font-size: 1.05rem;">a little something, for you</p>
             <div class="heart-target" id="main-heart">💖</div>
         </div>
@@ -527,11 +504,6 @@
 
     <!-- SCENE 3: REAL AUTO-BLOOMING HEART TREE -->
     <div id="scene-3" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-        
         <div class="tree-stage">
             <div class="sunray-bg" id="sunray-bg"></div>
             <svg class="tree-svg" viewBox="0 0 200 240">
@@ -557,12 +529,7 @@
 
     <!-- SCENE 4: REALISTIC BAKERY CAKE + ATTACHED CANDLE -->
     <div id="scene-4" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-        
-        <h3 style="font-size: 1.35rem; margin-top: 5px;">First things first 🎂</h3>
+        <h3 style="font-size: 1.35rem; margin-top: 15px;">First things first 🎂</h3>
 
         <div class="cake-svg-container">
             <svg class="cake-svg-el" viewBox="0 0 200 200">
@@ -611,12 +578,7 @@
 
     <!-- SCENE 5: BALLOONS (5 REASONS) -->
     <div id="scene-5" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-
-        <div>
+        <div style="margin-top: 15px;">
             <h3 style="font-size: 1.3rem;">Pop the balloons 🎈</h3>
             <p style="font-size: 0.76rem; color: rgba(255,255,255,0.7); margin-top: 2px;">5 balloons. Each one holds a reason you're special. Pop them all 🎈</p>
         </div>
@@ -657,12 +619,7 @@
 
     <!-- SCENE 5.5: A WALK DOWN MEMORY LANE (BLACK & WHITE PANDAS ON SKY-BLUE) -->
     <div id="scene-memory" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-
-        <div style="margin-top: 5px;">
+        <div style="margin-top: 15px;">
             <h3 style="font-size: 1.35rem; font-weight: 600;">A walk down memory lane ✨</h3>
             <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 2px;">swipe through 🤍</p>
         </div>
@@ -674,32 +631,25 @@
                 <div class="pin-clip" style="left: 80%;"></div>
             </div>
 
-            <!-- Horizontal Swipe Carousel of Cute B&W Pandas on Soft Sky-Blue -->
             <div class="polaroid-scroller">
-                
-                <!-- CARD 1: MALE IN BLACK SUIT & FEMALE WHITE PANDA -->
+                <!-- CARD 1 -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <!-- Male Black Panda (Tuxedo & Bowtie) -->
                             <g transform="translate(18, 24)">
                                 <circle cx="20" cy="20" r="10" fill="#18181b"/>
                                 <circle cx="56" cy="20" r="10" fill="#18181b"/>
                                 <ellipse cx="38" cy="40" rx="28" ry="24" fill="#ffffff"/>
-                                <!-- Black Panda Eye Patches -->
                                 <ellipse cx="28" cy="38" rx="6" ry="7" fill="#18181b"/>
                                 <ellipse cx="48" cy="38" rx="6" ry="7" fill="#18181b"/>
                                 <circle cx="29" cy="37" r="2" fill="#fff"/>
                                 <circle cx="47" cy="37" r="2" fill="#fff"/>
                                 <ellipse cx="38" cy="45" rx="3.5" ry="2.5" fill="#18181b"/>
-                                <!-- Tuxedo / Black Suit -->
                                 <path d="M 18,62 L 58,62 L 54,102 L 22,102 Z" fill="#09090b"/>
                                 <polygon points="32,62 44,62 38,76" fill="#ffffff"/>
                                 <polygon points="34,65 42,69 34,73" fill="#ef4444"/>
                                 <polygon points="42,65 34,69 42,73" fill="#ef4444"/>
                             </g>
-
-                            <!-- Female White Panda (Veil & Tiara) -->
                             <g transform="translate(74, 24)">
                                 <path d="M 15,18 Q 38,-3 60,18 Q 75,65 65,92 Q 38,102 10,92 Z" fill="rgba(255,255,255,0.75)"/>
                                 <circle cx="20" cy="20" r="10" fill="#18181b"/>
@@ -721,14 +671,11 @@
                     <p class="panda-caption">Celebrating You 🌸</p>
                 </div>
 
-                <!-- CARD 2: CUTE B&W HUGGING PANDAS -->
+                <!-- CARD 2 -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <!-- Floating Heart -->
                             <path d="M 80,24 C 72,12 55,18 55,30 C 55,42 80,55 80,55 C 80,55 105,42 105,30 C 105,18 88,12 80,24 Z" fill="#f43f5e"/>
-                            
-                            <!-- Female Panda (White) -->
                             <g transform="translate(32, 45)">
                                 <circle cx="16" cy="16" r="9" fill="#18181b"/>
                                 <circle cx="48" cy="16" r="9" fill="#18181b"/>
@@ -741,8 +688,6 @@
                                 <circle cx="46" cy="41" r="3" fill="#f43f5e" opacity="0.55"/>
                                 <path d="M 16,54 Q 32,72 48,54 L 45,88 Q 32,92 19,88 Z" fill="#ffffff"/>
                             </g>
-
-                            <!-- Male Panda (Black/Coat) Hugging tightly -->
                             <g transform="translate(68, 45)">
                                 <circle cx="16" cy="16" r="9" fill="#18181b"/>
                                 <circle cx="48" cy="16" r="9" fill="#18181b"/>
@@ -751,7 +696,6 @@
                                 <ellipse cx="40" cy="34" rx="5" ry="6" fill="#18181b"/>
                                 <circle cx="25" cy="33" r="1.8" fill="#fff"/>
                                 <circle cx="39" cy="33" r="1.8" fill="#fff"/>
-                                <!-- Hugging Arm -->
                                 <path d="M 12,50 Q -10,64 14,68 Q 24,58 16,50 Z" fill="#18181b"/>
                                 <path d="M 16,54 Q 32,72 48,54 L 45,88 Q 32,92 19,88 Z" fill="#18181b"/>
                             </g>
@@ -760,11 +704,10 @@
                     <p class="panda-caption">Best Friends Forever 🤍</p>
                 </div>
 
-                <!-- CARD 3: SHARING BIRTHDAY CAKE -->
+                <!-- CARD 3 -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <!-- Cake in Center -->
                             <g transform="translate(56, 75)">
                                 <polygon points="24,5 48,44 0,44" fill="#fb7185"/>
                                 <polygon points="24,5 29,12 24,19 19,27 24,34 14,44 0,44" fill="#ffffff"/>
@@ -772,8 +715,6 @@
                                 <ellipse cx="24" cy="-16" rx="3.5" ry="5" fill="#f43f5e"/>
                                 <circle cx="24" cy="5" r="4" fill="#e11d48"/>
                             </g>
-
-                            <!-- Male Black Panda Left -->
                             <g transform="translate(14, 58)">
                                 <circle cx="15" cy="15" r="8" fill="#18181b"/>
                                 <ellipse cx="26" cy="30" rx="20" ry="17" fill="#ffffff"/>
@@ -783,8 +724,6 @@
                                 <circle cx="32" cy="27" r="1.5" fill="#fff"/>
                                 <path d="M 12,46 L 36,46 L 34,75 L 14,75 Z" fill="#18181b"/>
                             </g>
-
-                            <!-- Female White Panda Right -->
                             <g transform="translate(98, 58)">
                                 <circle cx="33" cy="15" r="8" fill="#18181b"/>
                                 <ellipse cx="22" cy="30" rx="20" ry="17" fill="#ffffff"/>
@@ -800,16 +739,13 @@
                     <p class="panda-caption">Extra Sweet Today 🎂</p>
                 </div>
 
-                <!-- CARD 4: HAPPY DANCE PANDAS -->
+                <!-- CARD 4 -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <!-- Musical Sparks -->
                             <text x="35" y="32" font-size="18" fill="#f59e0b">♪</text>
                             <text x="112" y="28" font-size="22" fill="#ec4899">♫</text>
                             <circle cx="80" cy="24" r="3" fill="#06b6d4"/>
-
-                            <!-- Male Black Panda Dancing -->
                             <g transform="translate(24, 45) rotate(-6 35 40)">
                                 <circle cx="16" cy="16" r="9" fill="#18181b"/>
                                 <circle cx="48" cy="16" r="9" fill="#18181b"/>
@@ -822,8 +758,6 @@
                                 <ellipse cx="56" cy="28" rx="5" ry="10" fill="#18181b" transform="rotate(30 56 28)"/>
                                 <path d="M 16,52 L 48,52 L 44,85 L 20,85 Z" fill="#18181b"/>
                             </g>
-
-                            <!-- Female White Panda Dancing -->
                             <g transform="translate(86, 45) rotate(6 35 40)">
                                 <circle cx="16" cy="16" r="9" fill="#18181b"/>
                                 <circle cx="48" cy="16" r="9" fill="#18181b"/>
@@ -843,19 +777,16 @@
                     <p class="panda-caption">Pure Joy & Smiles ✨</p>
                 </div>
 
-                <!-- CARD 5: PERFECT REDESIGN (ZERO CUTS / NO AWKWARD ARM) -->
+                <!-- CARD 5 -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <!-- Golden Stars & Heart Balloon Floating Together -->
                             <path d="M 80,24 C 74,15 62,18 62,28 C 62,38 80,48 80,48 C 80,48 98,38 98,28 C 98,18 86,15 80,24 Z" fill="#f43f5e"/>
                             <line x1="80" y1="48" x2="80" y2="70" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2,2"/>
                             
-                            <!-- Little Sparkling Stars -->
                             <path d="M 35,28 L 37,32 L 41,32 L 38,34 L 39,38 L 35,36 L 31,38 L 32,34 L 29,32 L 33,32 Z" fill="#f59e0b"/>
                             <path d="M 125,28 L 127,32 L 131,32 L 128,34 L 129,38 L 125,36 L 121,38 L 122,34 L 119,32 L 123,32 Z" fill="#f59e0b"/>
 
-                            <!-- Male Black Panda (Sitting cozy left) -->
                             <g transform="translate(24, 52)">
                                 <circle cx="16" cy="16" r="8" fill="#18181b"/>
                                 <circle cx="44" cy="16" r="8" fill="#18181b"/>
@@ -865,14 +796,11 @@
                                 <circle cx="24" cy="31" r="1.6" fill="#fff"/>
                                 <circle cx="36" cy="31" r="1.6" fill="#fff"/>
                                 <ellipse cx="30" cy="38" rx="3" ry="2" fill="#18181b"/>
-                                <!-- Sitting Round Body in Black -->
                                 <ellipse cx="30" cy="62" rx="19" ry="16" fill="#18181b"/>
-                                <!-- Little Clean Paws in Front -->
                                 <circle cx="21" cy="58" r="4.5" fill="#18181b"/>
                                 <circle cx="39" cy="58" r="4.5" fill="#18181b"/>
                             </g>
 
-                            <!-- Female White Panda (Sitting cozy right, side by side) -->
                             <g transform="translate(76, 52)">
                                 <circle cx="16" cy="16" r="8" fill="#18181b"/>
                                 <circle cx="44" cy="16" r="8" fill="#18181b"/>
@@ -884,9 +812,7 @@
                                 <ellipse cx="30" cy="38" rx="3" ry="2" fill="#18181b"/>
                                 <circle cx="17" cy="38" r="3.2" fill="#f43f5e" opacity="0.6"/>
                                 <circle cx="43" cy="38" r="3.2" fill="#f43f5e" opacity="0.6"/>
-                                <!-- Sitting Round Body in White -->
                                 <ellipse cx="30" cy="62" rx="19" ry="16" fill="#ffffff"/>
-                                <!-- Little Clean Paws in Front -->
                                 <circle cx="21" cy="58" r="4.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
                                 <circle cx="39" cy="58" r="4.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
                             </g>
@@ -903,12 +829,7 @@
 
     <!-- SCENE 6: GOLDEN ENVELOPE -->
     <div id="scene-6" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-
-        <div style="margin-top: 15px;">
+        <div style="margin-top: 25px;">
             <h3 style="font-size: 1.4rem;">One last thing, Sonu...</h3>
             <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 4px;">Dipu wrote you a letter.</p>
         </div>
@@ -923,11 +844,6 @@
 
     <!-- SCENE 7: LETTER (OPTION 2 UPDATED) -->
     <div id="scene-7" class="screen">
-        <div class="top-nav">
-            <span class="preview-badge">👁 PREVIEW MODE</span>
-            <span style="font-size:1.1rem;">🔊</span>
-        </div>
-
         <div class="letter-scroll" id="letter-scroll-box">
             <h3>Dear Sonu,</h3>
             <div class="typewriter-body">
@@ -1027,7 +943,7 @@
             }
         }
 
-        // 1. Arrow Trigger
+        // 1. Arrow Trigger (Starts Audio & Shoots)
         function triggerArrow() {
             playMusic();
             const arrow = document.getElementById('flying-arrow');
@@ -1178,7 +1094,7 @@
             }, 600);
         }
 
-        // 6. Typewriter Effect for Letter (With Option 2)
+        // 6. Typewriter Effect for Letter (Option 2)
         const fullLetterParagraphs = [
             "I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍\n\n",
             "This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...\n\n",
