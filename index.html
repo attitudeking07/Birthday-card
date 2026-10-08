@@ -125,10 +125,7 @@
             justify-content: center;
             margin-bottom: 15px;
         }
-        .cake-svg-el {
-            width: 100%;
-            height: 100%;
-        }
+        .cake-svg-el { width: 100%; height: 100%; }
 
         #cake-base-plate {
             transform-origin: bottom center;
@@ -320,35 +317,116 @@
             letter-spacing: 0.3px;
         }
 
-        /* --- SCENE 6: ENVELOPE --- */
+        /* --- SCENE 6: REAL ENVELOPE OPENING & SLIDE-OUT ANIMATION --- */
         #scene-6 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
         }
-        .envelope-card {
+        .envelope-stage {
             position: relative;
-            width: 260px;
-            height: 170px;
-            background: #e09f3e;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            width: 280px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: auto;
+            cursor: pointer;
         }
+        .envelope-card {
+            position: relative;
+            width: 270px;
+            height: 175px;
+            background: #df9e38;
+            border-radius: 8px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+            overflow: visible;
+        }
+        /* The letter sheet that slides OUT */
+        .paper-sliding-sheet {
+            position: absolute;
+            top: 15px; left: 15px;
+            width: 240px; height: 145px;
+            background: #fffdf7;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 2;
+            transition: all 1.1s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .paper-sliding-sheet.slide-out {
+            transform: translateY(-110px) scale(1.06);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            z-index: 8;
+        }
+        .sheet-mini-line {
+            width: 75%; height: 3px;
+            background: #e2d9cc;
+            border-radius: 2px;
+            margin: 4px 0;
+        }
+
+        /* Floating elements when opening */
+        .pop-icons-cloud {
+            position: absolute;
+            top: 30px; left: 50%;
+            transform: translateX(-50%);
+            width: 200px; height: 80px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 9;
+            transition: opacity 0.5s ease;
+        }
+        .pop-icons-cloud.active {
+            opacity: 1;
+        }
+        .floating-pop-item {
+            position: absolute;
+            font-size: 1.4rem;
+            animation: floatPop 1.5s infinite ease-in-out alternate;
+        }
+        @keyframes floatPop {
+            0% { transform: translateY(0) scale(0.9); }
+            100% { transform: translateY(-12px) scale(1.15); }
+        }
+
+        /* Envelope pocket & side folds */
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 135px solid #d48e25;
+            border-right: 135px solid #d48e25;
+            border-bottom: 95px solid #c78018;
+            border-top: 80px solid transparent;
+            z-index: 5;
+            border-radius: 0 0 8px 8px;
+            pointer-events: none;
+        }
+
+        /* Top Flap */
         .envelope-lid {
             position: absolute;
             top: 0; left: 0;
             width: 0; height: 0;
-            border-left: 130px solid transparent;
-            border-right: 130px solid transparent;
-            border-top: 90px solid #d48b28;
+            border-left: 135px solid transparent;
+            border-right: 135px solid transparent;
+            border-top: 96px solid #e09f3e;
             transform-origin: top;
             transition: transform 0.6s ease;
+            z-index: 6;
         }
+        .envelope-lid.open {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Wax Seal */
         .gold-seal {
             position: absolute;
+            top: 72px; left: 50%;
+            transform: translate(-50%, -50%);
             width: 44px; height: 44px;
             background: #f4a261;
             border-radius: 50%;
@@ -359,7 +437,8 @@
             font-weight: 700;
             color: #fff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 10;
+            z-index: 7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         /* --- SCENE 7: LETTER (TYPEWRITER MODE) --- */
@@ -827,22 +906,46 @@
         <button class="cta-button" onclick="switchScene(6)" style="background: linear-gradient(135deg, #f77f00, #d62828);">Keep going ✨</button>
     </div>
 
-    <!-- SCENE 6: GOLDEN ENVELOPE -->
+    <!-- SCENE 6: REAL GOLDEN ENVELOPE OPENING & SLIDE-OUT -->
     <div id="scene-6" class="screen">
         <div style="margin-top: 25px;">
             <h3 style="font-size: 1.4rem;">One last thing, Sonu...</h3>
             <p style="font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 4px;">Dipu wrote you a letter.</p>
         </div>
 
-        <div class="envelope-card" onclick="openLetterEnvelope()">
-            <div class="envelope-lid" id="envelope-lid"></div>
-            <div class="gold-seal">S</div>
+        <div class="envelope-stage" onclick="openLetterEnvelope()">
+            <!-- Floating icons burst from envelope -->
+            <div class="pop-icons-cloud" id="pop-icons-cloud">
+                <span class="floating-pop-item" style="left:15%; top:10px;">🎂</span>
+                <span class="floating-pop-item" style="left:40%; top:-15px;">💛</span>
+                <span class="floating-pop-item" style="left:65%; top:5px;">🎈</span>
+                <span class="floating-pop-item" style="left:85%; top:-10px;">🎉</span>
+                <span class="floating-pop-item" style="left:50%; top:20px;">✨</span>
+            </div>
+
+            <div class="envelope-card">
+                <!-- Top Flap -->
+                <div class="envelope-lid" id="envelope-lid"></div>
+                <!-- Wax Seal -->
+                <div class="gold-seal" id="gold-seal">S</div>
+                
+                <!-- The Letter Paper inside that smoothly slides OUT -->
+                <div class="paper-sliding-sheet" id="paper-sliding-sheet">
+                    <span style="font-size:1.2rem; margin-bottom:4px;">🎂</span>
+                    <div class="sheet-mini-line" style="width:85%;"></div>
+                    <div class="sheet-mini-line"></div>
+                    <div class="sheet-mini-line" style="width:60%;"></div>
+                </div>
+
+                <!-- Bottom Pocket of Envelope -->
+                <div class="envelope-pocket"></div>
+            </div>
         </div>
 
-        <p class="hint-text">Tap to open your letter</p>
+        <p class="hint-text" id="envelope-tap-hint">Tap to open your letter</p>
     </div>
 
-    <!-- SCENE 7: LETTER (OPTION 2 UPDATED) -->
+    <!-- SCENE 7: LETTER (FULL READABLE TYPEWRITER) -->
     <div id="scene-7" class="screen">
         <div class="letter-scroll" id="letter-scroll-box">
             <h3>Dear Sonu,</h3>
@@ -1084,14 +1187,44 @@
             }
         }
 
-        // 5. Envelope Open
+        // 5. Envelope Opening & Paper Slide-Out Animation (Exact Screenshot 13)
+        let isOpeningEnvelope = false;
         function openLetterEnvelope() {
+            if (isOpeningEnvelope) return;
+            isOpeningEnvelope = true;
+
             playMusic();
-            document.getElementById('envelope-lid').style.transform = "rotateX(180deg)";
-            confetti({ particleCount: 35, spread: 50, origin: { y: 0.5 } });
+            const lid = document.getElementById('envelope-lid');
+            const seal = document.getElementById('gold-seal');
+            const paper = document.getElementById('paper-sliding-sheet');
+            const iconsCloud = document.getElementById('pop-icons-cloud');
+            const hint = document.getElementById('envelope-tap-hint');
+
+            hint.innerText = "Opening your letter...";
+
+            // Step 1: Pop seal & open top flap (0.4s)
+            seal.style.transform = 'translate(-50%, -50%) scale(0)';
+            seal.style.opacity = '0';
+            lid.classList.add('open');
+
+            // Step 2: Paper slides up from inside envelope + Floating hearts/cake burst (0.5s)
+            setTimeout(() => {
+                paper.classList.add('slide-out');
+                iconsCloud.classList.add('active');
+
+                confetti({
+                    particleCount: 45,
+                    spread: 60,
+                    origin: { y: 0.55 },
+                    colors: ['#ffd166', '#ff758f', '#ffffff']
+                });
+            }, 450);
+
+            // Step 3: Transition smoothly into Full Letter Screen (1.6s)
             setTimeout(() => {
                 switchScene(7);
-            }, 600);
+                isOpeningEnvelope = false;
+            }, 1600);
         }
 
         // 6. Typewriter Effect for Letter (Option 2)
