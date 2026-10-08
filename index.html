@@ -252,7 +252,7 @@
             line-height: 1.35;
         }
 
-        /* --- SCENE 5.5: CUTE MEMORY LANE (BUBU & DUDU PANDA POLAROIDS) --- */
+        /* --- SCENE 5.5: CUTE MEMORY LANE (BLACK & WHITE PANDAS ON SKY-BLUE) --- */
         #scene-memory {
             background: radial-gradient(circle at center, #230836 0%, #0d0118 100%);
             padding-bottom: 25px;
@@ -309,15 +309,17 @@
         .panda-card:nth-child(even) { transform: rotate(1.5deg); }
         .panda-card:hover { transform: scale(1.03) rotate(0deg); }
         
+        /* Pastel Sky-Blue Background Inside Frame */
         .panda-svg-frame {
             width: 100%;
             height: 180px;
             border-radius: 8px;
-            background: #fff5f7;
+            background: #e0f2fe; /* Clean Soft Sky-Blue */
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border: 1px solid #bae6fd;
         }
         .panda-svg-frame svg {
             width: 150px;
@@ -331,7 +333,7 @@
 
         .panda-caption {
             margin-top: 10px;
-            color: #3d2b3d;
+            color: #1e293b;
             font-size: 0.78rem;
             font-weight: 600;
             letter-spacing: 0.3px;
@@ -433,7 +435,7 @@
             transition: opacity 0.6s ease;
         }
 
-        /* --- SCENE 8: FINAL CELEBRATION (ULTRA CUTE CHIBI PRINCESS) --- */
+        /* --- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS) --- */
         #scene-8 {
             background: radial-gradient(circle at center, #3c094d 0%, #12001a 100%);
             justify-content: center;
@@ -653,7 +655,7 @@
         <button class="cta-button" id="next-from-balloons" style="display:none;" onclick="switchScene('memory')">Continue ✨</button>
     </div>
 
-    <!-- SCENE 5.5: A WALK DOWN MEMORY LANE (BUBU & DUDU EMBEDDED REAL PANDAS) -->
+    <!-- SCENE 5.5: A WALK DOWN MEMORY LANE (BLACK & WHITE PANDAS ON SKY-BLUE) -->
     <div id="scene-memory" class="screen">
         <div class="top-nav">
             <span class="preview-badge">👁 PREVIEW MODE</span>
@@ -672,182 +674,227 @@
                 <div class="pin-clip" style="left: 80%;"></div>
             </div>
 
+            <!-- Horizontal Swipe Carousel of Cute B&W Pandas on Soft Sky-Blue -->
             <div class="polaroid-scroller">
-                <!-- CARD 1 -->
+                
+                <!-- CARD 1: MALE IN BLACK SUIT & FEMALE WHITE PANDA -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <g transform="translate(15, 20)">
-                                <circle cx="20" cy="22" r="11" fill="#c48b68"/>
-                                <circle cx="56" cy="22" r="11" fill="#c48b68"/>
-                                <ellipse cx="38" cy="42" rx="28" ry="24" fill="#dfa07a"/>
-                                <circle cx="28" cy="40" r="3.5" fill="#2d1e18"/>
-                                <circle cx="48" cy="40" r="3.5" fill="#2d1e18"/>
-                                <ellipse cx="38" cy="47" rx="5" ry="3.5" fill="#fff"/>
-                                <circle cx="38" cy="46" r="2.5" fill="#2d1e18"/>
-                                <circle cx="23" cy="46" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <circle cx="53" cy="46" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <path d="M 18,65 L 58,65 L 54,105 L 22,105 Z" fill="#1d1e2c"/>
-                                <polygon points="32,65 44,65 38,80" fill="#ffffff"/>
-                                <polygon points="34,68 42,72 34,76" fill="#e63946"/>
-                                <polygon points="42,68 34,72 42,76" fill="#e63946"/>
+                            <!-- Male Black Panda (Tuxedo & Bowtie) -->
+                            <g transform="translate(18, 24)">
+                                <circle cx="20" cy="20" r="10" fill="#18181b"/>
+                                <circle cx="56" cy="20" r="10" fill="#18181b"/>
+                                <ellipse cx="38" cy="40" rx="28" ry="24" fill="#ffffff"/>
+                                <!-- Black Panda Eye Patches -->
+                                <ellipse cx="28" cy="38" rx="6" ry="7" fill="#18181b"/>
+                                <ellipse cx="48" cy="38" rx="6" ry="7" fill="#18181b"/>
+                                <circle cx="29" cy="37" r="2" fill="#fff"/>
+                                <circle cx="47" cy="37" r="2" fill="#fff"/>
+                                <ellipse cx="38" cy="45" rx="3.5" ry="2.5" fill="#18181b"/>
+                                <!-- Tuxedo / Black Suit -->
+                                <path d="M 18,62 L 58,62 L 54,102 L 22,102 Z" fill="#09090b"/>
+                                <polygon points="32,62 44,62 38,76" fill="#ffffff"/>
+                                <polygon points="34,65 42,69 34,73" fill="#ef4444"/>
+                                <polygon points="42,65 34,69 42,73" fill="#ef4444"/>
                             </g>
-                            <g transform="translate(75, 20)">
-                                <path d="M 15,20 Q 38,-2 60,20 Q 75,65 65,95 Q 38,105 10,95 Z" fill="rgba(255,255,255,0.7)"/>
-                                <circle cx="20" cy="22" r="11" fill="#333"/>
-                                <circle cx="56" cy="22" r="11" fill="#333"/>
-                                <ellipse cx="38" cy="42" rx="28" ry="24" fill="#ffffff"/>
-                                <ellipse cx="28" cy="40" rx="6" ry="7" fill="#333"/>
-                                <ellipse cx="48" cy="40" rx="6" ry="7" fill="#333"/>
-                                <circle cx="29" cy="39" r="2.5" fill="#fff"/>
-                                <circle cx="47" cy="39" r="2.5" fill="#fff"/>
-                                <ellipse cx="38" cy="46" rx="3.5" ry="2.5" fill="#333"/>
-                                <circle cx="22" cy="48" r="3.5" fill="#ff85a1" opacity="0.6"/>
-                                <circle cx="54" cy="48" r="3.5" fill="#ff85a1" opacity="0.6"/>
-                                <path d="M 20,65 L 56,65 L 62,105 L 14,105 Z" fill="#ffffff" stroke="#f1faee" stroke-width="1.5"/>
-                                <circle cx="15" cy="80" r="5" fill="#ff758f"/>
-                                <circle cx="18" cy="74" r="5" fill="#ffd166"/>
-                                <circle cx="22" cy="80" r="5" fill="#a2d2ff"/>
+
+                            <!-- Female White Panda (Veil & Tiara) -->
+                            <g transform="translate(74, 24)">
+                                <path d="M 15,18 Q 38,-3 60,18 Q 75,65 65,92 Q 38,102 10,92 Z" fill="rgba(255,255,255,0.75)"/>
+                                <circle cx="20" cy="20" r="10" fill="#18181b"/>
+                                <circle cx="56" cy="20" r="10" fill="#18181b"/>
+                                <ellipse cx="38" cy="40" rx="28" ry="24" fill="#ffffff"/>
+                                <ellipse cx="28" cy="38" rx="6" ry="7" fill="#18181b"/>
+                                <ellipse cx="48" cy="38" rx="6" ry="7" fill="#18181b"/>
+                                <circle cx="29" cy="37" r="2" fill="#fff"/>
+                                <circle cx="47" cy="37" r="2" fill="#fff"/>
+                                <circle cx="21" cy="46" r="3.5" fill="#f43f5e" opacity="0.5"/>
+                                <circle cx="55" cy="46" r="3.5" fill="#f43f5e" opacity="0.5"/>
+                                <path d="M 20,62 L 56,62 L 62,102 L 14,102 Z" fill="#ffffff"/>
+                                <circle cx="16" cy="76" r="4.5" fill="#fb7185"/>
+                                <circle cx="19" cy="70" r="4.5" fill="#fef08a"/>
+                                <circle cx="23" cy="76" r="4.5" fill="#38bdf8"/>
                             </g>
                         </svg>
                     </div>
                     <p class="panda-caption">Celebrating You 🌸</p>
                 </div>
 
-                <!-- CARD 2 -->
+                <!-- CARD 2: CUTE B&W HUGGING PANDAS -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <path d="M 80,25 C 72,12 55,18 55,30 C 55,42 80,55 80,55 C 80,55 105,42 105,30 C 105,18 88,12 80,25 Z" fill="#ff4d6d"/>
-                            <g transform="translate(30, 45)">
-                                <circle cx="18" cy="18" r="10" fill="#333"/>
-                                <circle cx="50" cy="18" r="10" fill="#333"/>
-                                <ellipse cx="34" cy="38" rx="26" ry="22" fill="#fff"/>
-                                <ellipse cx="26" cy="36" rx="5" ry="6" fill="#333"/>
-                                <ellipse cx="42" cy="36" rx="5" ry="6" fill="#333"/>
-                                <circle cx="27" cy="35" r="2" fill="#fff"/>
-                                <circle cx="41" cy="35" r="2" fill="#fff"/>
-                                <circle cx="20" cy="43" r="3.5" fill="#ff9ebb" opacity="0.7"/>
-                                <circle cx="48" cy="43" r="3.5" fill="#ff9ebb" opacity="0.7"/>
-                                <path d="M 16,56 Q 34,75 52,56 L 48,90 Q 34,95 20,90 Z" fill="#fff"/>
+                            <!-- Floating Heart -->
+                            <path d="M 80,24 C 72,12 55,18 55,30 C 55,42 80,55 80,55 C 80,55 105,42 105,30 C 105,18 88,12 80,24 Z" fill="#f43f5e"/>
+                            
+                            <!-- Female Panda (White) -->
+                            <g transform="translate(32, 45)">
+                                <circle cx="16" cy="16" r="9" fill="#18181b"/>
+                                <circle cx="48" cy="16" r="9" fill="#18181b"/>
+                                <ellipse cx="32" cy="36" rx="25" ry="21" fill="#ffffff"/>
+                                <ellipse cx="24" cy="34" rx="5" ry="6" fill="#18181b"/>
+                                <ellipse cx="40" cy="34" rx="5" ry="6" fill="#18181b"/>
+                                <circle cx="25" cy="33" r="1.8" fill="#fff"/>
+                                <circle cx="39" cy="33" r="1.8" fill="#fff"/>
+                                <circle cx="18" cy="41" r="3" fill="#f43f5e" opacity="0.55"/>
+                                <circle cx="46" cy="41" r="3" fill="#f43f5e" opacity="0.55"/>
+                                <path d="M 16,54 Q 32,72 48,54 L 45,88 Q 32,92 19,88 Z" fill="#ffffff"/>
                             </g>
-                            <g transform="translate(65, 45)">
-                                <circle cx="18" cy="18" r="10" fill="#b07d62"/>
-                                <circle cx="50" cy="18" r="10" fill="#b07d62"/>
-                                <ellipse cx="34" cy="38" rx="26" ry="22" fill="#d49b7a"/>
-                                <circle cx="26" cy="36" r="3.5" fill="#2d1e18"/>
-                                <circle cx="42" cy="36" r="3.5" fill="#2d1e18"/>
-                                <circle cx="20" cy="43" r="3.5" fill="#ff9ebb" opacity="0.7"/>
-                                <circle cx="48" cy="43" r="3.5" fill="#ff9ebb" opacity="0.7"/>
-                                <path d="M 12,50 Q -10,65 15,70 Q 25,60 18,50 Z" fill="#b07d62"/>
-                                <path d="M 16,56 Q 34,75 52,56 L 48,90 Q 34,95 20,90 Z" fill="#d49b7a"/>
+
+                            <!-- Male Panda (Black/Coat) Hugging tightly -->
+                            <g transform="translate(68, 45)">
+                                <circle cx="16" cy="16" r="9" fill="#18181b"/>
+                                <circle cx="48" cy="16" r="9" fill="#18181b"/>
+                                <ellipse cx="32" cy="36" rx="25" ry="21" fill="#ffffff"/>
+                                <ellipse cx="24" cy="34" rx="5" ry="6" fill="#18181b"/>
+                                <ellipse cx="40" cy="34" rx="5" ry="6" fill="#18181b"/>
+                                <circle cx="25" cy="33" r="1.8" fill="#fff"/>
+                                <circle cx="39" cy="33" r="1.8" fill="#fff"/>
+                                <!-- Hugging Arm -->
+                                <path d="M 12,50 Q -10,64 14,68 Q 24,58 16,50 Z" fill="#18181b"/>
+                                <path d="M 16,54 Q 32,72 48,54 L 45,88 Q 32,92 19,88 Z" fill="#18181b"/>
                             </g>
                         </svg>
                     </div>
                     <p class="panda-caption">Best Friends Forever 🤍</p>
                 </div>
 
-                <!-- CARD 3 -->
+                <!-- CARD 3: SHARING BIRTHDAY CAKE -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <g transform="translate(55, 75)">
-                                <polygon points="25,5 50,45 0,45" fill="#ff8fa3"/>
-                                <polygon points="25,5 30,12 25,20 20,28 25,35 15,45 0,45" fill="#ffffff"/>
-                                <rect x="23" y="-12" width="4" height="18" fill="#ffd166"/>
-                                <ellipse cx="25" cy="-16" rx="3.5" ry="5" fill="#ff758f"/>
-                                <circle cx="25" cy="5" r="4.5" fill="#d90429"/>
+                            <!-- Cake in Center -->
+                            <g transform="translate(56, 75)">
+                                <polygon points="24,5 48,44 0,44" fill="#fb7185"/>
+                                <polygon points="24,5 29,12 24,19 19,27 24,34 14,44 0,44" fill="#ffffff"/>
+                                <rect x="22" y="-12" width="4" height="18" fill="#fde047"/>
+                                <ellipse cx="24" cy="-16" rx="3.5" ry="5" fill="#f43f5e"/>
+                                <circle cx="24" cy="5" r="4" fill="#e11d48"/>
                             </g>
-                            <g transform="translate(15, 60)">
-                                <circle cx="15" cy="15" r="8" fill="#333"/>
-                                <ellipse cx="26" cy="30" rx="20" ry="17" fill="#fff"/>
-                                <circle cx="20" cy="28" r="3" fill="#333"/>
-                                <circle cx="32" cy="28" r="3" fill="#333"/>
-                                <circle cx="16" cy="34" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <ellipse cx="26" cy="34" rx="2" ry="1.5" fill="#333"/>
+
+                            <!-- Male Black Panda Left -->
+                            <g transform="translate(14, 58)">
+                                <circle cx="15" cy="15" r="8" fill="#18181b"/>
+                                <ellipse cx="26" cy="30" rx="20" ry="17" fill="#ffffff"/>
+                                <ellipse cx="20" cy="28" rx="4" ry="5" fill="#18181b"/>
+                                <ellipse cx="32" cy="28" rx="4" ry="5" fill="#18181b"/>
+                                <circle cx="20" cy="27" r="1.5" fill="#fff"/>
+                                <circle cx="32" cy="27" r="1.5" fill="#fff"/>
+                                <path d="M 12,46 L 36,46 L 34,75 L 14,75 Z" fill="#18181b"/>
                             </g>
-                            <g transform="translate(95, 60)">
-                                <circle cx="35" cy="15" r="8" fill="#a06e52"/>
-                                <ellipse cx="24" cy="30" rx="20" ry="17" fill="#dfa07a"/>
-                                <circle cx="18" cy="28" r="3" fill="#2d1e18"/>
-                                <circle cx="30" cy="28" r="3" fill="#2d1e18"/>
-                                <circle cx="34" cy="34" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <ellipse cx="24" cy="34" rx="2" ry="1.5" fill="#2d1e18"/>
+
+                            <!-- Female White Panda Right -->
+                            <g transform="translate(98, 58)">
+                                <circle cx="33" cy="15" r="8" fill="#18181b"/>
+                                <ellipse cx="22" cy="30" rx="20" ry="17" fill="#ffffff"/>
+                                <ellipse cx="16" cy="28" rx="4" ry="5" fill="#18181b"/>
+                                <ellipse cx="28" cy="28" rx="4" ry="5" fill="#18181b"/>
+                                <circle cx="16" cy="27" r="1.5" fill="#fff"/>
+                                <circle cx="28" cy="27" r="1.5" fill="#fff"/>
+                                <circle cx="32" cy="34" r="3" fill="#f43f5e" opacity="0.6"/>
+                                <path d="M 10,46 L 34,46 L 32,75 L 12,75 Z" fill="#ffffff"/>
                             </g>
                         </svg>
                     </div>
                     <p class="panda-caption">Extra Sweet Today 🎂</p>
                 </div>
 
-                <!-- CARD 4 -->
+                <!-- CARD 4: HAPPY DANCE PANDAS -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <text x="35" y="35" font-size="18" fill="#ffd166">♪</text>
-                            <text x="110" y="30" font-size="22" fill="#ff758f">♫</text>
-                            <circle cx="80" cy="25" r="3" fill="#4cc9f0"/>
-                            <circle cx="65" cy="40" r="2.5" fill="#f72585"/>
-                            <g transform="translate(25, 45) rotate(-8 35 40)">
-                                <circle cx="16" cy="16" r="9" fill="#333"/>
-                                <circle cx="48" cy="16" r="9" fill="#333"/>
-                                <ellipse cx="32" cy="36" rx="23" ry="19" fill="#fff"/>
-                                <ellipse cx="25" cy="34" rx="4.5" ry="5.5" fill="#333"/>
-                                <ellipse cx="39" cy="34" rx="4.5" ry="5.5" fill="#333"/>
+                            <!-- Musical Sparks -->
+                            <text x="35" y="32" font-size="18" fill="#f59e0b">♪</text>
+                            <text x="112" y="28" font-size="22" fill="#ec4899">♫</text>
+                            <circle cx="80" cy="24" r="3" fill="#06b6d4"/>
+
+                            <!-- Male Black Panda Dancing -->
+                            <g transform="translate(24, 45) rotate(-6 35 40)">
+                                <circle cx="16" cy="16" r="9" fill="#18181b"/>
+                                <circle cx="48" cy="16" r="9" fill="#18181b"/>
+                                <ellipse cx="32" cy="36" rx="23" ry="19" fill="#ffffff"/>
+                                <ellipse cx="25" cy="34" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <ellipse cx="39" cy="34" rx="4.5" ry="5.5" fill="#18181b"/>
                                 <circle cx="26" cy="33" r="1.8" fill="#fff"/>
                                 <circle cx="38" cy="33" r="1.8" fill="#fff"/>
-                                <path d="M 29,40 Q 32,43 35,40" fill="none" stroke="#333" stroke-width="1.5"/>
-                                <ellipse cx="8" cy="28" rx="5" ry="10" fill="#333" transform="rotate(-30 8 28)"/>
-                                <ellipse cx="56" cy="28" rx="5" ry="10" fill="#333" transform="rotate(30 56 28)"/>
-                                <path d="M 16,52 L 48,52 L 44,85 L 20,85 Z" fill="#fff"/>
+                                <ellipse cx="8" cy="28" rx="5" ry="10" fill="#18181b" transform="rotate(-30 8 28)"/>
+                                <ellipse cx="56" cy="28" rx="5" ry="10" fill="#18181b" transform="rotate(30 56 28)"/>
+                                <path d="M 16,52 L 48,52 L 44,85 L 20,85 Z" fill="#18181b"/>
                             </g>
-                            <g transform="translate(85, 45) rotate(8 35 40)">
-                                <circle cx="16" cy="16" r="9" fill="#b07d62"/>
-                                <circle cx="48" cy="16" r="9" fill="#b07d62"/>
-                                <ellipse cx="32" cy="36" rx="23" ry="19" fill="#e0a37e"/>
-                                <circle cx="25" cy="34" r="3.5" fill="#2d1e18"/>
-                                <circle cx="39" cy="34" r="3.5" fill="#2d1e18"/>
-                                <circle cx="19" cy="40" r="3" fill="#ffb4a2" opacity="0.7"/>
-                                <circle cx="45" cy="40" r="3" fill="#ffb4a2" opacity="0.7"/>
-                                <ellipse cx="8" cy="28" rx="5" ry="10" fill="#b07d62" transform="rotate(-30 8 28)"/>
-                                <ellipse cx="56" cy="28" rx="5" ry="10" fill="#b07d62" transform="rotate(30 56 28)"/>
-                                <path d="M 16,52 L 48,52 L 44,85 L 20,85 Z" fill="#e0a37e"/>
+
+                            <!-- Female White Panda Dancing -->
+                            <g transform="translate(86, 45) rotate(6 35 40)">
+                                <circle cx="16" cy="16" r="9" fill="#18181b"/>
+                                <circle cx="48" cy="16" r="9" fill="#18181b"/>
+                                <ellipse cx="32" cy="36" rx="23" ry="19" fill="#ffffff"/>
+                                <ellipse cx="25" cy="34" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <ellipse cx="39" cy="34" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <circle cx="26" cy="33" r="1.8" fill="#fff"/>
+                                <circle cx="38" cy="33" r="1.8" fill="#fff"/>
+                                <circle cx="19" cy="40" r="3" fill="#f43f5e" opacity="0.6"/>
+                                <circle cx="45" cy="40" r="3" fill="#f43f5e" opacity="0.6"/>
+                                <ellipse cx="8" cy="28" rx="5" ry="10" fill="#ffffff" transform="rotate(-30 8 28)"/>
+                                <ellipse cx="56" cy="28" rx="5" ry="10" fill="#ffffff" transform="rotate(30 56 28)"/>
+                                <path d="M 16,52 L 48,52 L 44,85 L 20,85 Z" fill="#ffffff"/>
                             </g>
                         </svg>
                     </div>
                     <p class="panda-caption">Pure Joy & Smiles ✨</p>
                 </div>
 
-                <!-- CARD 5 -->
+                <!-- CARD 5: PERFECT REDESIGN (ZERO CUTS / NO AWKWARD ARM) -->
                 <div class="panda-card">
                     <div class="panda-svg-frame">
                         <svg viewBox="0 0 160 160">
-                            <path d="M 75,20 L 77,25 L 82,25 L 78,28 L 80,33 L 75,30 L 70,33 L 72,28 L 68,25 L 73,25 Z" fill="#ffd166"/>
-                            <path d="M 120,40 L 121,43 L 124,43 L 122,45 L 123,48 L 120,46 L 117,48 L 118,45 L 116,43 L 119,43 Z" fill="#ffd166"/>
-                            <g transform="translate(35, 60)">
-                                <circle cx="18" cy="16" r="8" fill="#333"/>
-                                <circle cx="46" cy="16" r="8" fill="#333"/>
-                                <ellipse cx="32" cy="34" rx="22" ry="18" fill="#fff"/>
-                                <ellipse cx="26" cy="32" rx="4" ry="5" fill="#333"/>
-                                <ellipse cx="38" cy="32" rx="4" ry="5" fill="#333"/>
-                                <circle cx="27" cy="31" r="1.5" fill="#fff"/>
-                                <circle cx="37" cy="31" r="1.5" fill="#fff"/>
-                                <ellipse cx="32" cy="37" rx="3" ry="2" fill="#333"/>
-                                <circle cx="21" cy="37" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <circle cx="43" cy="37" r="3" fill="#ffb4a2" opacity="0.6"/>
-                                <ellipse cx="32" cy="62" rx="20" ry="16" fill="#fff"/>
+                            <!-- Golden Stars & Heart Balloon Floating Together -->
+                            <path d="M 80,24 C 74,15 62,18 62,28 C 62,38 80,48 80,48 C 80,48 98,38 98,28 C 98,18 86,15 80,24 Z" fill="#f43f5e"/>
+                            <line x1="80" y1="48" x2="80" y2="70" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="2,2"/>
+                            
+                            <!-- Little Sparkling Stars -->
+                            <path d="M 35,28 L 37,32 L 41,32 L 38,34 L 39,38 L 35,36 L 31,38 L 32,34 L 29,32 L 33,32 Z" fill="#f59e0b"/>
+                            <path d="M 125,28 L 127,32 L 131,32 L 128,34 L 129,38 L 125,36 L 121,38 L 122,34 L 119,32 L 123,32 Z" fill="#f59e0b"/>
+
+                            <!-- Male Black Panda (Sitting cozy left) -->
+                            <g transform="translate(24, 52)">
+                                <circle cx="16" cy="16" r="8" fill="#18181b"/>
+                                <circle cx="44" cy="16" r="8" fill="#18181b"/>
+                                <ellipse cx="30" cy="34" rx="22" ry="18" fill="#ffffff"/>
+                                <ellipse cx="23" cy="32" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <ellipse cx="37" cy="32" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <circle cx="24" cy="31" r="1.6" fill="#fff"/>
+                                <circle cx="36" cy="31" r="1.6" fill="#fff"/>
+                                <ellipse cx="30" cy="38" rx="3" ry="2" fill="#18181b"/>
+                                <!-- Sitting Round Body in Black -->
+                                <ellipse cx="30" cy="62" rx="19" ry="16" fill="#18181b"/>
+                                <!-- Little Clean Paws in Front -->
+                                <circle cx="21" cy="58" r="4.5" fill="#18181b"/>
+                                <circle cx="39" cy="58" r="4.5" fill="#18181b"/>
                             </g>
-                            <g transform="translate(80, 45)">
-                                <circle cx="36" cy="16" r="8.5" fill="#b07d62"/>
-                                <ellipse cx="26" cy="32" rx="20" ry="16" fill="#dfa07a"/>
-                                <circle cx="20" cy="30" r="3" fill="#2d1e18"/>
-                                <circle cx="32" cy="30" r="3" fill="#2d1e18"/>
-                                <path d="M 12,38 C -5,35 -15,48 -22,46 C -20,42 -10,32 5,32 Z" fill="#b07d62"/>
-                                <ellipse cx="26" cy="62" rx="18" ry="18" fill="#dfa07a"/>
+
+                            <!-- Female White Panda (Sitting cozy right, side by side) -->
+                            <g transform="translate(76, 52)">
+                                <circle cx="16" cy="16" r="8" fill="#18181b"/>
+                                <circle cx="44" cy="16" r="8" fill="#18181b"/>
+                                <ellipse cx="30" cy="34" rx="22" ry="18" fill="#ffffff"/>
+                                <ellipse cx="23" cy="32" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <ellipse cx="37" cy="32" rx="4.5" ry="5.5" fill="#18181b"/>
+                                <circle cx="24" cy="31" r="1.6" fill="#fff"/>
+                                <circle cx="36" cy="31" r="1.6" fill="#fff"/>
+                                <ellipse cx="30" cy="38" rx="3" ry="2" fill="#18181b"/>
+                                <circle cx="17" cy="38" r="3.2" fill="#f43f5e" opacity="0.6"/>
+                                <circle cx="43" cy="38" r="3.2" fill="#f43f5e" opacity="0.6"/>
+                                <!-- Sitting Round Body in White -->
+                                <ellipse cx="30" cy="62" rx="19" ry="16" fill="#ffffff"/>
+                                <!-- Little Clean Paws in Front -->
+                                <circle cx="21" cy="58" r="4.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+                                <circle cx="39" cy="58" r="4.5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
                             </g>
                         </svg>
                     </div>
                     <p class="panda-caption">Always in your corner 💫</p>
                 </div>
+
             </div>
         </div>
 
@@ -901,62 +948,46 @@
             <h2 style="font-size: 2.2rem; color: #ffd166; font-family: 'Dancing Script', cursive;">Sonu!</h2>
         </div>
 
-        <!-- NEW GORGEOUS CHIBI FAIRY-TALE PRINCESS -->
         <div class="princess-frame">
             <svg class="princess-vector" viewBox="0 0 160 160">
-                <!-- Sparkle Fairy Dust -->
                 <circle cx="25" cy="35" r="2.5" fill="#ffd166"/>
                 <circle cx="135" cy="40" r="2" fill="#ffd166"/>
                 <circle cx="18" cy="95" r="2" fill="#ff758f"/>
                 <circle cx="142" cy="100" r="3" fill="#ff758f"/>
                 
-                <!-- Back Hair Volume (Long Wavy Caramel Brunette) -->
                 <path d="M 40,70 Q 25,115 32,145 Q 80,155 128,145 Q 135,115 120,70 Z" fill="#7f4f24"/>
                 <path d="M 48,85 Q 38,120 44,142 Q 80,150 116,142 Q 122,120 112,85 Z" fill="#936639"/>
 
-                <!-- Body & Princess Ball Gown -->
                 <path d="M 64,115 L 96,115 L 115,155 Q 80,160 45,155 Z" fill="#ff8fa3"/>
-                <!-- Gown Ruffles & Pearls -->
                 <path d="M 52,142 Q 80,152 108,142 Q 80,158 52,142 Z" fill="#ffccd5"/>
                 <ellipse cx="80" cy="116" rx="14" ry="4" fill="#ffffff" opacity="0.8"/>
                 <path d="M 68,118 Q 80,126 92,118" stroke="#ffd166" stroke-width="2" fill="none"/>
                 
-                <!-- Neck & Cute Face (Soft Porcelain Chibi) -->
                 <rect x="74" y="98" width="12" height="12" fill="#fde2e4" rx="3"/>
                 <ellipse cx="80" cy="74" rx="38" ry="32" fill="#ffecd1"/>
 
-                <!-- Rosy Soft Cheeks -->
                 <ellipse cx="56" cy="80" rx="7.5" ry="4.5" fill="#ff758f" opacity="0.55"/>
                 <ellipse cx="104" cy="80" rx="7.5" ry="4.5" fill="#ff758f" opacity="0.55"/>
 
-                <!-- Big Glossy Anime Chibi Eyes -->
-                <!-- Left Eye -->
                 <ellipse cx="62" cy="73" rx="7.5" ry="10" fill="#2d0036"/>
                 <circle cx="60" cy="69" r="3.2" fill="#ffffff"/>
                 <circle cx="65.5" cy="76" r="1.6" fill="#ffffff"/>
                 <path d="M 54,64 Q 62,60 70,64" stroke="#4a154b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                 
-                <!-- Right Eye -->
                 <ellipse cx="98" cy="73" rx="7.5" ry="10" fill="#2d0036"/>
                 <circle cx="96" cy="69" r="3.2" fill="#ffffff"/>
                 <circle cx="101.5" cy="76" r="1.6" fill="#ffffff"/>
                 <path d="M 90,64 Q 98,60 106,64" stroke="#4a154b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
 
-                <!-- Sweet Cute Smile -->
                 <path d="M 76,83 Q 80,88 84,83" stroke="#d90429" stroke-width="2" stroke-linecap="round" fill="none"/>
 
-                <!-- Front Bangs Hair (Soft Curled Layers) -->
                 <path d="M 42,66 C 48,45 60,42 74,48 C 84,42 108,44 118,66 C 114,56 102,52 92,54 C 80,50 64,52 42,66 Z" fill="#936639"/>
-                <!-- Side Pigtail Tendrils -->
                 <path d="M 42,66 Q 34,92 40,118 Q 45,95 48,74 Z" fill="#7f4f24"/>
                 <path d="M 118,66 Q 126,92 120,118 Q 115,95 112,74 Z" fill="#7f4f24"/>
 
-                <!-- Royal Gold Princess Tiara with Ruby & Gems -->
                 <path d="M 64,48 L 70,36 L 80,42 L 90,36 L 96,48 Z" fill="#ffd166" stroke="#f4a261" stroke-width="1.2"/>
-                <!-- Center Ruby Gem -->
                 <ellipse cx="80" cy="41" rx="3.5" ry="4.5" fill="#e63946"/>
                 <circle cx="79" cy="39.5" r="1.2" fill="#ffffff"/>
-                <!-- Side Sparkle Gems -->
                 <circle cx="70" cy="37" r="2.2" fill="#4cc9f0"/>
                 <circle cx="90" cy="37" r="2.2" fill="#4cc9f0"/>
                 <circle cx="64" cy="48" r="1.8" fill="#ffd166"/>
