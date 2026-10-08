@@ -252,6 +252,77 @@
             line-height: 1.35;
         }
 
+        /* --- SCENE 5.5: CUTE MEMORY LANE (BUBU & DUDU PANDA POLAROIDS) --- */
+        #scene-memory {
+            background: radial-gradient(circle at center, #230836 0%, #0d0118 100%);
+            padding-bottom: 25px;
+        }
+        .memory-track {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .string-wire {
+            width: 90%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.25);
+            margin-bottom: -10px;
+            position: relative;
+            z-index: 2;
+        }
+        .pin-clip {
+            position: absolute;
+            top: -6px;
+            width: 12px;
+            height: 14px;
+            background: #ffd166;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        .polaroid-scroller {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 15px 25px 20px 25px;
+            width: 100%;
+            max-width: 360px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .polaroid-scroller::-webkit-scrollbar { display: none; }
+        .panda-card {
+            flex: 0 0 190px;
+            scroll-snap-align: center;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 10px 10px 18px 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+        .panda-card:nth-child(even) { transform: rotate(1.5deg); }
+        .panda-card:hover { transform: scale(1.03) rotate(0deg); }
+        .panda-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #fdf0f2;
+        }
+        .panda-caption {
+            margin-top: 10px;
+            color: #3d2b3d;
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
         /* --- SCENE 6: ENVELOPE --- */
         #scene-6 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
@@ -565,7 +636,65 @@
             </div>
         </div>
 
-        <button class="cta-button" id="next-from-balloons" style="display:none;" onclick="switchScene(6)">Continue ✨</button>
+        <!-- Takes to the Cute Panda Memory Lane -->
+        <button class="cta-button" id="next-from-balloons" style="display:none;" onclick="switchScene('memory')">Continue ✨</button>
+    </div>
+
+    <!-- SCENE 5.5: A WALK DOWN MEMORY LANE (BUBU & DUDU PANDA POLAROIDS) -->
+    <div id="scene-memory" class="screen">
+        <div class="top-nav">
+            <span class="preview-badge">👁 PREVIEW MODE</span>
+            <span style="font-size:1.1rem;">🔊</span>
+        </div>
+
+        <div style="margin-top: 5px;">
+            <h3 style="font-size: 1.35rem; font-weight: 600;">A walk down memory lane ✨</h3>
+            <p style="font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 2px;">swipe through 🤍</p>
+        </div>
+
+        <div class="memory-track">
+            <div class="string-wire">
+                <div class="pin-clip" style="left: 15%;"></div>
+                <div class="pin-clip" style="left: 48%;"></div>
+                <div class="pin-clip" style="left: 80%;"></div>
+            </div>
+
+            <!-- Horizontal Swipe Carousel of Cute Bubu & Dudu / Panda moments -->
+            <div class="polaroid-scroller">
+                <!-- Card 1: Bubu & Dudu Wedding / Suit Party (Exact screenshot match) -->
+                <div class="panda-card">
+                    <img src="https://media.tenor.com/Fw5R6V23ZJIAAAAM/bubu-dudu-bubu.gif" alt="Cute Panda Party">
+                    <p class="panda-caption">Celebrating You 🌸</p>
+                </div>
+
+                <!-- Card 2: Bubu & Dudu Warm Hug -->
+                <div class="panda-card">
+                    <img src="https://media.tenor.com/2K1z9_p_n7QAAAAM/bubu-dudu-hug.gif" alt="Cute Panda Hug">
+                    <p class="panda-caption">Best Friends Forever 🤍</p>
+                </div>
+
+                <!-- Card 3: Eating Cake Together -->
+                <div class="panda-card">
+                    <img src="https://media.tenor.com/qUom1T1rM_EAAAAM/bubu-dudu-cake.gif" alt="Cute Panda Cake">
+                    <p class="panda-caption">Extra Sweet Today 🎂</p>
+                </div>
+
+                <!-- Card 4: Happy Dance -->
+                <div class="panda-card">
+                    <img src="https://media.tenor.com/w2Y9Z7T3kO0AAAAM/bubu-dudu-dance.gif" alt="Cute Panda Dancing">
+                    <p class="panda-caption">Pure Joy & Smiles ✨</p>
+                </div>
+
+                <!-- Card 5: Head Pat / Love -->
+                <div class="panda-card">
+                    <img src="https://media.tenor.com/eBf7p_s2o8YAAAAM/bubu-dudu-pat.gif" alt="Cute Panda Pat">
+                    <p class="panda-caption">Always in your corner 💫</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keep going button (Takes to Envelope) -->
+        <button class="cta-button" onclick="switchScene(6)" style="background: linear-gradient(135deg, #f77f00, #d62828);">Keep going ✨</button>
     </div>
 
     <!-- SCENE 6: GOLDEN ENVELOPE -->
@@ -819,7 +948,7 @@
             }, 600);
         }
 
-        // 6. Typewriter Effect for Letter (With Selected Option 2)
+        // 6. Typewriter Effect for Letter (With Option 2)
         const fullLetterParagraphs = [
             "I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍\n\n",
             "This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...\n\n",
