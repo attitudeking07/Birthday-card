@@ -76,7 +76,7 @@
             gap: 15px;
         }
 
-        /* --- SCENE 3: MAGICAL NIGHT PURPLE HEART TREE WITH SKYSHOTS --- */
+        /* --- SCENE 3: PURE DENSE HEART BLOOM (NO VISIBLE BRANCHES) --- */
         #scene-3 {
             background: radial-gradient(circle at 50% 30%, #2b0b47 0%, #160326 65%, #080012 100%);
             color: #ffffff;
@@ -90,23 +90,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .tree-svg { width: 100%; height: 100%; z-index: 3; }
         .trunk-path {
             stroke: #d4a373;
             stroke-width: 4.5;
             fill: none;
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
-            transition: stroke-dashoffset 1.8s ease-in-out;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+            stroke-linecap: round;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            transition: stroke-dashoffset 1.4s ease-in-out;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
         }
         .heart-leaf {
             transform: scale(0);
             transform-origin: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 2px 6px rgba(255, 117, 143, 0.4));
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 2px 5px rgba(255, 105, 180, 0.45));
         }
         .sunray-bg {
             position: absolute;
@@ -119,7 +120,6 @@
             z-index: 1;
         }
 
-        /* Floating Drift Hearts (Hawa me udne wale hearts) */
         .drift-heart {
             position: absolute;
             font-size: 14px;
@@ -598,19 +598,18 @@
         <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3: REAL AUTO-BLOOMING NIGHT HEART TREE (PURPLE SKYSHOTS + 60+ HEARTS) -->
+    <!-- SCENE 3: PURE DENSE HEART BLOOM (NO VISIBLE BRANCHES, CLEAN STEM) -->
     <div id="scene-3" class="screen">
         <div class="tree-stage">
             <div class="sunray-bg" id="sunray-bg"></div>
             
-            <!-- Drift particles container (Hawa me udne wale hearts) -->
             <div id="drift-container" style="position:absolute; width:100%; height:100%; pointer-events:none;"></div>
 
             <svg class="tree-svg" viewBox="0 0 240 270">
-                <!-- Sturdy trunk branching into lush canopy -->
-                <path id="tree-path" class="trunk-path" d="M 120,250 L 120,140 M 120,170 Q 75,130 60,85 M 120,170 Q 165,130 180,85 M 120,140 Q 90,105 105,65 M 120,140 Q 150,105 135,65 M 120,195 Q 45,150 40,115 M 120,195 Q 195,150 200,115"/>
+                <!-- Only clean vertical slim trunk at the bottom (branches hidden inside hearts) -->
+                <line id="tree-path" class="trunk-path" x1="120" y1="250" x2="120" y2="155"/>
                 
-                <!-- 60+ Beautiful Multi-color Hearts forming dense Heart Crown -->
+                <!-- Pure Dense Heart Bouquet Canopy (Zero open wood) -->
                 <g id="hearts-canopy"></g>
             </svg>
         </div>
@@ -1050,7 +1049,6 @@
                 target.classList.add('active');
             }
 
-            // Scene 3 se nikalne par skyshots & drift ko clean up karenge
             if (num !== 3) {
                 if (skyshotsInterval) clearInterval(skyshotsInterval);
                 if (driftInterval) clearInterval(driftInterval);
@@ -1083,7 +1081,7 @@
             }, 300);
         }
 
-        // 2. Real Automatic Tree Grow (60+ Hearts, Night Sky Shots, Heart Drift)
+        // 2. Pure Dense Heart Bouquet Generation (Zero Visible Raw Branches)
         function generateDenseCanopy() {
             const canopy = document.getElementById('hearts-canopy');
             canopy.innerHTML = '';
@@ -1093,26 +1091,34 @@
                 '#e879f9', '#c084fc', '#f472b6', '#fda4af', '#fef08a'
             ];
 
-            // 65 Structured points forming a lush Heart-shaped crown
             const points = [];
-            for (let t = 0; t < Math.PI * 2; t += 0.1) {
-                // Heart mathematical formula for natural crown shape
-                const x = 120 + 75 * Math.pow(Math.sin(t), 3);
-                const y = 95 - (65 * Math.cos(t) - 25 * Math.cos(2*t) - 10 * Math.cos(3*t) - 5 * Math.cos(4*t));
-                points.push({x, y});
+            
+            // Outer Heart Perimeter
+            for (let t = 0; t < Math.PI * 2; t += 0.08) {
+                const x = 120 + 78 * Math.pow(Math.sin(t), 3);
+                const y = 100 - (68 * Math.cos(t) - 26 * Math.cos(2*t) - 10 * Math.cos(3*t) - 5 * Math.cos(4*t));
+                points.push({x, y, s: 0.42});
             }
 
-            // Fill interior with random floating density
-            for (let i = 0; i < 28; i++) {
+            // Mid-layer Heart Outline (Fills and expands depth)
+            for (let t = 0; t < Math.PI * 2; t += 0.14) {
+                const x = 120 + 52 * Math.pow(Math.sin(t), 3);
+                const y = 100 - (46 * Math.cos(t) - 18 * Math.cos(2*t) - 7 * Math.cos(3*t) - 3 * Math.cos(4*t));
+                points.push({x, y, s: 0.45});
+            }
+
+            // Inner Core Hearts (Completely covers any stem or center gap)
+            for (let i = 0; i < 30; i++) {
                 points.push({
-                    x: 120 + (Math.random() - 0.5) * 110,
-                    y: 95 + (Math.random() - 0.5) * 75
+                    x: 120 + (Math.random() - 0.5) * 75,
+                    y: 100 + (Math.random() - 0.5) * 55,
+                    s: 0.48
                 });
             }
 
-            points.forEach((p, index) => {
+            points.forEach((p) => {
                 const h = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                const s = Math.random() * 0.3 + 0.35; // Size variations
+                const s = p.s + (Math.random() * 0.1 - 0.05);
                 const color = heartColors[Math.floor(Math.random() * heartColors.length)];
                 
                 h.setAttribute('class', 'heart-leaf');
@@ -1131,7 +1137,6 @@
             const icons = ['💖', '💕', '🌸', '✨', '💛', '💜'];
             h.innerText = icons[Math.floor(Math.random() * icons.length)];
             
-            // Random start point near tree canopy center
             h.style.left = (Math.random() * 140 + 70) + 'px';
             h.style.top = (Math.random() * 80 + 80) + 'px';
             h.style.setProperty('--drift-x', ((Math.random() - 0.5) * 80) + 'px');
@@ -1160,40 +1165,37 @@
             const sunray = document.getElementById('sunray-bg');
             const btn = document.getElementById('tree-continue-btn');
 
-            trunk.style.strokeDashoffset = '400';
+            trunk.style.strokeDashoffset = '200';
             leaves.forEach(l => l.style.transform = 'scale(0)');
             sunray.style.opacity = '0';
             btn.style.opacity = '0';
             btn.style.pointerEvents = 'none';
 
-            // Step 1: Trunk smoothly grows
+            // Step 1: Smooth single trunk growth
             setTimeout(() => {
                 trunk.style.strokeDashoffset = '0';
             }, 200);
 
-            // Step 2: Dense 60+ hearts pop out smoothly
+            // Step 2: Dense heart bouquet blossom
             setTimeout(() => {
                 leaves.forEach((leaf, idx) => {
                     setTimeout(() => {
                         leaf.style.transform = 'scale(1)';
-                    }, (idx % 20) * 60);
+                    }, (idx % 22) * 55);
                 });
-            }, 1000);
+            }, 800);
 
-            // Step 3: Glowing halo + Active Skyshots & Endless Floating Hearts
+            // Step 3: Glow burst + Skyshots + Drifting hearts
             setTimeout(() => {
                 sunray.style.opacity = '1';
                 launchNightSkyshot();
 
-                // Continuous colorful skyshots every 1.6s
                 skyshotsInterval = setInterval(launchNightSkyshot, 1600);
-
-                // Continuous drifting hearts floating up from tree (ped khali nahi hoga!)
                 driftInterval = setInterval(spawnDriftingHeart, 450);
 
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
-            }, 2200);
+            }, 2000);
         }
 
         // 3. Real Bakery Cake Step-by-Step Baking Animation
@@ -1240,7 +1242,6 @@
             }, 2000);
         }
 
-        // Blow Candle Out
         function blowCandle() {
             const flame = document.getElementById('candle-flame-path');
             if (flame.style.opacity === '0') return;
