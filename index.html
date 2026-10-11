@@ -37,7 +37,7 @@
             opacity: 1;
         }
 
-        /* --- SCENE 1: CUPID ARROW (SMOOTH VISIBLE FLIGHT) --- */
+        /* --- SCENE 1: CUPID ARROW (ORIGINAL HEART + CHOCOLATE/JHALAR BLAST) --- */
         #scene-1 {
             background: radial-gradient(circle at center, #ffd1dc 0%, #ffccd5 40%, #fbc4ab 100%);
             color: #c94b6e;
@@ -51,7 +51,7 @@
             align-items: center;
         }
         .heart-target {
-            font-size: 5rem;
+            font-size: 5.5rem;
             filter: drop-shadow(0 15px 30px rgba(255, 105, 180, 0.45));
             animation: pulseHeart 1.8s infinite ease-in-out;
             display: inline-block;
@@ -73,6 +73,19 @@
             transform-origin: center bottom;
         }
 
+        /* Chocolate & Jhalar floating particle */
+        .choco-blast-item {
+            position: absolute;
+            font-size: 1.8rem;
+            pointer-events: none;
+            z-index: 10;
+            animation: chocoExplode 1.2s forwards cubic-bezier(0.12, 0.8, 0.32, 1);
+        }
+        @keyframes chocoExplode {
+            0% { transform: translate(0, 0) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1.2) rotate(var(--rot)); opacity: 0; }
+        }
+
         /* --- SCENE 2: FLASH GRID --- */
         #scene-2 {
             background: #e60067;
@@ -84,7 +97,7 @@
             gap: 15px;
         }
 
-        /* --- SCENE 3: REAL ARTISTIC CELEBRATION TREE (BRANCHES + FAIRY JHALAR + STARS) --- */
+        /* --- SCENE 3: REAL TREE WITH HEARTS + HANGING JHALAR & STARS --- */
         #scene-3 {
             background: radial-gradient(circle at 50% 25%, #2a0845 0%, #150326 65%, #080012 100%);
             color: #ffffff;
@@ -115,6 +128,12 @@
             transform: scale(0);
             transform-origin: center;
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tree-heart {
+            transform: scale(0);
+            transform-origin: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 2px 6px rgba(255, 105, 180, 0.5));
         }
         .hanging-jhalar {
             transform: scaleY(0);
@@ -339,6 +358,7 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(-4px) scale(1.02); }
         }
+
         .panda-caption {
             margin-top: 10px;
             color: #1e293b;
@@ -562,10 +582,11 @@
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- SCENE 1: CUPID ARROW (CLEAR VISIBLE FLIGHT INTO TARGET HEART) -->
+    <!-- SCENE 1: CUPID ARROW (ORIGINAL HEART + CHOCOLATE/JHALAR BLAST) -->
     <div id="scene-1" class="screen active">
         <div class="target-container">
-            <div class="heart-target" id="main-heart">🎯</div>
+            <div class="heart-target" id="main-heart">💖</div>
+            <div id="blast-container" style="position:absolute; width:100%; height:100%; pointer-events:none;"></div>
         </div>
         <p style="font-style: italic; font-weight: 500; font-size: 1.05rem; margin-top:-20px;">a little something, for you</p>
         
@@ -597,7 +618,7 @@
         <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3: REAL ARTISTIC CELEBRATION TREE (BRANCHES + FAIRY JHALAR + STARS) -->
+    <!-- SCENE 3: REAL ARTISTIC TREE WITH HEARTS + HANGING JHALAR & STARS -->
     <div id="scene-3" class="screen">
         <div class="tree-stage">
             <div class="ambient-glow" id="tree-ambient-glow"></div>
@@ -605,46 +626,60 @@
             <svg class="tree-svg" viewBox="0 0 300 320">
                 <!-- Sturdy Elegant Trunk & Branch Structure -->
                 <g id="tree-branches">
-                    <!-- Main Trunk -->
                     <path class="tree-branch-path" d="M 150,300 C 150,240 148,200 150,170" stroke-width="8"/>
-                    <!-- Major Branches -->
                     <path class="tree-branch-path" d="M 150,210 C 130,180 90,165 70,120" stroke-width="5.5"/>
                     <path class="tree-branch-path" d="M 150,210 C 170,180 210,165 230,120" stroke-width="5.5"/>
                     <path class="tree-branch-path" d="M 150,180 C 145,150 120,135 115,80" stroke-width="4.5"/>
                     <path class="tree-branch-path" d="M 150,180 C 155,150 180,135 185,80" stroke-width="4.5"/>
                     <path class="tree-branch-path" d="M 150,170 L 150,75" stroke-width="4"/>
-                    <!-- Sub-twigs -->
                     <path class="tree-branch-path" d="M 100,160 C 80,145 65,150 45,130" stroke-width="3.5"/>
                     <path class="tree-branch-path" d="M 200,160 C 220,145 235,150 255,130" stroke-width="3.5"/>
                 </g>
 
-                <!-- Natural Lush Foliage Clouds forming canopy -->
+                <!-- Natural Lush Foliage Clouds -->
                 <g id="tree-canopy">
-                    <circle class="tree-foliage" cx="65" cy="115" r="28" fill="#a855f7" opacity="0.6"/>
-                    <circle class="tree-foliage" cx="235" cy="115" r="28" fill="#a855f7" opacity="0.6"/>
-                    <circle class="tree-foliage" cx="115" cy="80" r="32" fill="#ec4899" opacity="0.65"/>
-                    <circle class="tree-foliage" cx="185" cy="80" r="32" fill="#ec4899" opacity="0.65"/>
-                    <circle class="tree-foliage" cx="150" cy="70" r="36" fill="#f43f5e" opacity="0.7"/>
-                    <circle class="tree-foliage" cx="150" cy="120" r="38" fill="#c084fc" opacity="0.55"/>
-                    <circle class="tree-foliage" cx="95" cy="130" r="26" fill="#f472b6" opacity="0.65"/>
-                    <circle class="tree-foliage" cx="205" cy="130" r="26" fill="#f472b6" opacity="0.65"/>
+                    <circle class="tree-foliage" cx="65" cy="115" r="28" fill="#a855f7" opacity="0.55"/>
+                    <circle class="tree-foliage" cx="235" cy="115" r="28" fill="#a855f7" opacity="0.55"/>
+                    <circle class="tree-foliage" cx="115" cy="80" r="32" fill="#ec4899" opacity="0.6"/>
+                    <circle class="tree-foliage" cx="185" cy="80" r="32" fill="#ec4899" opacity="0.6"/>
+                    <circle class="tree-foliage" cx="150" cy="70" r="36" fill="#f43f5e" opacity="0.65"/>
+                    <circle class="tree-foliage" cx="150" cy="120" r="38" fill="#c084fc" opacity="0.5"/>
+                    <circle class="tree-foliage" cx="95" cy="130" r="26" fill="#f472b6" opacity="0.6"/>
+                    <circle class="tree-foliage" cx="205" cy="130" r="26" fill="#f472b6" opacity="0.6"/>
+                </g>
+
+                <!-- Cute Pastel Hearts Growing on Branches -->
+                <g id="tree-hearts">
+                    <!-- Heart 1 Top Center -->
+                    <path class="tree-heart" d="M 150,60 C 145,50 135,50 135,58 C 135,68 150,78 150,78 C 150,78 165,68 165,58 C 165,50 155,50 150,60 Z" fill="#ff758f"/>
+                    <!-- Heart 2 Left Branch -->
+                    <path class="tree-heart" d="M 68,105 C 63,95 53,95 53,103 C 53,113 68,123 68,123 C 68,123 83,113 83,103 C 83,95 73,95 68,105 Z" fill="#ffd166"/>
+                    <!-- Heart 3 Right Branch -->
+                    <path class="tree-heart" d="M 232,105 C 227,95 217,95 217,103 C 217,113 232,123 232,123 C 232,123 247,113 247,103 C 247,95 237,95 232,105 Z" fill="#f472b6"/>
+                    <!-- Heart 4 Mid Left -->
+                    <path class="tree-heart" d="M 115,75 C 111,67 103,67 103,73 C 103,81 115,89 115,89 C 115,89 127,81 127,73 C 127,67 119,67 115,75 Z" fill="#c084fc"/>
+                    <!-- Heart 5 Mid Right -->
+                    <path class="tree-heart" d="M 185,75 C 181,67 173,67 173,73 C 173,81 185,89 185,89 C 185,89 197,81 197,73 C 197,67 189,67 185,75 Z" fill="#ff8fa3"/>
+                    <!-- Heart 6 Center Core -->
+                    <path class="tree-heart" d="M 150,110 C 145,100 135,100 135,108 C 135,118 150,128 150,128 C 150,128 165,118 165,108 C 165,100 155,100 150,110 Z" fill="#fda4af"/>
+                    <!-- Heart 7 Lower Left -->
+                    <path class="tree-heart" d="M 90,125 C 86,118 80,118 80,123 C 80,130 90,137 90,137 C 90,137 100,130 100,123 C 100,118 94,118 90,125 Z" fill="#ffd166"/>
+                    <!-- Heart 8 Lower Right -->
+                    <path class="tree-heart" d="M 210,125 C 206,118 200,118 200,123 C 200,130 210,137 210,137 C 210,137 220,130 220,123 C 220,118 214,118 210,125 Z" fill="#f43f5e"/>
                 </g>
 
                 <!-- Hanging Decorative Jhalar / Starry Beads (Niche Latakti Hui) -->
                 <g id="hanging-decorations">
-                    <!-- Left Garland -->
                     <path class="hanging-jhalar" d="M 60,135 Q 100,175 140,145" fill="none" stroke="#ffd166" stroke-width="1.8" stroke-dasharray="3,3"/>
                     <circle class="hanging-jhalar" cx="75" cy="148" r="3" fill="#ff758f"/>
                     <circle class="hanging-jhalar" cx="100" cy="162" r="3.5" fill="#ffd166"/>
                     <circle class="hanging-jhalar" cx="125" cy="154" r="3" fill="#38bdf8"/>
                     
-                    <!-- Right Garland -->
                     <path class="hanging-jhalar" d="M 160,145 Q 200,175 240,135" fill="none" stroke="#ffd166" stroke-width="1.8" stroke-dasharray="3,3"/>
                     <circle class="hanging-jhalar" cx="175" cy="154" r="3" fill="#38bdf8"/>
                     <circle class="hanging-jhalar" cx="200" cy="162" r="3.5" fill="#ffd166"/>
                     <circle class="hanging-jhalar" cx="225" cy="148" r="3" fill="#ff758f"/>
 
-                    <!-- Hanging Pendant Stars / Gems from branches -->
                     <line class="hanging-jhalar" x1="50" y1="130" x2="50" y2="160" stroke="#ffd166" stroke-width="1.2"/>
                     <polygon class="hanging-jhalar" points="50,160 52,165 57,165 53,168 55,173 50,170 45,173 47,168 43,165 48,165" fill="#ffd166"/>
 
@@ -662,8 +697,6 @@
                     <polygon class="sparkle-decor" points="195,62 197,67 202,67 198,70 200,75 195,72 190,75 192,70 188,67 193,67" fill="#ffffff"/>
                     <circle class="sparkle-decor" cx="130" cy="95" r="3.5" fill="#fde047"/>
                     <circle class="sparkle-decor" cx="170" cy="95" r="3.5" fill="#fde047"/>
-                    <circle class="sparkle-decor" cx="75" cy="95" r="3" fill="#f43f5e"/>
-                    <circle class="sparkle-decor" cx="225" cy="95" r="3" fill="#f43f5e"/>
                 </g>
             </svg>
         </div>
@@ -682,18 +715,15 @@
 
         <div class="cake-svg-container">
             <svg class="cake-svg-el" viewBox="0 0 200 220">
-                <!-- Glossy Silver Base Pedestal Plate -->
                 <ellipse cx="100" cy="195" rx="88" ry="14" fill="#64748b"/>
                 <ellipse cx="100" cy="192" rx="84" ry="12" fill="#cbd5e1"/>
                 <ellipse cx="100" cy="190" rx="80" ry="10" fill="#f8fafc"/>
 
-                <!-- Tier 1: Bottom Layer (Moist Berry Sponge + Rich Cream) -->
                 <g id="cake-bottom-tier">
                     <path d="M 28,140 L 28,175 C 28,190 172,190 172,175 L 172,140 Z" fill="#f43f5e"/>
                     <path d="M 28,154 C 55,168 145,168 172,154 L 172,162 C 145,176 55,176 28,162 Z" fill="#881337" opacity="0.45"/>
                     <ellipse cx="100" cy="140" rx="72" ry="14" fill="#fb7185"/>
                     
-                    <!-- Bottom Cream Pearls Rim -->
                     <circle cx="36" cy="174" r="4.5" fill="#fff"/>
                     <circle cx="56" cy="178" r="4.5" fill="#fff"/>
                     <circle cx="80" cy="180" r="4.5" fill="#fff"/>
@@ -703,17 +733,13 @@
                     <circle cx="166" cy="173" r="4.5" fill="#fff"/>
                 </g>
 
-                <!-- Tier 2: Top Layer (Vanilla Soft Sponge) -->
                 <g id="cake-top-tier">
                     <path d="M 50,95 L 50,135 C 50,147 150,147 150,135 L 150,95 Z" fill="#fda4af"/>
                     <ellipse cx="100" cy="95" rx="50" ry="11" fill="#ffe4e6"/>
                 </g>
 
-                <!-- Cream Drips Layer on Top Tier -->
                 <g id="cake-icing-drips">
                     <path d="M 50,95 C 55,108 60,102 65,115 C 72,100 80,118 90,105 C 100,122 110,102 120,116 C 130,103 140,115 150,95 C 150,85 50,85 50,95 Z" fill="#ffffff" filter="drop-shadow(0 3px 2px rgba(0,0,0,0.15))"/>
-                    
-                    <!-- Juicy Strawberry / Cherry Toppings -->
                     <circle cx="68" cy="92" r="5" fill="#e11d48"/>
                     <circle cx="100" cy="88" r="5.5" fill="#e11d48"/>
                     <circle cx="132" cy="92" r="5" fill="#e11d48"/>
@@ -721,7 +747,6 @@
                     <circle cx="115" cy="95" r="4" fill="#be123c"/>
                 </g>
 
-                <!-- Realistic Candle Assembly -->
                 <g id="candle-assembly" onclick="blowCandle()">
                     <rect x="96.5" y="45" width="7" height="42" rx="3.5" fill="url(#candleGradient)" stroke="#fecdd3" stroke-width="0.5"/>
                     <defs>
@@ -734,7 +759,6 @@
                     </defs>
                     <line x1="100" y1="45" x2="100" y2="37" stroke="#334155" stroke-width="1.8"/>
                     
-                    <!-- Dynamic Glowing Candle Flame -->
                     <g id="candle-flame-path">
                         <ellipse cx="100" cy="26" rx="14" ry="18" fill="rgba(251, 191, 36, 0.28)"/>
                         <path d="M 100,12 C 94,22 94,34 100,36 C 106,34 106,22 100,12 Z" fill="#f59e0b"/>
@@ -1131,36 +1155,57 @@
             }
         }
 
-        // 1. Arrow Shot Animation (Accurate Trajectory to Heart)
+        // 1. Arrow Shot Animation (Hit Heart -> Explode Chocolates & Jhalar/Ribbons)
         function triggerArrow() {
             playMusic();
             const arrow = document.getElementById('flying-arrow');
             const target = document.getElementById('main-heart');
+            const blastBox = document.getElementById('blast-container');
             
-            // Clear upward visible trajectory flight path
+            // Smooth upward flight path to heart
             arrow.style.transform = "translateY(-340px) scale(0.95)";
             
             setTimeout(() => {
-                target.style.transform = "scale(1.4) rotate(-5deg)";
-                target.innerText = "💥";
-                
+                target.style.transform = "scale(1.35) rotate(-5deg)";
+
+                // Spawn flying chocolates & ribbons
+                const chocoEmojis = ['🍫', '🍬', '🍩', '✨', '🎉', '🎊', '🎀', '🍫'];
+                for (let i = 0; i < 18; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'choco-blast-item';
+                    el.innerText = chocoEmojis[Math.floor(Math.random() * chocoEmojis.length)];
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 140 + 70;
+                    const dx = Math.cos(angle) * distance + 'px';
+                    const dy = Math.sin(angle) * distance + 'px';
+                    const rot = (Math.random() * 360 - 180) + 'deg';
+                    
+                    el.style.setProperty('--dx', dx);
+                    el.style.setProperty('--dy', dy);
+                    el.style.setProperty('--rot', rot);
+                    blastBox.appendChild(el);
+                }
+
+                // Confetti party blast
                 confetti({
-                    particleCount: 50,
-                    spread: 65,
+                    particleCount: 55,
+                    spread: 80,
                     origin: { y: 0.28 },
-                    colors: ['#ff758f', '#ffd166', '#ff4d6d', '#ffffff']
+                    colors: ['#ff758f', '#ffd166', '#ff4d6d', '#8b5a2b', '#ffffff']
                 });
                 
                 setTimeout(() => {
                     switchScene(2);
-                }, 650);
+                }, 750);
             }, 600);
         }
 
-        // 2. Artistic Celebration Tree Animation (Trunk + Foliage + Hanging Bunting/Stars)
+        // 2. Tree Animation (Branches + Balanced Cute Hearts + Hanging Jhalar)
         function startTreeCelebrationAnimation() {
             const branches = document.querySelectorAll('.tree-branch-path');
             const foliage = document.querySelectorAll('.tree-foliage');
+            const hearts = document.querySelectorAll('.tree-heart');
             const jhalar = document.querySelectorAll('.hanging-jhalar');
             const sparkles = document.querySelectorAll('.sparkle-decor');
             const glow = document.getElementById('tree-ambient-glow');
@@ -1168,30 +1213,34 @@
 
             branches.forEach(b => b.style.strokeDashoffset = '500');
             foliage.forEach(f => f.style.transform = 'scale(0)');
+            hearts.forEach(h => h.style.transform = 'scale(0)');
             jhalar.forEach(j => j.style.transform = 'scaleY(0)');
             sparkles.forEach(s => s.style.transform = 'scale(0)');
             glow.style.opacity = '0';
             btn.style.opacity = '0';
             btn.style.pointerEvents = 'none';
 
-            // Step 1: Smooth branches unfold
+            // Step 1: Branches grow
             setTimeout(() => {
                 branches.forEach(b => b.style.strokeDashoffset = '0');
             }, 200);
 
-            // Step 2: Foliage bloom
+            // Step 2: Foliage + Hearts bloom on branches
             setTimeout(() => {
                 foliage.forEach((f, idx) => {
-                    setTimeout(() => f.style.transform = 'scale(1)', idx * 80);
+                    setTimeout(() => f.style.transform = 'scale(1)', idx * 70);
                 });
-            }, 1200);
+                hearts.forEach((h, idx) => {
+                    setTimeout(() => h.style.transform = 'scale(1)', idx * 90);
+                });
+            }, 1100);
 
-            // Step 3: Hanging Jhalar / Bunting drops down naturally
+            // Step 3: Hanging jhalar drops down
             setTimeout(() => {
                 jhalar.forEach(j => j.style.transform = 'scaleY(1)');
-            }, 1900);
+            }, 1800);
 
-            // Step 4: Twinkling stars & Ambient party glow
+            // Step 4: Stars twinkle + ambient celebration glow
             setTimeout(() => {
                 sparkles.forEach(s => s.style.transform = 'scale(1)');
                 glow.style.opacity = '1';
@@ -1205,7 +1254,7 @@
 
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
-            }, 2500);
+            }, 2400);
         }
 
         // 3. Real 2-Tier Bakery Cake Step-by-Step Baking Animation
@@ -1231,27 +1280,23 @@
             narrative.innerText = "Baking fresh bakery layers...";
             instruction.innerText = "baking in progress...";
 
-            // Bottom Tier lands
             setTimeout(() => {
                 bottomTier.style.opacity = '1';
                 bottomTier.style.transform = 'translateY(0)';
             }, 300);
 
-            // Top Tier lands
             setTimeout(() => {
                 topTier.style.opacity = '1';
                 topTier.style.transform = 'translateY(0)';
                 narrative.innerText = "Adding delicate top sponge...";
             }, 900);
 
-            // Drips & berries glaze
             setTimeout(() => {
                 icing.style.opacity = '1';
                 icing.style.transform = 'scaleY(1)';
                 narrative.innerText = "Glazing with vanilla drips & cherries...";
             }, 1600);
 
-            // Candle placed & lit
             setTimeout(() => {
                 candle.style.opacity = '1';
                 candle.style.transform = 'translateY(0)';
@@ -1341,7 +1386,7 @@
             }, 1500);
         }
 
-        // 6. Unfolding Letter Scroll & Dynamic Growing Size (Center expansion)
+        // 6. Center Unfolding Letter Scroll & Dynamic Growing Size
         const fullLetterParagraphs = [
             "I keep thinking about how lucky I got to have you as my best friend. Through all the chaotic days, you've always been someone I can count on, and I don't say thank you nearly enough for that 🤍\n\n",
             "This year, I genuinely hope life treats you with kindness, brings you endless reasons to smile, and opens doors to everything you're working hard for...\n\n",
@@ -1362,7 +1407,6 @@
             continueBtn.style.pointerEvents = "none";
             cursor.style.display = "inline-block";
 
-            // Center Unfold animation
             setTimeout(() => {
                 scrollBox.classList.add('unfolded');
             }, 150);
@@ -1374,8 +1418,6 @@
                 if (wIdx < allWords.length) {
                     container.innerText += (wIdx === 0 ? '' : ' ') + allWords[wIdx];
                     wIdx++;
-                    
-                    // Smooth auto scroll as height naturally expands
                     scrollBox.scrollTop = scrollBox.scrollHeight;
                     setTimeout(typeNextWord, 68);
                 } else {
@@ -1388,7 +1430,6 @@
                 }
             }
 
-            // Start typewriter after unfold completes
             setTimeout(typeNextWord, 900);
         }
 
