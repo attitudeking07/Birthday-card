@@ -76,41 +76,63 @@
             gap: 15px;
         }
 
-        /* --- SCENE 3: REAL AUTO-BLOOMING HEART TREE --- */
+        /* --- SCENE 3: MAGICAL NIGHT PURPLE HEART TREE WITH SKYSHOTS --- */
         #scene-3 {
-            background: radial-gradient(circle at center, #ffe5ec 0%, #ffc2d1 60%, #ffb3c6 100%);
-            color: #800f2f;
+            background: radial-gradient(circle at 50% 30%, #2b0b47 0%, #160326 65%, #080012 100%);
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
         }
         .tree-stage {
             position: relative;
             width: 280px;
-            height: 310px;
+            height: 320px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 15px;
         }
-        .tree-svg { width: 100%; height: 100%; }
+        .tree-svg { width: 100%; height: 100%; z-index: 3; }
         .trunk-path {
-            stroke: #4a2828;
-            stroke-width: 4;
+            stroke: #d4a373;
+            stroke-width: 4.5;
             fill: none;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
             transition: stroke-dashoffset 1.8s ease-in-out;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
         }
         .heart-leaf {
             transform: scale(0);
             transform-origin: center;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 2px 6px rgba(255, 117, 143, 0.4));
         }
         .sunray-bg {
             position: absolute;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            width: 270px;
+            height: 270px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.35) 0%, rgba(138, 43, 226, 0.15) 50%, transparent 75%);
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1.2s ease;
             pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating Drift Hearts (Hawa me udne wale hearts) */
+        .drift-heart {
+            position: absolute;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 4;
+            animation: driftUpwards 3.5s linear infinite;
+            opacity: 0;
+        }
+        @keyframes driftUpwards {
+            0% { transform: translate(0, 0) scale(0.6) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.9; }
+            80% { opacity: 0.7; }
+            100% { transform: translate(var(--drift-x), -160px) scale(1.1) rotate(25deg); opacity: 0; }
         }
 
         /* --- SCENE 4: REALISTIC BAKERY-STYLE SVG CAKE --- */
@@ -317,7 +339,7 @@
             letter-spacing: 0.3px;
         }
 
-        /* --- SCENE 6: REAL ENVELOPE OPENING & SLIDE-OUT ANIMATION --- */
+        /* --- SCENE 6: REAL GOLDEN ENVELOPE OPENING & SLIDE-OUT --- */
         #scene-6 {
             background: radial-gradient(circle at center, #35143f 0%, #15061e 100%);
         }
@@ -340,7 +362,6 @@
             box-shadow: 0 18px 40px rgba(0,0,0,0.6);
             overflow: visible;
         }
-        /* The letter sheet that slides OUT */
         .paper-sliding-sheet {
             position: absolute;
             top: 15px; left: 15px;
@@ -367,7 +388,6 @@
             margin: 4px 0;
         }
 
-        /* Floating elements when opening */
         .pop-icons-cloud {
             position: absolute;
             top: 30px; left: 50%;
@@ -391,7 +411,6 @@
             100% { transform: translateY(-12px) scale(1.15); }
         }
 
-        /* Envelope pocket & side folds */
         .envelope-pocket {
             position: absolute;
             bottom: 0; left: 0;
@@ -405,7 +424,6 @@
             pointer-events: none;
         }
 
-        /* Top Flap */
         .envelope-lid {
             position: absolute;
             top: 0; left: 0;
@@ -422,7 +440,6 @@
             z-index: 1;
         }
 
-        /* Wax Seal */
         .gold-seal {
             position: absolute;
             top: 72px; left: 50%;
@@ -441,7 +458,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* --- SCENE 7: LETTER (TYPEWRITER MODE) --- */
+        /* --- SCENE 7: LETTER (FULL READABLE TYPEWRITER) --- */
         #scene-7 {
             background: radial-gradient(circle at center, #260d2e 0%, #100314 100%);
             padding: 30px 20px 20px 20px;
@@ -495,7 +512,7 @@
             transition: opacity 0.6s ease;
         }
 
-        /* --- SCENE 8: FINAL CELEBRATION (DISNEY PRINCESS) --- */
+        /* --- SCENE 8: FINAL CELEBRATION (NEW ADORABLE CHIBI PRINCESS DOLL) --- */
         #scene-8 {
             background: radial-gradient(circle at center, #3c094d 0%, #12001a 100%);
             justify-content: center;
@@ -581,28 +598,28 @@
         <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3: REAL AUTO-BLOOMING HEART TREE -->
+    <!-- SCENE 3: REAL AUTO-BLOOMING NIGHT HEART TREE (PURPLE SKYSHOTS + 60+ HEARTS) -->
     <div id="scene-3" class="screen">
         <div class="tree-stage">
             <div class="sunray-bg" id="sunray-bg"></div>
-            <svg class="tree-svg" viewBox="0 0 200 240">
-                <path id="tree-path" class="trunk-path" d="M 100,230 L 100,120 M 100,140 Q 60,110 50,60 M 100,140 Q 140,110 150,60 M 100,110 Q 70,80 85,35 M 100,110 Q 130,80 115,35"/>
-                <g id="hearts-canopy">
-                    <path class="heart-leaf" d="M100,45 C90,25 65,30 65,50 C65,70 100,90 100,90 C100,90 135,70 135,50 C135,30 110,25 100,45 Z" fill="#ff758f"/>
-                    <path class="heart-leaf" d="M70,75 C60,55 35,60 35,80 C35,100 70,120 70,120 C70,120 105,100 105,80 C105,60 80,55 70,75 Z" fill="#ff4d6d"/>
-                    <path class="heart-leaf" d="M130,75 C120,55 95,60 95,80 C95,100 130,120 130,120 C130,120 165,100 165,80 C165,60 140,55 130,75 Z" fill="#ff8fa3"/>
-                    <path class="heart-leaf" d="M50,110 C42,95 20,100 20,115 C20,130 50,145 50,145 C50,145 80,130 80,115 C80,100 58,95 50,110 Z" fill="#ffd166"/>
-                    <path class="heart-leaf" d="M150,110 C142,95 120,100 120,115 C120,130 150,145 150,145 C150,145 180,130 180,115 C180,100 158,95 150,110 Z" fill="#f4a261"/>
-                    <path class="heart-leaf" d="M100,105 C92,90 75,95 75,108 C75,120 100,135 100,135 C100,135 125,120 125,108 C125,95 108,90 100,105 Z" fill="#ffb703"/>
-                </g>
+            
+            <!-- Drift particles container (Hawa me udne wale hearts) -->
+            <div id="drift-container" style="position:absolute; width:100%; height:100%; pointer-events:none;"></div>
+
+            <svg class="tree-svg" viewBox="0 0 240 270">
+                <!-- Sturdy trunk branching into lush canopy -->
+                <path id="tree-path" class="trunk-path" d="M 120,250 L 120,140 M 120,170 Q 75,130 60,85 M 120,170 Q 165,130 180,85 M 120,140 Q 90,105 105,65 M 120,140 Q 150,105 135,65 M 120,195 Q 45,150 40,115 M 120,195 Q 195,150 200,115"/>
+                
+                <!-- 60+ Beautiful Multi-color Hearts forming dense Heart Crown -->
+                <g id="hearts-canopy"></g>
             </svg>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <p style="font-style: italic; font-size: 0.88rem; color: #b02a5b;">it's officially your day</p>
-            <h2 style="font-size: 1.85rem; color: #800f2f; margin: 4px 0;">Happy Birthday, Sonu</h2>
-            <p style="font-size: 0.85rem; color: #800f2f; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
-            <button class="cta-button" id="tree-continue-btn" style="opacity:0; pointer-events:none; transition:opacity 0.5s ease; margin-top:10px;" onclick="switchScene(4)">Continue ✨</button>
+        <div style="margin-bottom: 10px; z-index: 5;">
+            <p style="font-style: italic; font-size: 0.88rem; color: #f472b6;">it's officially your day</p>
+            <h2 style="font-size: 1.9rem; color: #ffd166; text-shadow: 0 0 15px rgba(255,209,102,0.6); margin: 4px 0;">Happy Birthday, Sonu</h2>
+            <p style="font-size: 0.85rem; color: #e9d5ff; font-weight: 500;">and just like that, another beautiful year of you ✨</p>
+            <button class="cta-button" id="tree-continue-btn" style="opacity:0; pointer-events:none; transition:opacity 0.5s ease; margin-top:10px; background: linear-gradient(135deg, #a855f7, #ec4899);" onclick="switchScene(4)">Continue ✨</button>
         </div>
     </div>
 
@@ -914,7 +931,6 @@
         </div>
 
         <div class="envelope-stage" onclick="openLetterEnvelope()">
-            <!-- Floating icons burst from envelope -->
             <div class="pop-icons-cloud" id="pop-icons-cloud">
                 <span class="floating-pop-item" style="left:15%; top:10px;">🎂</span>
                 <span class="floating-pop-item" style="left:40%; top:-15px;">💛</span>
@@ -924,12 +940,9 @@
             </div>
 
             <div class="envelope-card">
-                <!-- Top Flap -->
                 <div class="envelope-lid" id="envelope-lid"></div>
-                <!-- Wax Seal -->
                 <div class="gold-seal" id="gold-seal">S</div>
                 
-                <!-- The Letter Paper inside that smoothly slides OUT -->
                 <div class="paper-sliding-sheet" id="paper-sliding-sheet">
                     <span style="font-size:1.2rem; margin-bottom:4px;">🎂</span>
                     <div class="sheet-mini-line" style="width:85%;"></div>
@@ -937,7 +950,6 @@
                     <div class="sheet-mini-line" style="width:60%;"></div>
                 </div>
 
-                <!-- Bottom Pocket of Envelope -->
                 <div class="envelope-pocket"></div>
             </div>
         </div>
@@ -1028,11 +1040,20 @@
             audio.play().catch(e => console.log(e));
         }
 
+        let skyshotsInterval = null;
+        let driftInterval = null;
+
         function switchScene(num) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById('scene-' + num);
             if (target) {
                 target.classList.add('active');
+            }
+
+            // Scene 3 se nikalne par skyshots & drift ko clean up karenge
+            if (num !== 3) {
+                if (skyshotsInterval) clearInterval(skyshotsInterval);
+                if (driftInterval) clearInterval(driftInterval);
             }
 
             if (num === 3) {
@@ -1062,8 +1083,78 @@
             }, 300);
         }
 
-        // 2. Real Automatic Tree Grow & Bloom
+        // 2. Real Automatic Tree Grow (60+ Hearts, Night Sky Shots, Heart Drift)
+        function generateDenseCanopy() {
+            const canopy = document.getElementById('hearts-canopy');
+            canopy.innerHTML = '';
+            
+            const heartColors = [
+                '#ff758f', '#ff4d6d', '#ff8fa3', '#ffd166', '#f4a261', 
+                '#e879f9', '#c084fc', '#f472b6', '#fda4af', '#fef08a'
+            ];
+
+            // 65 Structured points forming a lush Heart-shaped crown
+            const points = [];
+            for (let t = 0; t < Math.PI * 2; t += 0.1) {
+                // Heart mathematical formula for natural crown shape
+                const x = 120 + 75 * Math.pow(Math.sin(t), 3);
+                const y = 95 - (65 * Math.cos(t) - 25 * Math.cos(2*t) - 10 * Math.cos(3*t) - 5 * Math.cos(4*t));
+                points.push({x, y});
+            }
+
+            // Fill interior with random floating density
+            for (let i = 0; i < 28; i++) {
+                points.push({
+                    x: 120 + (Math.random() - 0.5) * 110,
+                    y: 95 + (Math.random() - 0.5) * 75
+                });
+            }
+
+            points.forEach((p, index) => {
+                const h = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const s = Math.random() * 0.3 + 0.35; // Size variations
+                const color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                
+                h.setAttribute('class', 'heart-leaf');
+                h.setAttribute('d', `M${p.x},${p.y} C${p.x-10*s},${p.y-18*s} ${p.x-24*s},${p.y-5*s} ${p.x-24*s},${p.y+10*s} C${p.x-24*s},${p.y+25*s} ${p.x},${p.y+42*s} ${p.x},${p.y+42*s} C${p.x},${p.y+42*s} ${p.x+24*s},${p.y+25*s} ${p.x+24*s},${p.y+10*s} C${p.x+24*s},${p.y-5*s} ${p.x+10*s},${p.y-18*s} ${p.x},${p.y} Z`);
+                h.setAttribute('fill', color);
+                canopy.appendChild(h);
+            });
+        }
+
+        function spawnDriftingHeart() {
+            const container = document.getElementById('drift-container');
+            if (!container) return;
+
+            const h = document.createElement('div');
+            h.className = 'drift-heart';
+            const icons = ['💖', '💕', '🌸', '✨', '💛', '💜'];
+            h.innerText = icons[Math.floor(Math.random() * icons.length)];
+            
+            // Random start point near tree canopy center
+            h.style.left = (Math.random() * 140 + 70) + 'px';
+            h.style.top = (Math.random() * 80 + 80) + 'px';
+            h.style.setProperty('--drift-x', ((Math.random() - 0.5) * 80) + 'px');
+            h.style.fontSize = (Math.random() * 10 + 12) + 'px';
+
+            container.appendChild(h);
+            setTimeout(() => h.remove(), 3600);
+        }
+
+        function launchNightSkyshot() {
+            confetti({
+                particleCount: 22,
+                angle: Math.random() * 60 + 60,
+                spread: 70,
+                origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.4 + 0.1 },
+                colors: ['#ff758f', '#ffd166', '#a855f7', '#ec4899', '#38bdf8', '#ffffff'],
+                shapes: ['circle', 'star'],
+                ticks: 200
+            });
+        }
+
         function startTreeAutoGrow() {
+            generateDenseCanopy();
             const trunk = document.getElementById('tree-path');
             const leaves = document.querySelectorAll('.heart-leaf');
             const sunray = document.getElementById('sunray-bg');
@@ -1075,29 +1166,34 @@
             btn.style.opacity = '0';
             btn.style.pointerEvents = 'none';
 
+            // Step 1: Trunk smoothly grows
             setTimeout(() => {
                 trunk.style.strokeDashoffset = '0';
             }, 200);
 
+            // Step 2: Dense 60+ hearts pop out smoothly
             setTimeout(() => {
                 leaves.forEach((leaf, idx) => {
                     setTimeout(() => {
                         leaf.style.transform = 'scale(1)';
-                    }, idx * 160);
+                    }, (idx % 20) * 60);
                 });
-            }, 1200);
+            }, 1000);
 
+            // Step 3: Glowing halo + Active Skyshots & Endless Floating Hearts
             setTimeout(() => {
                 sunray.style.opacity = '1';
-                confetti({
-                    particleCount: 50,
-                    spread: 70,
-                    origin: { y: 0.4 },
-                    colors: ['#ff758f', '#ffd166', '#ff4d6d', '#ffffff']
-                });
+                launchNightSkyshot();
+
+                // Continuous colorful skyshots every 1.6s
+                skyshotsInterval = setInterval(launchNightSkyshot, 1600);
+
+                // Continuous drifting hearts floating up from tree (ped khali nahi hoga!)
+                driftInterval = setInterval(spawnDriftingHeart, 450);
+
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
-            }, 2400);
+            }, 2200);
         }
 
         // 3. Real Bakery Cake Step-by-Step Baking Animation
@@ -1187,7 +1283,7 @@
             }
         }
 
-        // 5. Envelope Opening & Paper Slide-Out Animation (Exact Screenshot 13)
+        // 5. Envelope Opening & Paper Slide-Out Animation
         let isOpeningEnvelope = false;
         function openLetterEnvelope() {
             if (isOpeningEnvelope) return;
@@ -1202,12 +1298,10 @@
 
             hint.innerText = "Opening your letter...";
 
-            // Step 1: Pop seal & open top flap (0.4s)
             seal.style.transform = 'translate(-50%, -50%) scale(0)';
             seal.style.opacity = '0';
             lid.classList.add('open');
 
-            // Step 2: Paper slides up from inside envelope + Floating hearts/cake burst (0.5s)
             setTimeout(() => {
                 paper.classList.add('slide-out');
                 iconsCloud.classList.add('active');
@@ -1220,7 +1314,6 @@
                 });
             }, 450);
 
-            // Step 3: Transition smoothly into Full Letter Screen (1.6s)
             setTimeout(() => {
                 switchScene(7);
                 isOpeningEnvelope = false;
