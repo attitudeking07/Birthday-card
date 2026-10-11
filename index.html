@@ -37,7 +37,7 @@
             opacity: 1;
         }
 
-        /* --- SCENE 1: CUPID ARROW (DYNAMIC HIT & VANISH) --- */
+        /* --- SCENE 1: CUPID ARROW (DYNAMIC EXACT HIT & VANISH) --- */
         #scene-1 {
             background: radial-gradient(circle at center, #ffe5ec 0%, #ffc2d1 45%, #fbc4ab 100%);
             color: #b02a5b;
@@ -98,13 +98,26 @@
             gap: 15px;
         }
 
-        /* --- SCENE 3: AESTHETIC CELEBRATION TREE --- */
+        /* --- SCENE 3: AESTHETIC NIGHT CITY SKYLINE + SKYSHOTS + CELEBRATION TREE --- */
         #scene-3 {
-            background: radial-gradient(circle at 50% 25%, #2a0845 0%, #150326 65%, #080012 100%);
+            background: radial-gradient(circle at 50% 20%, #300a4f 0%, #17032a 60%, #090014 100%);
             color: #ffffff;
             position: relative;
             overflow: hidden;
         }
+
+        /* City Skyline Graphic */
+        .city-skyline-bg {
+            position: absolute;
+            bottom: 75px;
+            left: 0;
+            width: 100%;
+            height: 160px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
         .tree-stage {
             position: relative;
             width: 320px;
@@ -113,8 +126,9 @@
             justify-content: center;
             align-items: center;
             margin-top: 5px;
+            z-index: 3;
         }
-        .tree-svg { width: 100%; height: 100%; z-index: 3; }
+        .tree-svg { width: 100%; height: 100%; z-index: 4; }
         
         .tree-branch-path {
             stroke: #d4a373;
@@ -156,11 +170,11 @@
             position: absolute;
             width: 290px;
             height: 290px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(236, 72, 153, 0.15) 50%, transparent 75%);
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(236, 72, 153, 0.18) 50%, transparent 75%);
             opacity: 0;
             transition: opacity 1.2s ease;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
         /* --- SCENE 4: REALISTIC 2-TIER BAKERY CAKE --- */
@@ -619,8 +633,59 @@
         <p class="hint-text" style="margin-top: 35px;">tap anywhere to continue</p>
     </div>
 
-    <!-- SCENE 3: REAL ARTISTIC TREE WITH HEARTS + HANGING JHALAR & STARS -->
+    <!-- SCENE 3: REAL ARTISTIC TREE WITH HEARTS + HANGING JHALAR & STARS + AESTHETIC CITY SKYLINE -->
     <div id="scene-3" class="screen">
+        
+        <!-- Aesthetic Night City Skyline Background -->
+        <svg class="city-skyline-bg" viewBox="0 0 400 160" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="buildingGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1b0533"/>
+                    <stop offset="100%" stop-color="#0a0014"/>
+                </linearGradient>
+            </defs>
+            <!-- Buildings Cluster -->
+            <rect x="10" y="80" width="35" height="80" fill="url(#buildingGrad)" rx="3"/>
+            <rect x="50" y="55" width="40" height="105" fill="url(#buildingGrad)" rx="3"/>
+            <rect x="95" y="90" width="30" height="70" fill="url(#buildingGrad)" rx="2"/>
+            <rect x="130" y="40" width="45" height="120" fill="url(#buildingGrad)" rx="4"/>
+            <rect x="180" y="70" width="38" height="90" fill="url(#buildingGrad)" rx="3"/>
+            <rect x="222" y="45" width="42" height="115" fill="url(#buildingGrad)" rx="4"/>
+            <rect x="268" y="75" width="35" height="85" fill="url(#buildingGrad)" rx="3"/>
+            <rect x="308" y="60" width="40" height="100" fill="url(#buildingGrad)" rx="3"/>
+            <rect x="352" y="85" width="38" height="75" fill="url(#buildingGrad)" rx="2"/>
+
+            <!-- Antenna Towers with Signal Glow -->
+            <line x1="152" y1="40" x2="152" y2="15" stroke="#a855f7" stroke-width="1.5"/>
+            <circle cx="152" cy="14" r="2.5" fill="#f43f5e"/>
+            <line x1="243" y1="45" x2="243" y2="25" stroke="#38bdf8" stroke-width="1.5"/>
+            <circle cx="243" cy="24" r="2.5" fill="#ffd166"/>
+
+            <!-- Glowing Windows Dots inside Buildings -->
+            <circle cx="65" cy="70" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="75" cy="70" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="65" cy="85" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="75" cy="85" r="1.5" fill="#38bdf8" opacity="0.8"/>
+            <circle cx="65" cy="100" r="1.5" fill="#fef08a" opacity="0.8"/>
+            
+            <circle cx="145" cy="55" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="160" cy="55" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="145" cy="70" r="1.5" fill="#f472b6" opacity="0.8"/>
+            <circle cx="160" cy="70" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="145" cy="85" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="160" cy="85" r="1.5" fill="#38bdf8" opacity="0.8"/>
+
+            <circle cx="235" cy="60" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="250" cy="60" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="235" cy="75" r="1.5" fill="#38bdf8" opacity="0.8"/>
+            <circle cx="250" cy="75" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="235" cy="90" r="1.5" fill="#fef08a" opacity="0.8"/>
+
+            <circle cx="320" cy="75" r="1.5" fill="#fef08a" opacity="0.8"/>
+            <circle cx="335" cy="75" r="1.5" fill="#f472b6" opacity="0.8"/>
+            <circle cx="320" cy="90" r="1.5" fill="#fef08a" opacity="0.8"/>
+        </svg>
+
         <div class="tree-stage">
             <div class="ambient-glow" id="tree-ambient-glow"></div>
             
@@ -1119,11 +1184,18 @@
             audio.play().catch(e => console.log(e));
         }
 
+        let skyshotsTimer = null;
+
         function switchScene(num) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById('scene-' + num);
             if (target) {
                 target.classList.add('active');
+            }
+
+            if (num !== 3 && skyshotsTimer) {
+                clearInterval(skyshotsTimer);
+                skyshotsTimer = null;
             }
 
             if (num === 3) {
@@ -1148,24 +1220,19 @@
             const target = document.getElementById('main-heart');
             const blastBox = document.getElementById('blast-container');
 
-            // Live screen coordinates measure karna taaki har phone pe exact heart tak pahuche
             const arrowRect = arrow.getBoundingClientRect();
             const targetRect = target.getBoundingClientRect();
 
-            // Distance from arrow tip to heart center
             const targetCenterY = targetRect.top + targetRect.height / 2;
             const arrowTipY = arrowRect.top;
             const distance = targetCenterY - arrowTipY;
 
-            // Smooth upward flight
             arrow.style.transform = `translateY(${distance}px)`;
 
-            // Right on impact (0.4s) -> Arrow instantly vanishes, heart pops
             setTimeout(() => {
                 arrow.style.opacity = '0';
                 target.style.transform = "scale(1.35) rotate(-6deg)";
 
-                // Flying cute chocolates, candies & ribbons explosion
                 const chocoEmojis = ['🍫', '🍬', '🍩', '✨', '🎉', '🎊', '🎀', '🍭'];
                 for (let i = 0; i < 20; i++) {
                     const el = document.createElement('div');
@@ -1184,7 +1251,6 @@
                     blastBox.appendChild(el);
                 }
 
-                // Confetti party blast
                 confetti({
                     particleCount: 55,
                     spread: 80,
@@ -1198,7 +1264,20 @@
             }, 420);
         }
 
-        // 2. Tree Animation (Branches + Balanced Cute Hearts + Hanging Jhalar)
+        // Sky Shot Firework Burst over City Skyline
+        function fireCitySkyshot() {
+            confetti({
+                particleCount: 26,
+                angle: Math.random() * 50 + 65,
+                spread: 75,
+                origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.35 + 0.1 },
+                colors: ['#ff758f', '#ffd166', '#a855f7', '#38bdf8', '#f43f5e', '#ffffff'],
+                shapes: ['circle', 'star'],
+                ticks: 180
+            });
+        }
+
+        // 2. Tree Animation (Branches + Balanced Cute Hearts + Hanging Jhalar + Active Skyshots)
         function startTreeCelebrationAnimation() {
             const branches = document.querySelectorAll('.tree-branch-path');
             const foliage = document.querySelectorAll('.tree-foliage');
@@ -1238,12 +1317,11 @@
                 sparkles.forEach(s => s.style.transform = 'scale(1)');
                 glow.style.opacity = '1';
                 
-                confetti({
-                    particleCount: 40,
-                    spread: 70,
-                    origin: { y: 0.38 },
-                    colors: ['#ffd166', '#a855f7', '#ec4899', '#ffffff']
-                });
+                // Continuous city sky shots launch
+                fireCitySkyshot();
+                if (!skyshotsTimer) {
+                    skyshotsTimer = setInterval(fireCitySkyshot, 1500);
+                }
 
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
